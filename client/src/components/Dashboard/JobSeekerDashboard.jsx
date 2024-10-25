@@ -16,6 +16,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
   const token = localStorage.getItem("accessToken");
   const [activeTab, setActiveTab] = useState("profile");
   const [connectedCount, setConnectedCount] = useState(5); // Example: 5 employers have connected
+
   useEffect(() => {
     // Fetch job seeker profile data immediately after login
     const fetchUserData = async () => {
@@ -52,6 +53,8 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
 
     if (token) {
       fetchUserData(); // Fetch profile data if the user has a valid token
+    } // <-- This closing bracket was missing
+  }, [token, setProfileData]);
 
   useEffect(() => {
     if (!profileData && token) {
@@ -73,10 +76,10 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
     }
 
     // Check for profile data validity
-    const hasProfileData = profileData && 
-      profileData.first_name && 
-      profileData.last_name && 
-      profileData.skills && 
+    const hasProfileData = profileData &&
+      profileData.first_name &&
+      profileData.last_name &&
+      profileData.skills &&
       profileData.skills.length > 0;
 
     switch (activeTab) {
@@ -84,8 +87,8 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         return hasProfileData ? (
           <CreateProfileView profileData={profileData} />
         ) : (
-          <CreateProfilePage 
-            setProfileData={setProfileData} 
+          <CreateProfilePage
+            setProfileData={setProfileData}
             onProfileUpdate={handleProfileUpdate} // Pass the handler to child
           />
         );
