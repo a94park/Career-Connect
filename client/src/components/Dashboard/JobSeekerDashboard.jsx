@@ -18,10 +18,8 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
   const [connectedCount, setConnectedCount] = useState(5); // Example: 5 employers have connected
 
   useEffect(() => {
-    // Fetch job seeker profile data immediately after login
     const fetchUserData = async () => {
       setIsLoading(true); // Start loading
-
       try {
         const response = await fetch("http://localhost:5000/dashboard", {
           method: "GET",
@@ -42,10 +40,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
           console.error("Failed to fetch job seeker data.");
         }
       } catch (error) {
-        console.error(
-          "An error occurred while fetching job seeker data:",
-          error
-        );
+        console.error("An error occurred while fetching job seeker data:", error);
       } finally {
         setIsLoading(false); // Stop loading
       }
@@ -53,11 +48,14 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
 
     if (token) {
       fetchUserData(); // Fetch profile data if the user has a valid token
-    } // <-- This closing bracket was missing
+    }
   }, [token, setProfileData]);
 
   useEffect(() => {
     if (!profileData && token) {
+      const fetchUserData = async () => {
+        // fetching logic
+      };
       fetchUserData(); // Fetch user data initially
     } else {
       setIsLoading(false); // If profileData exists, stop loading
@@ -75,7 +73,6 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
       return <p>Loading user data...</p>;
     }
 
-    // Check for profile data validity
     const hasProfileData = profileData &&
       profileData.first_name &&
       profileData.last_name &&
@@ -96,7 +93,6 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         return <SearchAndFilterSystem />;
       case "connections":
         return <SeekerConnections />;
-
       case "security":
         return (
           <div>
@@ -105,7 +101,6 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
             <UpdateJobSeekerProfile />
           </div>
         );
-
       default:
         return "profile";
     }
@@ -121,22 +116,13 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
           <li onClick={() => setActiveTab("search")} className={activeTab === "search" ? "active" : ""}>
             Search
           </li>
-
-          <li
-            onClick={() => setActiveTab("connections")}
-            className={activeTab === "connections" ? "active" : ""}
-          >
+          <li onClick={() => setActiveTab("connections")} className={activeTab === "connections" ? "active" : ""}>
             Connections
-            {connectedCount > 0 && (
-              <span className="counter">{connectedCount}</span>
-            )}
-
+            {connectedCount > 0 && <span className="counter">{connectedCount}</span>}
           </li>
           <li onClick={() => setActiveTab("security")} className={activeTab === "security" ? "active" : ""}>
             Security
           </li>
-
-
         </ul>
       </aside>
       <main className="content-area">
