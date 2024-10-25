@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./EmployerViewJobPost.scss";
 
 const EmployerViewJobPost = () => {
   const [jobs, setJobs] = useState([]);
@@ -8,18 +9,14 @@ const EmployerViewJobPost = () => {
   useEffect(() => {
     const fetchEmployerJobs = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/employer/jobs",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch("http://localhost:5000/api/employer/jobs", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-        // Check if the response is OK
         if (!response.ok) {
           if (response.status === 401) {
             throw new Error("Unauthorized access - Please log in again");
@@ -30,7 +27,6 @@ const EmployerViewJobPost = () => {
           }
         }
 
-        // Parse the response as JSON
         const data = await response.json();
         setJobs(data);
       } catch (err) {
@@ -43,27 +39,31 @@ const EmployerViewJobPost = () => {
   }, [token]);
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (
-    <div>
+    <div className="employer-job-posts-container">
       <h1>My Job Postings</h1>
       {jobs.length > 0 ? (
-        <ul>
+        <ul className="job-list">
           {jobs.map((job) => (
-            <li key={job.job_posting_id}>
-              <h2>{job.title}</h2>
-              <p>{job.description}</p>
-              <p>Location: {job.location}</p>
-              <p>Salary: {job.salary}</p>
-              <p>Skills: {job.skills}</p>
-              <p>Posted on: {new Date(job.created_at).toLocaleDateString()}</p>
+            <li key={job.job_posting_id} className="job-list-item">
+              <h2 className="job-title">{job.title}</h2>
+              <p className="job-description">{job.description}</p>
+              <div className="job-meta">
+                <p className="job-location"><strong>Location:</strong> {job.location}</p>
+                <p className="job-salary"><strong>Salary:</strong> {job.salary}</p>
+                <p className="job-skills"><strong>Skills:</strong> {job.skills}</p>
+              </div>
+              <p className="job-posted">
+                <strong>Posted on:</strong> {new Date(job.created_at).toLocaleDateString()}
+              </p>
             </li>
           ))}
         </ul>
       ) : (
-        <p>You have not posted any jobs yet.</p>
+        <p className="no-jobs-message">You have not posted any jobs yet.</p>
       )}
     </div>
   );
