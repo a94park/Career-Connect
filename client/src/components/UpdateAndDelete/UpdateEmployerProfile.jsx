@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../Profile/EmployerCreateProfile.scss";
 
 function UpdateEmployerProfile() {
     const [companyName, setCompanyName] = useState('');
