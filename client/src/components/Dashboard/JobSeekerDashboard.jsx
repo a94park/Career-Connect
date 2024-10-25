@@ -65,7 +65,6 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
   // Handle the profile update
   const handleProfileUpdate = async (updatedProfile) => {
     setProfileData(updatedProfile); // Update the profile data in state
-    await fetchUserData(); // Fetch updated user data
   };
 
   const renderContent = () => {

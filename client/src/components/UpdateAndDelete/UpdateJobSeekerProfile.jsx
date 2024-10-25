@@ -10,12 +10,10 @@ function UpdateJobSeekerProfile() {
     const [nationality, setNationality] = useState('');
     const [skills, setSkills] = useState([]);
     const [inputSkill, setInputSkill] = useState('');
-    const [educationFields, setEducationFields] = useState([
-        { education: '', degreeDetails: '', institution: '' }
-    ]);
+    const [educationFields, setEducationFields] = useState([]);
     const [profilePic, setProfilePic] = useState(null);
 
-    const navigate = useNavigate();
+
 
     const handleAddSkill = (e) => {
         e.preventDefault();
@@ -46,7 +44,6 @@ function UpdateJobSeekerProfile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const convertImageToBase64 = (file) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -55,22 +52,23 @@ function UpdateJobSeekerProfile() {
                 reader.onerror = (error) => reject(error);
             });
         };
-
+    
         let profile_pic = null; // Declare profile_pic here
-
         if (profilePic) {
             profile_pic = await convertImageToBase64(profilePic);
         }
-
-        const education = educationFields.map((field) => {
+    
+        const education = educationFields
+        .filter(field => field.education) // Keep only fields with a non-empty education value
+        .map((field) => {
             const { education, degreeDetails, institution } = field;
             return {
-              education,
-              degreeDetails,
-              institution,
+                education,
+                degreeDetails,
+                institution,
             };
-          });
-
+        });
+    
         const formData = {
             profile_pic,
             first_name: firstName,
@@ -78,17 +76,16 @@ function UpdateJobSeekerProfile() {
             dob,
             gender,
             nationality,
-            education: JSON.stringify(education), // JSON string of education array
-            skills: JSON.stringify(skills), // JSON string of skills array
+            education, // JSON string of education array
+            skills, // JSON string of skills array
         };
-
+    
         try {
             const token = localStorage.getItem('token');
             if (!token) {
                 alert("No token found. Please log in.");
                 return;
             }
-
             const response = await fetch("http://localhost:5000/api/update_job_seeker_profile", {
                 method: "PUT",
                 headers: {
@@ -97,18 +94,15 @@ function UpdateJobSeekerProfile() {
                 },
                 body: JSON.stringify(formData),
             });
-
             const data = await response.json();
-
             if (response.ok) {
                 alert("Profile updated successfully!", data);
-                // Optionally, clear other fields but keep skills and education intact
-                // setFirstName('');
-                // setLastName('');
-                // setDob('');
-                // setGender('');
-                // setNationality('');
-                // setProfilePic(null);
+                setFirstName('');
+                setLastName('');
+                setDob('');
+                setGender('');
+                setNationality('');
+                setProfilePic(null);
             } else {
                 const errorData = await response.json();
                 alert(`Error: ${errorData.message || "Profile update failed"}`);
@@ -118,6 +112,7 @@ function UpdateJobSeekerProfile() {
             console.error("Error updating profile:", error);
         }
     };
+    
 
     return (
         <div className="update-profile-page">
