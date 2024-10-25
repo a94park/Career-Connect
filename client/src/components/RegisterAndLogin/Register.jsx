@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';  // Import eye icons
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for redirection
 import '../RegisterAndLogin/Register.scss';
 
 function Register() {
@@ -21,6 +22,8 @@ function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);  // For confirm password visibility
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  
+  const navigate = useNavigate(); // Initialize useNavigate for redirection
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -62,6 +65,11 @@ function Register() {
       if (response.status === 201) {
         setRegistrationSuccess(true);
         setErrorMessage("");
+
+        // Show success checkmark and redirect to login after 2 seconds
+        setTimeout(() => {
+          navigate("/login"); // Navigate to the login page
+        }, 2000);
       }
     } catch (error) {
       if (error.response) {
@@ -87,9 +95,9 @@ function Register() {
       <div className="register-form">
         <h2 className="text-center mb-4">Register</h2>
         {registrationSuccess ? (
-          <p className="alert alert-success">
-            Registration successful! You can now log in.
-          </p>
+          <div className="alert alert-success text-center">
+            <p>✔️ Registration successful! Redirecting to login...</p>
+          </div>
         ) : (
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
