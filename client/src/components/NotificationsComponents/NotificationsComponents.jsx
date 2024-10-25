@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
-import './NotificationsComponents.scss'
+import { useEffect, useState } from "react";
+import "./NotificationsComponents.scss";
 
 function NotificationsComponent() {
   const [notifications, setNotifications] = useState([]);
   const [detailedNotifications, setDetailedNotifications] = useState([]);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [selectedJobSeeker, setSelectedJobSeeker] = useState(null); // Store job seeker data for the modal
 
   const getTokenFromLocalStorage = () => localStorage.getItem("token");
 
   const fetchNotifications = async () => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch("http://localhost:5000/api/employer/notifications", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/employer/notifications",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
@@ -26,8 +31,7 @@ function NotificationsComponent() {
 
       const pendingNotifications = data.filter(
         (notification) => notification.employer_status === null
-      )
-
+      );
 
       setNotifications(pendingNotifications);
     } catch (error) {
@@ -38,12 +42,15 @@ function NotificationsComponent() {
   const fetchJobPostingDetails = async (jobPostingId) => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch(`http://localhost:5000/api/job_posting/${jobPostingId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/job_posting/${jobPostingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.ok) {
         return await response.json();
       }
@@ -56,12 +63,15 @@ function NotificationsComponent() {
   const fetchJobSeekerDetails = async (jobSeekerId) => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch(`http://localhost:5000/api/job_seekers/${jobSeekerId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/job_seekers/${jobSeekerId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (response.ok) {
         return await response.json();
       }
@@ -74,22 +84,32 @@ function NotificationsComponent() {
   const handleEmployerResponse = async (applicationId, status) => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch(`http://localhost:5000/api/employer/update_application`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ application_id: applicationId, employer_status: status }),
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/employer/update_application`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            application_id: applicationId,
+            employer_status: status,
+          }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update employer status");
+        throw new Error(
+          errorData.message || "Failed to update employer status"
+        );
       }
       setDetailedNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification.application_id !== applicationId)
-    )
+        prevNotifications.filter(
+          (notification) => notification.application_id !== applicationId
+        )
+      );
       // Refetch notifications after updating the status
     } catch (error) {
       alert(`Error: ${error.message}`);
@@ -99,8 +119,12 @@ function NotificationsComponent() {
   const loadDetailedNotifications = async () => {
     const detailedData = await Promise.all(
       notifications.map(async (notification) => {
-        const jobPostingDetails = await fetchJobPostingDetails(notification.job_posting_id);
-        const jobSeekerDetails = await fetchJobSeekerDetails(notification.job_seeker_id);
+        const jobPostingDetails = await fetchJobPostingDetails(
+          notification.job_posting_id
+        );
+        const jobSeekerDetails = await fetchJobSeekerDetails(
+          notification.job_seeker_id
+        );
         return {
           ...notification,
           jobPostingDetails,
@@ -121,6 +145,18 @@ function NotificationsComponent() {
     }
   }, [notifications]);
 
+  // Open the modal and set selected job seeker data
+  const viewProfile = (jobSeekerDetails) => {
+    setSelectedJobSeeker(jobSeekerDetails);
+    setShowProfileModal(true);
+  };
+
+  // Close the modal
+  const closeModal = () => {
+    setShowProfileModal(false);
+    setSelectedJobSeeker(null);
+  };
+
   return (
     <div className="notifications-container">
       <h2>Notifications</h2>
@@ -131,40 +167,109 @@ function NotificationsComponent() {
           {detailedNotifications.map((notification) => (
             <li key={notification.notification_id} className="list-group-item">
               <p className="job-posting-title">
-                <strong>Job Posting:</strong> {notification.jobPostingDetails?.title}
+                <strong>Job Posting:</strong>{" "}
+                {notification.jobPostingDetails?.title}
               </p>
               <p className="job-description">
-                <strong>Description:</strong> {notification.jobPostingDetails?.description}
+                <strong>Description:</strong>{" "}
+                {notification.jobPostingDetails?.description}
               </p>
               <p className="job-seeker-name">
-                <strong>Job Seeker:</strong> {notification.jobSeekerDetails?.first_name}{" "}
+                <strong>Job Seeker:</strong>{" "}
+                {notification.jobSeekerDetails?.first_name}{" "}
                 {notification.jobSeekerDetails?.last_name}
               </p>
               <p className="skills-list">
-                <strong>Skills:</strong> {notification.jobSeekerDetails?.skills?.join(", ")}
+                <strong>Skills:</strong>{" "}
+                {notification.jobSeekerDetails?.skills?.join(", ")}
               </p>
 
               {/* Accept and Reject buttons */}
               <div className="button-group">
                 <button
                   className="btn btn-success me-2"
-                  onClick={() => handleEmployerResponse(notification.application_id, 1)} // 1 for Accept
+                  onClick={() =>
+                    handleEmployerResponse(notification.application_id, 1)
+                  } // 1 for Accept
                 >
                   Accept
                 </button>
                 <button
                   className="btn btn-danger"
-                  onClick={() => handleEmployerResponse(notification.application_id, 2)} // 2 for Reject
+                  onClick={() =>
+                    handleEmployerResponse(notification.application_id, 2)
+                  } // 2 for Reject
                 >
                   Reject
+                </button>
+                <button
+                  className="btn btn-info"
+                  onClick={() => viewProfile(notification.jobSeekerDetails)}
+                >
+                  View Profile
                 </button>
               </div>
             </li>
           ))}
         </ul>
       )}
+      {/* Modal for viewing job seeker profile */}
+      {showProfileModal && selectedJobSeeker && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-btn" onClick={closeModal}>
+              X
+            </button>
+            <h3>
+              {selectedJobSeeker.first_name} {selectedJobSeeker.last_name}
+              {"'s Profile"}
+            </h3>
+
+            <p>
+              <strong>Date of Birth:</strong> {selectedJobSeeker.dob}
+            </p>
+            <p>
+              <strong>Gender:</strong> {selectedJobSeeker.gender}
+            </p>
+            <p>
+              <strong>Nationality:</strong> {selectedJobSeeker.nationality}
+            </p>
+            <p>
+              <strong>Skills:</strong> {selectedJobSeeker.skills?.join(", ")}
+            </p>
+            <div>
+              {selectedJobSeeker.education?.map((edu, index) => (
+                <div key={index}>
+                  {edu.education && (
+                    <p>
+                      <strong>Education:</strong> {edu.education}
+                    </p>
+                  )}
+                  {edu.degreeDetails && (
+                    <p>
+                      <strong>Degree Details:</strong> {edu.degreeDetails}
+                    </p>
+                  )}
+                  {edu.institution && (
+                    <p>
+                      <strong>Institution:</strong> {edu.institution}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default NotificationsComponent;
+
+{
+  /* <strong>Education:</strong>
+{profile.education.map((education, index) => (
+  <p key={index}>{education}</p>
+                            ))} */
+}
