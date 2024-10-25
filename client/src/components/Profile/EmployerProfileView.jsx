@@ -1,5 +1,4 @@
-// import React, { useEffect } from "react";
-// import './EmployerProfileView.css';
+import "./EmployerProfileView.scss";
 
 function EmployerProfileView({ profileData }) {
   if (!profileData) {
@@ -8,16 +7,6 @@ function EmployerProfileView({ profileData }) {
 
   return (
     <div>
-      {/* <div
-        id="particles-js"
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-        }}
-      ></div> */}
-
       <div className="profile-view">
         <h1>{profileData.company_name} Employer Profile</h1>
         <div className="profile-details">

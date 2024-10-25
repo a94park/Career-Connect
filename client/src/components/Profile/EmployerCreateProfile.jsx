@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./EmployerCreateProfile.css"; // Similar to JobSeekerProfileCreate.css
 import EmployerProfileView from "./EmployerProfileView";
+import "./EmployerCreateProfile.scss";
 
 function EmployerProfileCreate({ setProfileData, onProfileUpdate }) {
   const [companyName, setCompanyName] = useState("");

@@ -60,9 +60,15 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
     }
   }, [token, setProfileData]);
 
-  const handleProfileUpdate = (updatedProfile) => {
-    setProfileData(updatedProfile);
-    setFullName(`${updatedProfile.first_name} ${updatedProfile.last_name}`);
+// <<<<<<< employCanSeeRequestedJobseekerProfile
+//   const handleProfileUpdate = (updatedProfile) => {
+//     setProfileData(updatedProfile);
+//     setFullName(`${updatedProfile.first_name} ${updatedProfile.last_name}`);
+// =======
+  // Handle the profile update
+  const handleProfileUpdate = async (updatedProfile) => {
+    setProfileData(updatedProfile); // Update the profile data in state
+// >>>>>>> main
   };
 
   const [activeTab, setActiveTab] = useState("profile");
