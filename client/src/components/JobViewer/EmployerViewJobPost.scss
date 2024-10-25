@@ -10,7 +10,7 @@
   box-shadow: $box-shadow;
 
   h1 {
-    color: $text-color;
+    color: $primary-color;
     text-align: center;
     margin-bottom: 20px;
     font-family: $font-family;
@@ -37,7 +37,7 @@
 
       .job-description {
         font-size: 1rem;
-        color: black;
+        color: $primary-color;
         margin-bottom: 10px;
       }
 
