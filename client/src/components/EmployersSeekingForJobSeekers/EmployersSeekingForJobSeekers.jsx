@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import "./SearchForEmployers.css"
-function SearchForEmployers() {
+import "./EmployersSeekingForJobSeekers.scss"; // Assume SCSS is used for styling.
+import placeholderImage from '../../assets/placeholder.jpeg'
+
+
+function EmployersSeekingForJobSeekers() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0); // Track current card
 
-  // Retrieve token from local storage
   const getTokenFromLocalStorage = () => localStorage.getItem("token");
 
-  // Fetch job seekers from API
   const fetchJobSeekers = async () => {
     setLoading(true);
     setError(null);
@@ -53,6 +54,33 @@ function SearchForEmployers() {
     if (currentIndex < results.length - 1) setCurrentIndex(currentIndex + 1);
   };
 
+  // Helper function to format education data
+  const formatEducation = (educationArray) => {
+    const formattedEducation = educationArray
+      .map((edu) => {
+        if (edu.education === "High School Diploma") {
+          return `Has High School Diploma`;
+        } else if (edu.education && edu.degreeDetails && edu.institution) {
+          return `Received a ${edu.education} in ${edu.degreeDetails} at ${edu.institution}`;
+        } else if (edu.education && !edu.degreeDetails && !edu.institution) {
+          return `Received a ${edu.education}`;
+        } else {
+          return null; // Skip entries that don't have meaningful data
+        }
+      })
+      .filter((entry) => entry !== null); // Remove null entries
+
+    // Join the entries, using commas and adding "and" before the final entry
+    if (formattedEducation.length > 1) {
+      return (
+        formattedEducation.slice(0, -1).join(", ") +
+        `, and ${formattedEducation[formattedEducation.length - 1]}`
+      );
+    } else {
+      return formattedEducation[0] || "";
+    }
+  };
+
   return (
     <div className="search-container">
       <h1>Job Seekers</h1>
@@ -63,7 +91,7 @@ function SearchForEmployers() {
       {results.length > 0 && (
         <div className="result-card">
           <img
-            src={results[currentIndex].profile_pic || "/default-profile.png"}
+            src={results[currentIndex].profile_pic ? results[currentIndex].profile_pic : placeholderImage}
             alt={`${results[currentIndex].first_name} ${results[currentIndex].last_name}`}
             className="profile-pic"
           />
@@ -83,8 +111,8 @@ function SearchForEmployers() {
             <strong>Skills:</strong> {results[currentIndex].skills.join(", ")}
           </p>
           <p>
-            <strong>Education:</strong> {JSON.stringify(results[currentIndex].education)}
-            </p>
+            <strong>Education:</strong> {formatEducation(results[currentIndex].education)}
+          </p>
 
           <div className="button-group">
             <button onClick={handlePrevious} className="previous-button">
@@ -100,4 +128,4 @@ function SearchForEmployers() {
   );
 }
 
-export default SearchForEmployers;
+export default EmployersSeekingForJobSeekers;

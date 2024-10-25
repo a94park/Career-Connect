@@ -5,7 +5,9 @@ import SearchAndFilterSystem from "../SearchForJobSeekers/SearchAndFilterSystem"
 import SeekerActivity from "../SeekerActivity/SeekerActivity";
 import UpdateJobSeekerProfile from "../UpdateAndDelete/UpdateJobSeekerProfile";
 import DeleteJobSeekerProfile from "../UpdateAndDelete/DeleteJobSeekerProfile";
-import "./JobSeekerDashboard.scss";
+import JobSeekerNotifications from "../JobSeekerNotification/JobSeekerNotification";
+import './JobSeekerDashboard.scss'
+
 
 function JobSeekerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -67,6 +69,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
 
     switch (activeTab) {
       case "profile":
+
         return hasProfileData ? (
           <CreateProfileView profileData={profileData} />
         ) : (
@@ -79,6 +82,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         return <SearchAndFilterSystem />;
       case "activity":
         return <SeekerActivity />;
+
       case "security":
         return (
           <div>
@@ -88,9 +92,9 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
           </div>
         );
       case "notifications":
-        return <div>Notifications</div>;
-      case "help":
-        return <div>Help Content</div>;
+        return <div>Notifications
+              <JobSeekerNotifications/>
+              </div>;
       default:
         return "profile";
     }
@@ -114,10 +118,6 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
           </li>
           <li onClick={() => setActiveTab("notifications")} className={activeTab === "notifications" ? "active" : ""}>
             Notifications
-          </li>
-          <li onClick={() => setActiveTab("help")} className={activeTab === "help" ? "active" : ""}>
-            Help
-          </li>
         </ul>
       </aside>
       <main className="content-area">
