@@ -7,7 +7,8 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: $box-shadow;
-
+  overflow-y: scroll;
+  height: 750px;
   h2 {
     color: $text-color;
     text-align: center;
@@ -17,6 +18,10 @@
   ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
   }
 
   li {
@@ -26,6 +31,7 @@
     border: 1px solid $border-color;
     border-radius: 8px;
     box-shadow: $box-shadow;
+    width: 370px;
 
     .job-posting-title {
       font-weight: bold;
@@ -39,7 +45,7 @@
     }
 
     .job-description {
-      color: $text-color;
+      color: $primary-color;
       margin-bottom: 10px;
     }
 
@@ -51,10 +57,10 @@
 
   // Responsive design
   @media (max-width: 768px) {
-    padding: 10px;
+    padding: 0px;
 
     li {
-      padding: 10px;
+      padding: 0px;
     }
   }
 }

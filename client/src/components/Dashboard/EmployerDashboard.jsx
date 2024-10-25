@@ -87,7 +87,7 @@ function EmployerDashboard({ profileData, setProfileData }) {
       case "notification":
         return (
           <div>
-            notification <NotificationsComponent />
+            <NotificationsComponent />
           </div>
         );
       case "my-job-posts":
@@ -143,17 +143,14 @@ function EmployerDashboard({ profileData, setProfileData }) {
             My Job Posts
           </li>
         </ul>
-      </aside>
-      <main className="content-area">
         <div className="welcome-message">
-          <h1>Welcome, {fullName}!</h1>
           <p>
-            You are logged in as{" "}
+            Welcome, {fullName}! You are logged in as{" "}
             {userType === "job_seeker" ? "a Job Seeker" : "an Employer"}.
           </p>
         </div>
-        {renderContent()}
-      </main>
+      </aside>
+      <main className="content-area">{renderContent()}</main>
     </div>
   );
 }
