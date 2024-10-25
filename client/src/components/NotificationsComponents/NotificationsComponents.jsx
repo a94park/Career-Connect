@@ -22,13 +22,10 @@ function NotificationsComponent() {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
       }
-
       const data = await response.json();
-
       const pendingNotifications = data.filter(
         (notification) => notification.employer_status === null
       );
