@@ -1,3 +1,5 @@
+import "./DeleteEmployerProfile.scss";
+
 function DeleteEmployerProfile(){
     const SubmitDelete = async () => {
         const token = localStorage.getItem("token")
@@ -24,11 +26,11 @@ function DeleteEmployerProfile(){
     }
     
     return(
-        <>
-        <div style={{ marginTop: "10rem"}}>
-            <button onClick={SubmitDelete}>Delete Employer Profile</button>
+        <div className="delete-profile-container">
+            <button className="delete-profile-button" onClick={SubmitDelete}>
+                Delete Employer Profile
+            </button>
         </div>
-        </>
     )
 }
 

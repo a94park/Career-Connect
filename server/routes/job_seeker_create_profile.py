@@ -117,18 +117,22 @@ def update_job_seeker_profile():
 
     user_id = get_jwt_identity()
     job_seeker = JobSeeker.query.filter_by(user_id=user_id).first()
+    
+    
     if not job_seeker:
         return jsonify({"message": "Job seeker not found."}), 404
+    
     data = request.get_json()
+    
+    first_name = data.get("first_name")
+    last_name = data.get("last_name")
+    dob = data.get("dob")
+    gender = data.get("gender")
+    nationality = data.get("nationality")
+    education = data.get("education")
+    skills = data.get("skills")
 
-    # Handle education (ensure it's stored as valid JSON)
-    education = data.get('education')
-    if isinstance(education, list):
-        education = json.dumps(education)  # Convert list to JSON string
-    # Handle skills (ensure it's stored as valid JSON)
-    skills = data.get('skills')
-    if isinstance(skills, list):
-        skills = json.dumps(skills)  # Convert list to JSON string
+
     profile_pic = data.get('profile_pic')
     # Handle profile picture (if provided)
     profile_pic_path = None
@@ -143,11 +147,14 @@ def update_job_seeker_profile():
     elif profile_pic:
         profile_pic_path = profile_pic
 
-    job_seeker.first_name = data.get("first_name", job_seeker.first_name)
-    job_seeker.last_name = data.get("last_name", job_seeker.last_name)
-    job_seeker.dob = data.get("dob", job_seeker.dob)
-    job_seeker.gender = data.get("gender", job_seeker.gender)
-    job_seeker.nationality = data.get("nationality", job_seeker.nationality)
+    job_seeker.first_name = first_name if first_name else job_seeker.first_name
+    job_seeker.last_name = last_name if last_name else job_seeker.last_name
+    job_seeker.dob = dob if dob else job_seeker.dob
+    job_seeker.gender = gender if gender else job_seeker.gender
+    job_seeker.nationality = nationality if nationality else job_seeker.nationality
+    job_seeker.education = json.dumps(education) if education else job_seeker.education
+    job_seeker.skills = json.dumps(skills) if skills else job_seeker.skills
+    job_seeker.profile_pic = profile_pic_path
 
     db.session.commit()
     return jsonify({"message": "Profile updated successfully."}), 200

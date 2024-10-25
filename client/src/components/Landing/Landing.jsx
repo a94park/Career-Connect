@@ -9,7 +9,7 @@ import "./Landing.scss"
 
 function Landing() {
   const reviewsWrapperRef = useRef(null);
-
+  const navigate = useNavigate()
   const scrollLeft = () => {
     const cardWidth = reviewsWrapperRef.current.children[0].offsetWidth;
     const scrollDistance = cardWidth * 3;
@@ -43,7 +43,7 @@ function Landing() {
           Career Connect
         </h1>
         <p>Connect with your future.</p>
-        <a className="btn btn-danger" href="#">
+        <a className="btn btn-danger" href="#" onClick={() => navigate("/register")}>
           Start Now
         </a>
       </div>
