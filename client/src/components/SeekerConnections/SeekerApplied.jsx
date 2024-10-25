@@ -17,6 +17,10 @@ function SeekerApplied() {
     if (response.ok) {
       const data = await response.json();
       setApplications(data);
+    } else if (response.status === 404) {
+      // Handle no applications case
+      console.log("No applications found");
+      setApplications([]); // Clear applications or handle an empty state
     } else {
       alert("Failed to fetch applications");
     }

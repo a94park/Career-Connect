@@ -47,6 +47,9 @@ def get_applications():
         .filter(Application.job_seeker_id == job_seeker.job_seeker_id)
         .all()
     )
+     # Check if no applications were found
+    if not applications:
+        return jsonify({"message": "No applications found"}), 404
 
   # Prepare the data to be returned
     result = []
