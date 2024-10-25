@@ -3,13 +3,12 @@ import { useState, useEffect } from "react";
 import JobPosting from "../JobPosting/JobPosting";
 import EmployerCreateProfile from "../Profile/EmployerCreateProfile";
 import EmployerProfileView from "../Profile/EmployerProfileView";
-import SearchForEmployers from "../SearchForEmployers/SearchForEmployers";
+import EmployersSeekingForJobSeekers from "../EmployersSeekingForJobSeekers/EmployersSeekingForJobSeekers";
 import DeleteEmployerProfile from "../UpdateAndDelete/DeleteEmployerProfile";
 import UpdateEmployerProfile from "../UpdateAndDelete/UpdateEmployerProfile";
-import './JobSeekerDashboard.scss';
 import NotificationsComponent from "../NotificationsComponents/NotificationsComponents";
 import EmployerViewJobPost from "../JobViewer/EmployerViewJobPost";
-
+import './EmployerDashboard.scss';
 
 function EmployerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(!profileData);
@@ -67,13 +66,13 @@ function EmployerDashboard({ profileData, setProfileData }) {
           <EmployerCreateProfile setProfileData={setProfileData} onProfileUpdate={handleProfileUpdate} />
         );
       case "search":
-        return <SearchForEmployers />;
+        return <EmployersSeekingForJobSeekers />;
       case "create job post":
 
 
         return (
           <div>
-            Create a job post <JobPosting></JobPosting>
+            <JobPosting></JobPosting>
           </div>
         );
       case "security":
@@ -109,7 +108,7 @@ function EmployerDashboard({ profileData, setProfileData }) {
             Profile
           </li>
           <li onClick={() => setActiveTab("search")} className={activeTab === "search" ? "active" : ""}>
-            Search
+            Search Job Seekers
           </li>
           <li onClick={() => setActiveTab("create job post")} className={activeTab === "create job post" ? "active" : ""}>
             Create Job Post
