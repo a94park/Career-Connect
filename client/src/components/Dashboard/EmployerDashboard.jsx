@@ -91,7 +91,6 @@ function EmployerDashboard({ profileData, setProfileData }) {
       case "my-job-posts":
         return (
           <div>
-            My Job Posts
             <EmployerViewJobPost />
           </div>
         );

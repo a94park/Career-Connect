@@ -17,18 +17,13 @@ function NotificationsComponent() {
           "Content-Type": "application/json",
         },
       });
-
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
       }
-
       const data = await response.json();
-
       const pendingNotifications = data.filter(
         (notification) => notification.employer_status === null
       )
-
-
       setNotifications(pendingNotifications);
     } catch (error) {
       console.error("Error fetching notifications:", error);
