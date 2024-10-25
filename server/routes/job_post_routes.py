@@ -19,7 +19,7 @@ def create_job_posting():
         print(f"Employer fetched: {employer}")
 
         if not employer:
-            return jsonify({'message': 'Employer not found for this user'}), 404
+            return jsonify({'message': 'Employer Profile Not Detected. Please write a profile first.'}), 404
 
         # Extract data from request
         data = request.get_json()
