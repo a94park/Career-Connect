@@ -1,9 +1,10 @@
 @import '../../assets/styles/util/variables.scss';
 
 .search-container {
-  width: 80%;
+  width: 50%;
   margin: auto;
   text-align: center;
+  box-shadow: $box-shadow;
 }
 
 .result-card {
@@ -32,13 +33,12 @@
 }
 
 .previous-button {
-  background-color: #3498db;
+  background-color: $input-bg;
   color: white;
 }
 
 .next-button {
-  background-color: #2ecc71;
-  color: white;
+  background-color: $secondary-color;
 }
 
 .error {
