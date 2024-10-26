@@ -75,3 +75,33 @@ def get_job_posting(job_posting_id):
     if job_posting:
         return jsonify(job_posting.to_json()), 200
     return jsonify({"message": "Job posting not found"}), 404
+
+
+
+# Route to delete the job posts used inside the DeleteJobPost.jsx
+@app.route('/api/job_posting/<int:job_posting_id>', methods=['DELETE'])
+@jwt_required()
+def delete_job_posting(job_posting_id):
+    try:
+        # Extract user_id from JWT
+        user_id = get_jwt_identity()
+
+        # Find the employer based on the user_id
+        employer = Employer.query.filter_by(user_id=user_id).first()
+        if not employer:
+            return jsonify({'message': 'Employer not found'}), 404
+
+        # Find the job posting with the specified job_posting_id and verify it belongs to this employer
+        job_posting = JobPosting.query.filter_by(job_posting_id=job_posting_id, employer_id=employer.employer_id).first()
+        if not job_posting:
+            return jsonify({'message': 'Job posting not found or does not belong to this employer'}), 404
+
+        # Delete the job posting
+        db.session.delete(job_posting)
+        db.session.commit()
+
+        return jsonify({'message': 'Job post deleted successfully'}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': f'Error occurred: {str(e)}'}), 500
