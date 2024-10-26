@@ -19,48 +19,63 @@
   .job-list {
     list-style: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));  // Increase min-width for larger cards
+    gap: 20px;
+  }
 
-    .job-list-item {
-      background-color: $form-bg-color;
-      border: 1px solid $input-border-color;
-      border-radius: 6px;
-      padding: 15px;
-      margin-bottom: 15px;
-      box-shadow: $box-shadow;
+  .job-list-item {
+    background-color: $form-bg-color;
+    border: 1px solid $input-border-color;
+    border-radius: 8px;
+    padding: 20px;
+    height: 400px;  // Increased height for more content space
+    box-shadow: $box-shadow;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-      .job-title {
-        color: $primary-color;
-        font-size: 1.4rem;
-        font-weight: bold;
-        margin-bottom: 8px;
-      }
+    .job-title {
+      color: $primary-color;
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-bottom:8px;
+    }
 
-      .job-description {
-        font-size: 1rem;
-        color: $primary-color;
-        margin-bottom: 10px;
-      }
+    .job-description {
+      font-size: 1rem;
+      color: $primary-color;
+      margin-bottom: 10px;
+      height: 150px;  // Height constraint for scrolling
+      overflow-y: auto;  // Enable vertical scrolling if needed
+      padding-right: 10px;
+    }
 
-      .job-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
+    .job-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
 
-        p {
-          margin: 0;
-          font-size: 0.9rem;
-          color:black;
-          strong {
-            color: $secondary-color;
-          }
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: black;
+
+        strong {
+          color: $secondary-color;
         }
       }
+    }
 
-      .job-posted {
-        font-size: 0.8rem;
-        color: $text-hover-color;
-        margin-top: 10px;
-      }
+    .job-posted {
+      font-size: 0.9rem;
+      color: $text-hover-color;
+      margin-top: auto;
     }
   }
 

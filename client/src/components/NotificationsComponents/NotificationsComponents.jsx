@@ -5,7 +5,8 @@ function NotificationsComponent() {
   const [notifications, setNotifications] = useState([]);
   const [detailedNotifications, setDetailedNotifications] = useState([]);
   const [showProfileModal, setShowProfileModal] = useState(false);
-  const [selectedJobSeeker, setSelectedJobSeeker] = useState(null); // Store job seeker data for the modal
+  const [selectedJobSeeker, setSelectedJobSeeker] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state added
 
   const getTokenFromLocalStorage = () => localStorage.getItem("token");
 
@@ -29,10 +30,11 @@ function NotificationsComponent() {
       const pendingNotifications = data.filter(
         (notification) => notification.employer_status === null
       );
-
       setNotifications(pendingNotifications);
     } catch (error) {
       console.error("Error fetching notifications:", error);
+    } finally {
+      setLoading(false); // Turn off loading after fetch is complete
     }
   };
 
@@ -107,7 +109,6 @@ function NotificationsComponent() {
           (notification) => notification.application_id !== applicationId
         )
       );
-      // Refetch notifications after updating the status
     } catch (error) {
       alert(`Error: ${error.message}`);
     }
@@ -142,13 +143,11 @@ function NotificationsComponent() {
     }
   }, [notifications]);
 
-  // Open the modal and set selected job seeker data
   const viewProfile = (jobSeekerDetails) => {
     setSelectedJobSeeker(jobSeekerDetails);
     setShowProfileModal(true);
   };
 
-  // Close the modal
   const closeModal = () => {
     setShowProfileModal(false);
     setSelectedJobSeeker(null);
@@ -156,46 +155,37 @@ function NotificationsComponent() {
 
   return (
     <div className="notifications-container">
-      <h2>Notifications</h2>
-      {detailedNotifications.length === 0 ? (
-        <p>No notifications to display</p>
+      <h1>Notifications</h1>
+      {loading ? (
+        <h2>Loading Notifications...</h2>
+      ) : detailedNotifications.length === 0 ? (
+        <h2>There are no notifications.</h2>
       ) : (
         <ul className="list-group">
           {detailedNotifications.map((notification) => (
             <li key={notification.notification_id} className="list-group-item">
               <p className="job-posting-title">
-                <strong>Job Posting:</strong>{" "}
-                {notification.jobPostingDetails?.title}
+                <strong>Job Posting:</strong> {notification.jobPostingDetails?.title}
               </p>
               <p className="job-description">
-                <strong>Description:</strong>{" "}
-                {notification.jobPostingDetails?.description}
+                <strong>Description:</strong> {notification.jobPostingDetails?.description}
               </p>
               <p className="job-seeker-name">
-                <strong>Job Seeker:</strong>{" "}
-                {notification.jobSeekerDetails?.first_name}{" "}
-                {notification.jobSeekerDetails?.last_name}
+                <strong>Job Seeker:</strong> {notification.jobSeekerDetails?.first_name} {notification.jobSeekerDetails?.last_name}
               </p>
               <p className="skills-list">
-                <strong>Skills:</strong>{" "}
-                {notification.jobSeekerDetails?.skills?.join(", ")}
+                <strong>Skills:</strong> {notification.jobSeekerDetails?.skills?.join(", ")}
               </p>
-
-              {/* Accept and Reject buttons */}
               <div className="button-group">
                 <button
                   className="btn btn-success me-2"
-                  onClick={() =>
-                    handleEmployerResponse(notification.application_id, 1)
-                  } // 1 for Accept
+                  onClick={() => handleEmployerResponse(notification.application_id, 1)}
                 >
                   Accept
                 </button>
                 <button
                   className="btn btn-danger"
-                  onClick={() =>
-                    handleEmployerResponse(notification.application_id, 2)
-                  } // 2 for Reject
+                  onClick={() => handleEmployerResponse(notification.application_id, 2)}
                 >
                   Reject
                 </button>
@@ -210,48 +200,23 @@ function NotificationsComponent() {
           ))}
         </ul>
       )}
-      {/* Modal for viewing job seeker profile */}
       {showProfileModal && selectedJobSeeker && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="close-btn" onClick={closeModal}>
-              X
-            </button>
+            <button className="close-btn" onClick={closeModal}>X</button>
             <h3>
-              {selectedJobSeeker.first_name} {selectedJobSeeker.last_name}
-              {"'s Profile"}
+              {selectedJobSeeker.first_name} {selectedJobSeeker.last_name}'s Profile
             </h3>
-
-            <p>
-              <strong>Date of Birth:</strong> {selectedJobSeeker.dob}
-            </p>
-            <p>
-              <strong>Gender:</strong> {selectedJobSeeker.gender}
-            </p>
-            <p>
-              <strong>Nationality:</strong> {selectedJobSeeker.nationality}
-            </p>
-            <p>
-              <strong>Skills:</strong> {selectedJobSeeker.skills?.join(", ")}
-            </p>
+            <p><strong>Date of Birth:</strong> {selectedJobSeeker.dob}</p>
+            <p><strong>Gender:</strong> {selectedJobSeeker.gender}</p>
+            <p><strong>Nationality:</strong> {selectedJobSeeker.nationality}</p>
+            <p><strong>Skills:</strong> {selectedJobSeeker.skills?.join(", ")}</p>
             <div>
               {selectedJobSeeker.education?.map((edu, index) => (
                 <div key={index}>
-                  {edu.education && (
-                    <p>
-                      <strong>Education:</strong> {edu.education}
-                    </p>
-                  )}
-                  {edu.degreeDetails && (
-                    <p>
-                      <strong>Degree Details:</strong> {edu.degreeDetails}
-                    </p>
-                  )}
-                  {edu.institution && (
-                    <p>
-                      <strong>Institution:</strong> {edu.institution}
-                    </p>
-                  )}
+                  {edu.education && <p><strong>Education:</strong> {edu.education}</p>}
+                  {edu.degreeDetails && <p><strong>Degree Details:</strong> {edu.degreeDetails}</p>}
+                  {edu.institution && <p><strong>Institution:</strong> {edu.institution}</p>}
                 </div>
               ))}
             </div>
@@ -263,10 +228,3 @@ function NotificationsComponent() {
 }
 
 export default NotificationsComponent;
-
-{
-  /* <strong>Education:</strong>
-{profile.education.map((education, index) => (
-  <p key={index}>{education}</p>
-                            ))} */
-}

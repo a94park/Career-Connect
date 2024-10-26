@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./EmployerViewJobPost.scss";
+import DeleteJobPost from "../UpdateAndDelete/DeleteJobPost"; // Import the DeleteJobPost component
 
 const EmployerViewJobPost = () => {
   const [jobs, setJobs] = useState([]);
@@ -38,6 +39,11 @@ const EmployerViewJobPost = () => {
     fetchEmployerJobs();
   }, [token]);
 
+  const handleDeleteSuccess = (deletedJobId) => {
+    // Update the jobs state to remove the deleted job
+    setJobs(jobs.filter(job => job.job_posting_id !== deletedJobId));
+  };
+
   if (error) {
     return <div className="error-message">{error}</div>;
   }
@@ -59,6 +65,8 @@ const EmployerViewJobPost = () => {
               <p className="job-posted">
                 <strong>Posted on:</strong> {new Date(job.created_at).toLocaleDateString()}
               </p>
+              {/* DeleteJobPost component with success handler */}
+              <DeleteJobPost jobId={job.job_posting_id} onDeleteSuccess={handleDeleteSuccess} />
             </li>
           ))}
         </ul>
