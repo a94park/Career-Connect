@@ -156,9 +156,9 @@ function NotificationsComponent() {
 
   return (
     <div className="notifications-container">
-      <h2>Notifications</h2>
+      <h1>Notifications</h1>
       {detailedNotifications.length === 0 ? (
-        <p>No notifications to display</p>
+        <h2>Loading Notifications....</h2>
       ) : (
         <ul className="list-group">
           {detailedNotifications.map((notification) => (

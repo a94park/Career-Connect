@@ -9,8 +9,14 @@
   box-shadow: $box-shadow;
   overflow-y: scroll;
   height: 750px;
+
+  h1{
+    text-align:center;
+  }
+
   h2 {
     color: $text-color;
+    padding-top:4rem;
     text-align: center;
     margin-bottom: 20px;
   }
