@@ -5,43 +5,77 @@
   margin: auto;
   text-align: center;
   box-shadow: $box-shadow;
-}
 
-.result-card {
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 20px 0;
-  background-color: #f9f9f9;
-}
-
-.profile-pic {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-.button-group {
-  button {
-    margin: 5px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  h1 {
+    color: $primary-color;
+    padding-top: 24px;
   }
-}
 
-.previous-button {
-  background-color: $input-bg;
-  color: white;
-}
+  .error {
+    color: $border-color;
+    font-weight: bold;
+    margin-top: 15px;
+  }
 
-.next-button {
-  background-color: $secondary-color;
-}
+  .result-card {
+    border: 1px solid $primary-color;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    background-color: $form-bg-color;
+    box-shadow: $box-shadow;
 
-.error {
-  color: red;
-  font-weight: bold;
+    .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: $primary-color;
+      margin-top: 15px;
+    }
+
+    p {
+      margin: 5px 0;
+      font-size: 14px;
+
+      strong {
+        font-weight: bold;
+        color: $secondary-color;
+      }
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        color: $text-color;
+        transition: background-color 0.3s ease;
+
+        &.previous-button {
+          background-color: $input-bg;
+
+          &:hover {
+            background-color: darken($input-bg, 10%);
+          }
+        }
+
+        &.next-button {
+          background-color: $secondary-color;
+
+          &:hover {
+            background-color: darken($secondary-color, 10%);
+          }
+        }
+      }
+    }
+  }
 }
