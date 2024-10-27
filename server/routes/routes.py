@@ -361,3 +361,25 @@ def get_notifications_with_details():
         for n in notifications
     ]
     return jsonify(result), 200
+
+
+@app.route('/api/employer/notifications/<int:application_id>', methods=['DELETE'])
+@jwt_required()
+def delete_notification(application_id):
+    try:
+        # Find the notification with the given application_id
+        notification = Notification.query.filter_by(application_id=application_id).first()
+
+        if not notification:
+            return jsonify({"message": "Notification not found"}), 404
+
+        # Delete the notification
+        db.session.delete(notification)
+        db.session.commit()
+
+        return jsonify({"message": "Notification deleted successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error: {e}")
+        return jsonify({"message": "An error occurred while deleting the notification"}), 500
