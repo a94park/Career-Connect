@@ -1,4 +1,3 @@
-// import "./Dashboard.css";
 import { useState, useEffect } from "react";
 import JobPosting from "../JobPosting/JobPosting";
 import EmployerCreateProfile from "../Profile/EmployerCreateProfile";
@@ -10,7 +9,6 @@ import NotificationsComponent from "../NotificationsComponents/NotificationsComp
 import EmployerViewJobPost from "../JobViewer/EmployerViewJobPost";
 
 import "./EmployerDashboard.scss";
-
 
 function EmployerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(!profileData);

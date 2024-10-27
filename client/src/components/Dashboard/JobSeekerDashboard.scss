@@ -8,7 +8,10 @@
   height: 90vh;
 
   .welcome-message {
-    font-size: xx-large;
+    font-size: 20px;
+    padding-top: 100px;
+    color: $text-hover-color;
+    font-family: "merriweather", serif;
   }
 
   .sidebar {
