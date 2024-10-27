@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserToken from "../Token/UserToken.jsx";
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Import eye icons
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import "../RegisterAndLogin/Login.scss";
 
 function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
@@ -45,7 +45,7 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
           // Save the token and user information
           setToken(accessToken);
           setIsLoggedIn(true);
-          setUserType();
+          setUserType(userType);
           setFullName(fullName);
 
           // Save user data to local storage
@@ -54,11 +54,14 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
           localStorage.setItem("fullName", fullName);
 
           // Fetch profile data
-          const profileResponse = await fetch("http://localhost:5000/dashboard", {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
+          const profileResponse = await fetch(
+            "http://localhost:5000/dashboard",
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
 
           if (profileResponse.ok) {
             const profileData = await profileResponse.json();
@@ -69,12 +72,19 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
               setProfileData(profileData.employer_profile || {});
             }
           } else {
-            console.error("Failed to fetch profile data:", profileResponse.status);
+            console.error(
+              "Failed to fetch profile data:",
+              profileResponse.status
+            );
             setLoginError("Failed to retrieve profile data.");
           }
 
           // Navigate to the appropriate dashboard
-          navigate(userType === "job_seeker" ? "/job-seeker-dashboard" : "/employer-dashboard");
+          navigate(
+            userType === "job_seeker"
+              ? "/job-seeker-dashboard"
+              : "/employer-dashboard"
+          );
         } else {
           setLoginError("Failed to retrieve access token.");
         }
@@ -102,7 +112,7 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
-              maxLength={30}  // Limit the username input to 30 characters
+              maxLength={30} // Limit the username input to 30 characters
               required
             />
           </div>
@@ -115,16 +125,23 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              maxLength={30}  // Limit the username input to 30 characters
+              maxLength={30} // Limit the username input to 30 characters
               required
             />
-            <span className="toggle-password" onClick={togglePasswordVisibility}>
+            <span
+              className="toggle-password"
+              onClick={togglePasswordVisibility}
+            >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-            {loading ? 'Loading...' : 'Login'}
+          <button
+            type="submit"
+            className="btn btn-primary w-100"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
         {loginError && <p className="text-danger">{loginError}</p>}

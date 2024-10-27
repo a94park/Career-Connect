@@ -4,8 +4,6 @@ import CreateProfileView from "../Profile/CreateProfileView";
 import SearchAndFilterSystem from "../SearchForJobSeekers/SearchAndFilterSystem";
 import UpdateJobSeekerProfile from "../UpdateAndDelete/UpdateJobSeekerProfile";
 import DeleteJobSeekerProfile from "../UpdateAndDelete/DeleteJobSeekerProfile";
-// import SeekerActivity from "../SeekerActivity/SeekerActivity";
-// import JobSeekerNotifications from "../JobSeekerNotification/JobSeekerNotification";
 import SeekerConnections from "../SeekerConnections/SeekerConnections";
 import "./JobSeekerDashboard.scss";
 
@@ -60,15 +58,15 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
     }
   }, [token, setProfileData]);
 
-// <<<<<<< employCanSeeRequestedJobseekerProfile
-//   const handleProfileUpdate = (updatedProfile) => {
-//     setProfileData(updatedProfile);
-//     setFullName(`${updatedProfile.first_name} ${updatedProfile.last_name}`);
-// =======
+  // <<<<<<< employCanSeeRequestedJobseekerProfile
+  //   const handleProfileUpdate = (updatedProfile) => {
+  //     setProfileData(updatedProfile);
+  //     setFullName(`${updatedProfile.first_name} ${updatedProfile.last_name}`);
+  // =======
   // Handle the profile update
   const handleProfileUpdate = async (updatedProfile) => {
     setProfileData(updatedProfile); // Update the profile data in state
-// >>>>>>> main
+    // >>>>>>> main
   };
 
   const [activeTab, setActiveTab] = useState("profile");
@@ -144,24 +142,22 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
           >
             Security
           </li>
+          <div className="welcome-message">
+            {isLoading ? (
+              <p>Loading user data...</p>
+            ) : (
+              <>
+                <p>Welcome, {fullName}!</p>
+                <p>
+                  You are logged in as{" "}
+                  {userType === "job_seeker" ? "a Job Seeker" : "an Employer"}.
+                </p>
+              </>
+            )}
+          </div>
         </ul>
       </aside>
-      <main className="content-area">
-        <div className="welcome-message">
-          {isLoading ? (
-            <p>Loading user data...</p>
-          ) : (
-            <>
-              <h1>Welcome, {fullName}!</h1>
-              <p>
-                You are logged in as{" "}
-                {userType === "job_seeker" ? "a Job Seeker" : "an Employer"}.
-              </p>
-            </>
-          )}
-        </div>
-        {renderContent()}
-      </main>
+      <main className="content-area">{renderContent()}</main>
     </div>
   );
 }

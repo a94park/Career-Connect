@@ -76,6 +76,8 @@ function App() {
             path="/employer-dashboard"
             element={
               <EmployerDashboard
+                userType={userType}
+                fullName={fullName}
                 profileData={profileData}
                 setProfileData={setProfileData}
               />
