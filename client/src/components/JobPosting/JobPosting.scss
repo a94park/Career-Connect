@@ -1,9 +1,8 @@
-@import '../../assets/styles/util/variables.scss';
-
+@import "../../assets/styles/util/variables.scss";
 
 .job-posting-container {
-  max-width: 600px;
-  margin: 50px auto;
+  max-width: 100vw;
+
   padding: 30px;
   background-color: #f8f9fa; // Light background for the form
   border-radius: 10px;
@@ -46,7 +45,6 @@
     }
 
     .btn {
-
       width: 100%;
       padding: 10px;
       font-size: 18px;
