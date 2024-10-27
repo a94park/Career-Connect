@@ -30,25 +30,51 @@ function NotificationsComponent() {
     }
   };
 
-  const handleEmployerResponse = async (applicationId, status) => {
+  const handleEmployerResponse = async (applicationId, status, notificationId) => {
     const token = getTokenFromLocalStorage();
     try {
+      // Update the employer_status in the application
       const response = await fetch(
-        "http://localhost:5000/api/employer/update_application",
+        `http://localhost:5000/api/employer/update_application`,
         {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ application_id: applicationId, employer_status: status }),
+          body: JSON.stringify({
+            application_id: applicationId,
+            employer_status: status,
+          }),
         }
       );
-      if (!response.ok) throw new Error("Failed to update employer status");
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update employer status");
+      }
+
+      // Delete the corresponding notification
+      const deleteResponse = await fetch(
+        `http://localhost:5000/api/employer/notification/${notificationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!deleteResponse.ok) {
+        const deleteErrorData = await deleteResponse.json();
+        throw new Error(deleteErrorData.message || "Failed to delete notification");
+      }
+
+      // Remove the notification from the displayed list
       setNotifications((prevNotifications) =>
         prevNotifications.filter(
-          (notification) => notification.notification.notification_id !== applicationId
+          (notification) => notification.notification.notification_id !== notificationId
         )
       );
     } catch (error) {
@@ -96,17 +122,32 @@ function NotificationsComponent() {
               <div className="button-group">
                 <button
                   className="btn btn-success me-2"
-                  onClick={() => handleEmployerResponse(notification.application_id, 1)}
+                  onClick={() =>
+                    handleEmployerResponse(
+                      notification.application_id,
+                      1,
+                      notification.notification_id
+                    )
+                  }
                 >
                   Accept
                 </button>
                 <button
                   className="btn btn-danger"
-                  onClick={() => handleEmployerResponse(notification.application_id, 2)}
+                  onClick={() =>
+                    handleEmployerResponse(
+                      notification.application_id,
+                      2,
+                      notification.notification_id
+                    )
+                  }
                 >
                   Reject
                 </button>
-                <button className="btn btn-info" onClick={() => viewProfile(job_seeker)}>
+                <button
+                  className="btn btn-info"
+                  onClick={() => viewProfile(job_seeker)}
+                >
                   View Profile
                 </button>
               </div>
