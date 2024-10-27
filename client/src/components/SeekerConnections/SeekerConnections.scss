@@ -1,10 +1,16 @@
 @import "../../assets/styles/util/variables.scss";
 
+// Base styling for Seeker Connections
 .seeker-connections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   .tab-container {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 
     button {
       position: relative;
@@ -23,18 +29,18 @@
       &.active {
         background-color: lighten($input-bg, 20%);
         color: white;
+        font-weight: bold;
       }
 
       .counter {
         position: absolute;
-        top: 0;
+        top: -5px;
         right: -10px;
         background-color: red;
         color: white;
         font-size: 0.75rem;
         padding: 2px 6px;
         border-radius: 50%;
-        display: inline-block;
         min-width: 20px;
         text-align: center;
       }
@@ -42,9 +48,75 @@
   }
 
   .tab-content {
+    width: 100%;
+
     background-color: #f9f9f9;
-    padding: 20px;
+    padding: 1.5rem;
     border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid $border-color;
   }
+}
+
+// Base styling for notifications, applied, and passed sections
+.jobseeker-notifications,
+.seeker-applied,
+.seeker-passed {
+  border-radius: 10px;
+  height: 73vh;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+
+  .notification-card {
+    background-color: $form-bg-color;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    width: 300px;
+    height: 310px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .card-title {
+      font-family: $font-family;
+      font-weight: bold;
+      color: $secondary-color;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+      color: $primary-color;
+      font-size: 1rem;
+
+      strong {
+        color: $secondary-color;
+      }
+    }
+
+    .card-description-text {
+      height: 100px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+
+    .text-muted {
+      color: $text-color;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// Global text and alignment styles
+.text-light {
+  color: $text-color;
+}
+
+.text-center {
+  text-align: center;
 }

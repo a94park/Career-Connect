@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SeekerApplied from "./SeekerApplied";
-import JobSeekerNotification from "./JobSeekerNotification/JobSeekerNotification";
+import JobSeekerNotification from "./JobSeekerNotification";
 import SeekerPassed from "./SeekerPassed";
 import "./SeekerConnections.scss";
 

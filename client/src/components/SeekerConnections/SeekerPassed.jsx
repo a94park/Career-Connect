@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./SeekerApplied.scss";
 
 function SeekerPassed() {
   const [applications, setApplications] = useState([]);
@@ -30,23 +29,24 @@ function SeekerPassed() {
   const applied = applications.filter((app) => app.job_seeker_status === 2);
 
   return (
-    <div className="applied-container">
-      <div>
-        {applied.length > 0 ? (
-          applied.map((application) => (
-            <div className="job-listing" key={application.application_id}>
-              <p>Job Title: {application.job_title}</p>
-              <p>Company Name: {application.company_name}</p>
+    <div className="seeker-passed">
+      {applied.length > 0 ? (
+        applied.map((application) => (
+          <div
+            className="card notification-card mb-3 shadow"
+            key={application.application_id}
+          >
+            <p>Job Title: {application.job_title}</p>
+            <p>Company Name: {application.company_name}</p>
 
-              {/* <p>
+            {/* <p>
                 Applied on: {new Date(application.created_at).toLocaleString()}
               </p> */}
-            </div>
-          ))
-        ) : (
-          <p className="no-applications">You have not passed on any offers.</p>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <p className="no-applications">You have not passed on any offers.</p>
+      )}
     </div>
   );
 }
