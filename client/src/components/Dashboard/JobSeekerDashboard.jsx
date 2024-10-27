@@ -5,7 +5,7 @@ import SearchAndFilterSystem from "../SearchForJobSeekers/SearchAndFilterSystem"
 import UpdateJobSeekerProfile from "../UpdateAndDelete/UpdateJobSeekerProfile";
 import DeleteJobSeekerProfile from "../UpdateAndDelete/DeleteJobSeekerProfile";
 import SeekerConnections from "../SeekerConnections/SeekerConnections";
-import "./JobSeekerDashboard.scss";
+import "./Dashboard.scss";
 
 function JobSeekerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(true); // Start with loading state
@@ -112,7 +112,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
   };
 
   return (
-    <div className="js-profile-settings-container">
+    <div className="profile-settings-container">
       <aside className="sidebar">
         <ul className="sidebar-menu">
           <li

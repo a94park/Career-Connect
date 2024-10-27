@@ -38,30 +38,28 @@ function JobSeekerNotification() {
       {notifications.length > 0 ? (
         notifications.map((notification, index) => (
           <div key={index} className="card notification-card mb-3 shadow">
-            <div className="card-body">
-              <h5 className="card-title text-primary">
-                {notification.job_posting_title}
-              </h5>
-              <p className="card-description-text">
-                {notification.job_posting_description}
-              </p>
-              {notification.employer_status !== null && (
-                <p className="card-text">
-                  <strong>Status: </strong>
-                  {notification.employer_status === 1 ? "Accepted" : "Rejected"}
-                </p>
-              )}
+            <h5 className="card-title text-primary">
+              {notification.job_posting_title}
+            </h5>
+            <p className="card-description-text">
+              {notification.job_posting_description}
+            </p>
+            {notification.employer_status !== null && (
               <p className="card-text">
-                <small className="text-muted">
-                  Submitted on{" "}
-                  {new Date(notification.created_at).toLocaleDateString()}
-                </small>
+                <strong>Status: </strong>
+                {notification.employer_status === 1 ? "Accepted" : "Rejected"}
               </p>
-              <JobSeekerNotificationDelete
-                applicationId={notification.application_id}
-                onDelete={handleDeleteNotification}
-              />
-            </div>
+            )}
+            <p className="card-text">
+              <small className="text-muted">
+                Submitted on{" "}
+                {new Date(notification.created_at).toLocaleDateString()}
+              </small>
+            </p>
+            <JobSeekerNotificationDelete
+              applicationId={notification.application_id}
+              onDelete={handleDeleteNotification}
+            />
           </div>
         ))
       ) : (

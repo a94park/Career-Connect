@@ -8,7 +8,7 @@ import UpdateEmployerProfile from "../UpdateAndDelete/UpdateEmployerProfile";
 import NotificationsComponent from "../NotificationsComponents/NotificationsComponents";
 import EmployerViewJobPost from "../JobViewer/EmployerViewJobPost";
 
-import "./EmployerDashboard.scss";
+import "./Dashboard.scss";
 
 function EmployerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(!profileData);
