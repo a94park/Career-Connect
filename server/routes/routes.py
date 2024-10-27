@@ -119,18 +119,29 @@ def apply_to_job():
         job_posting = JobPosting.query.get(job_posting_id)
         employer = Employer.query.get(job_posting.employer_id)
 
-        # Create a notification for the employer
-        new_notification = Notification(
+        # Check if a notification for this application already exists
+        existing_notification = Notification.query.filter_by(
             application_id=application.application_id,
             employer_id=employer.employer_id,
             job_posting_id=job_posting.job_posting_id,
             job_seeker_id=job_seeker.job_seeker_id,
             send_notification=True
-        )
-        db.session.add(new_notification)
-        db.session.commit()
+        ).first()
+
+        # Only create a new notification if one does not already exist
+        if not existing_notification:
+            new_notification = Notification(
+                application_id=application.application_id,
+                employer_id=employer.employer_id,
+                job_posting_id=job_posting.job_posting_id,
+                job_seeker_id=job_seeker.job_seeker_id,
+                send_notification=True
+            )
+            db.session.add(new_notification)
+            db.session.commit()
 
     return jsonify({"message": f"Job {action}ed successfully"}), 200
+
 
 
 
