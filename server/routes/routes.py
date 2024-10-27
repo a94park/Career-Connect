@@ -76,7 +76,7 @@ def update_application_status():
     return jsonify({"message": "Status updated successfully"}), 200
 
 
- @app.route('/api/apply', methods=['POST'])
+@app.route('/api/apply', methods=['POST'])
 @jwt_required()
 def apply_to_job():
     data = request.json
