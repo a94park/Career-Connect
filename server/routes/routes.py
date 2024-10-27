@@ -331,3 +331,33 @@ def get_employer_job_postings():
 
     except Exception as e:
         return jsonify({'message': f'Error occurred: {str(e)}'}), 500
+
+
+@app.route('/api/employer/notifications_details', methods=['GET'])
+@jwt_required()
+def get_notifications_with_details():
+    user_id = get_jwt_identity()
+    employer = Employer.query.filter_by(user_id=user_id).first()
+
+    if not employer:
+        return jsonify({"message": "Employer not found"}), 404
+
+    notifications = (
+        db.session.query(Notification, Application, JobPosting, JobSeeker)
+        .join(Application, Notification.application_id == Application.application_id)
+        .join(JobPosting, Notification.job_posting_id == JobPosting.job_posting_id)
+        .join(JobSeeker, Notification.job_seeker_id == JobSeeker.job_seeker_id)
+        .filter(Notification.employer_id == employer.employer_id, Notification.send_notification)
+        .all()
+    )
+
+    result = [
+        {
+            "notification": n.Notification.to_json(),
+            "employer_status": n.Application.employer_status,
+            "job_posting": n.JobPosting.to_json(),
+            "job_seeker": n.JobSeeker.to_json()
+        }
+        for n in notifications
+    ]
+    return jsonify(result), 200

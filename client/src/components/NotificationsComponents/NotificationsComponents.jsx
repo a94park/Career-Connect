@@ -38,6 +38,7 @@ function NotificationsComponent() {
     }
   };
 
+
   const fetchJobPostingDetails = async (jobPostingId) => {
     const token = getTokenFromLocalStorage();
     try {
