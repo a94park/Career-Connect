@@ -1,11 +1,11 @@
 @import "../../assets/styles/util/variables.scss";
 
-.profile-settings-container {
-  margin-top: 3rem;
-  margin-bottom: 5rem;
+.js-profile-settings-container {
+  margin-top: 2.7rem;
+
   display: flex;
-  width: 90vw;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
 
   .welcome-message {
     font-size: 20px;

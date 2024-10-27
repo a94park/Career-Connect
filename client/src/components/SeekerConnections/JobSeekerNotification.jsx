@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
-import "./JobSeekerNotification.scss"; // Import your custom SCSS
 import JobSeekerNotificationDelete from "./JobSeekerNotificationDelete";
 
 function JobSeekerNotification() {
@@ -36,7 +34,7 @@ function JobSeekerNotification() {
   };
 
   return (
-    <div className="container my-5 jobseeker-notifications">
+    <div className="jobseeker-notifications">
       {notifications.length > 0 ? (
         notifications.map((notification, index) => (
           <div key={index} className="card notification-card mb-3 shadow">
@@ -44,7 +42,7 @@ function JobSeekerNotification() {
               <h5 className="card-title text-primary">
                 {notification.job_posting_title}
               </h5>
-              <p className="card-text">
+              <p className="card-description-text">
                 {notification.job_posting_description}
               </p>
               {notification.employer_status !== null && (

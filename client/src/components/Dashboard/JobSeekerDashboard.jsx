@@ -112,7 +112,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
   };
 
   return (
-    <div className="profile-settings-container">
+    <div className="js-profile-settings-container">
       <aside className="sidebar">
         <ul className="sidebar-menu">
           <li
