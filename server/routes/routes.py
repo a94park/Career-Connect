@@ -76,8 +76,7 @@ def update_application_status():
     return jsonify({"message": "Status updated successfully"}), 200
 
 
-
-@app.route('/api/apply', methods=['POST'])
+ @app.route('/api/apply', methods=['POST'])
 @jwt_required()
 def apply_to_job():
     data = request.json
@@ -119,16 +118,26 @@ def apply_to_job():
         job_posting = JobPosting.query.get(job_posting_id)
         employer = Employer.query.get(job_posting.employer_id)
 
-        # Create a notification for the employer
-        new_notification = Notification(
+        # Check if a notification for this application already exists
+        existing_notification = Notification.query.filter_by(
             application_id=application.application_id,
             employer_id=employer.employer_id,
             job_posting_id=job_posting.job_posting_id,
             job_seeker_id=job_seeker.job_seeker_id,
             send_notification=True
-        )
-        db.session.add(new_notification)
-        db.session.commit()
+        ).first()
+
+        # Only create a new notification if one does not already exist
+        if not existing_notification:
+            new_notification = Notification(
+                application_id=application.application_id,
+                employer_id=employer.employer_id,
+                job_posting_id=job_posting.job_posting_id,
+                job_seeker_id=job_seeker.job_seeker_id,
+                send_notification=True
+            )
+            db.session.add(new_notification)
+            db.session.commit()
 
     return jsonify({"message": f"Job {action}ed successfully"}), 200
 
@@ -331,3 +340,52 @@ def get_employer_job_postings():
 
     except Exception as e:
         return jsonify({'message': f'Error occurred: {str(e)}'}), 500
+
+
+@app.route('/api/employer/notifications_details', methods=['GET'])
+@jwt_required()
+def get_notifications_with_details():
+    user_id = get_jwt_identity()
+    employer = Employer.query.filter_by(user_id=user_id).first()
+
+    if not employer:
+        return jsonify({"message": "Employer not found"}), 404
+
+    notifications = (
+        db.session.query(Notification, Application, JobPosting, JobSeeker)
+        .join(Application, Notification.application_id == Application.application_id)
+        .join(JobPosting, Notification.job_posting_id == JobPosting.job_posting_id)
+        .join(JobSeeker, Notification.job_seeker_id == JobSeeker.job_seeker_id)
+        .filter(Notification.employer_id == employer.employer_id, Notification.send_notification)
+        .all()
+    )
+
+    result = [
+        {
+            "notification": n.Notification.to_json(),
+            "employer_status": n.Application.employer_status,
+            "job_posting": n.JobPosting.to_json(),
+            "job_seeker": n.JobSeeker.to_json()
+        }
+        for n in notifications
+    ]
+    return jsonify(result), 200
+
+
+@app.route('/api/employer/notification/<int:notification_id>', methods=['DELETE'])
+@jwt_required()
+def delete_notification(notification_id):
+    try:
+        notification = Notification.query.get(notification_id)
+
+        if not notification:
+            return jsonify({"message": "Notification not found"}), 404
+
+        db.session.delete(notification)
+        db.session.commit()
+
+        return jsonify({"message": "Notification deleted successfully"}), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": f"Error occurred: {str(e)}"}), 500

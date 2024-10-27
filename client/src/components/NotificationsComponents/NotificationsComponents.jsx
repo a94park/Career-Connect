@@ -3,86 +3,37 @@ import "./NotificationsComponents.scss";
 
 function NotificationsComponent() {
   const [notifications, setNotifications] = useState([]);
-  const [detailedNotifications, setDetailedNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [selectedJobSeeker, setSelectedJobSeeker] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state added
 
   const getTokenFromLocalStorage = () => localStorage.getItem("token");
 
-  const fetchNotifications = async () => {
+  const fetchNotificationsWithDetails = async () => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/employer/notifications",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch notifications");
-      }
+      const response = await fetch("http://localhost:5000/api/employer/notifications_details", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("Failed to fetch notifications");
+
       const data = await response.json();
-      const pendingNotifications = data.filter(
-        (notification) => notification.employer_status === null
-      );
-      setNotifications(pendingNotifications);
+      setNotifications(data);
     } catch (error) {
       console.error("Error fetching notifications:", error);
     } finally {
-      setLoading(false); // Turn off loading after fetch is complete
+      setLoading(false);
     }
   };
 
-  const fetchJobPostingDetails = async (jobPostingId) => {
+  const handleEmployerResponse = async (applicationId, status, notificationId) => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch(
-        `http://localhost:5000/api/job_posting/${jobPostingId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        return await response.json();
-      }
-    } catch (error) {
-      console.error("Error fetching job posting details:", error);
-    }
-    return null;
-  };
-
-  const fetchJobSeekerDetails = async (jobSeekerId) => {
-    const token = getTokenFromLocalStorage();
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/job_seekers/${jobSeekerId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        return await response.json();
-      }
-    } catch (error) {
-      console.error("Error fetching job seeker details:", error);
-    }
-    return null;
-  };
-
-  const handleEmployerResponse = async (applicationId, status) => {
-    const token = getTokenFromLocalStorage();
-    try {
+      // Update the employer_status in the application
       const response = await fetch(
         `http://localhost:5000/api/employer/update_application`,
         {
@@ -100,13 +51,30 @@ function NotificationsComponent() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(
-          errorData.message || "Failed to update employer status"
-        );
+        throw new Error(errorData.message || "Failed to update employer status");
       }
-      setDetailedNotifications((prevNotifications) =>
+
+      // Delete the corresponding notification
+      const deleteResponse = await fetch(
+        `http://localhost:5000/api/employer/notification/${notificationId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!deleteResponse.ok) {
+        const deleteErrorData = await deleteResponse.json();
+        throw new Error(deleteErrorData.message || "Failed to delete notification");
+      }
+
+      // Remove the notification from the displayed list
+      setNotifications((prevNotifications) =>
         prevNotifications.filter(
-          (notification) => notification.application_id !== applicationId
+          (notification) => notification.notification.notification_id !== notificationId
         )
       );
     } catch (error) {
@@ -114,34 +82,9 @@ function NotificationsComponent() {
     }
   };
 
-  const loadDetailedNotifications = async () => {
-    const detailedData = await Promise.all(
-      notifications.map(async (notification) => {
-        const jobPostingDetails = await fetchJobPostingDetails(
-          notification.job_posting_id
-        );
-        const jobSeekerDetails = await fetchJobSeekerDetails(
-          notification.job_seeker_id
-        );
-        return {
-          ...notification,
-          jobPostingDetails,
-          jobSeekerDetails,
-        };
-      })
-    );
-    setDetailedNotifications(detailedData);
-  };
-
   useEffect(() => {
-    fetchNotifications();
+    fetchNotificationsWithDetails();
   }, []);
-
-  useEffect(() => {
-    if (notifications.length > 0) {
-      loadDetailedNotifications();
-    }
-  }, [notifications]);
 
   const viewProfile = (jobSeekerDetails) => {
     setSelectedJobSeeker(jobSeekerDetails);
@@ -158,40 +101,52 @@ function NotificationsComponent() {
       <h1>Notifications</h1>
       {loading ? (
         <h2>Loading Notifications...</h2>
-      ) : detailedNotifications.length === 0 ? (
+      ) : notifications.length === 0 ? (
         <h2>There are no notifications.</h2>
       ) : (
         <ul className="list-group">
-          {detailedNotifications.map((notification) => (
+          {notifications.map(({ notification, job_posting, job_seeker }) => (
             <li key={notification.notification_id} className="list-group-item">
               <p className="job-posting-title">
-                <strong>Job Posting:</strong> {notification.jobPostingDetails?.title}
+                <strong>Job Posting:</strong> {job_posting.title}
               </p>
               <p className="job-description">
-                <strong>Description:</strong> {notification.jobPostingDetails?.description}
+                <strong>Description:</strong> {job_posting.description}
               </p>
               <p className="job-seeker-name">
-                <strong>Job Seeker:</strong> {notification.jobSeekerDetails?.first_name} {notification.jobSeekerDetails?.last_name}
+                <strong>Job Seeker:</strong> {job_seeker.first_name} {job_seeker.last_name}
               </p>
               <p className="skills-list">
-                <strong>Skills:</strong> {notification.jobSeekerDetails?.skills?.join(", ")}
+                <strong>Skills:</strong> {job_seeker.skills.join(", ")}
               </p>
               <div className="button-group">
                 <button
                   className="btn btn-success me-2"
-                  onClick={() => handleEmployerResponse(notification.application_id, 1)}
+                  onClick={() =>
+                    handleEmployerResponse(
+                      notification.application_id,
+                      1,
+                      notification.notification_id
+                    )
+                  }
                 >
                   Accept
                 </button>
                 <button
                   className="btn btn-danger"
-                  onClick={() => handleEmployerResponse(notification.application_id, 2)}
+                  onClick={() =>
+                    handleEmployerResponse(
+                      notification.application_id,
+                      2,
+                      notification.notification_id
+                    )
+                  }
                 >
                   Reject
                 </button>
                 <button
                   className="btn btn-info"
-                  onClick={() => viewProfile(notification.jobSeekerDetails)}
+                  onClick={() => viewProfile(job_seeker)}
                 >
                   View Profile
                 </button>
@@ -210,16 +165,14 @@ function NotificationsComponent() {
             <p><strong>Date of Birth:</strong> {selectedJobSeeker.dob}</p>
             <p><strong>Gender:</strong> {selectedJobSeeker.gender}</p>
             <p><strong>Nationality:</strong> {selectedJobSeeker.nationality}</p>
-            <p><strong>Skills:</strong> {selectedJobSeeker.skills?.join(", ")}</p>
-            <div>
-              {selectedJobSeeker.education?.map((edu, index) => (
-                <div key={index}>
-                  {edu.education && <p><strong>Education:</strong> {edu.education}</p>}
-                  {edu.degreeDetails && <p><strong>Degree Details:</strong> {edu.degreeDetails}</p>}
-                  {edu.institution && <p><strong>Institution:</strong> {edu.institution}</p>}
-                </div>
-              ))}
-            </div>
+            <p><strong>Skills:</strong> {selectedJobSeeker.skills.join(", ")}</p>
+            {selectedJobSeeker.education?.map((edu, index) => (
+              <div key={index}>
+                <p><strong>Education:</strong> {edu.education}</p>
+                {edu.degreeDetails && <p><strong>Degree Details:</strong> {edu.degreeDetails}</p>}
+                {edu.institution && <p><strong>Institution:</strong> {edu.institution}</p>}
+              </div>
+            ))}
           </div>
         </div>
       )}
