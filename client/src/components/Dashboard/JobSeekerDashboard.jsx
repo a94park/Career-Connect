@@ -142,19 +142,6 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
           >
             Security
           </li>
-          <div className="welcome-message">
-            {isLoading ? (
-              <p>Loading user data...</p>
-            ) : (
-              <>
-                <p>Welcome, {fullName}!</p>
-                <p>
-                  You are logged in as{" "}
-                  {userType === "job_seeker" ? "a Job Seeker" : "an Employer"}.
-                </p>
-              </>
-            )}
-          </div>
         </ul>
       </aside>
       <main className="content-area">{renderContent()}</main>
