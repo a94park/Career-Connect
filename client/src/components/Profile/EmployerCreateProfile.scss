@@ -1,8 +1,10 @@
 @import '../../assets/styles/util/variables.scss';
 
 .create-profile-page {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
+  margin-top: 48px;
+  margin-bottom:48px;
   padding: 20px;
   background-color: $form-bg-color;
   border-radius: 8px;
