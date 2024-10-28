@@ -101,8 +101,8 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         return (
           <div>
             Security Settings
-            <DeleteJobSeekerProfile />
             <UpdateJobSeekerProfile />
+            <DeleteJobSeekerProfile />
           </div>
         );
 
@@ -140,7 +140,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
             onClick={() => setActiveTab("security")}
             className={activeTab === "security" ? "active" : ""}
           >
-            Security
+            Setting
           </li>
         </ul>
       </aside>
