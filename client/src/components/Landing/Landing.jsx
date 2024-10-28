@@ -1,9 +1,9 @@
-// import "./Landing.scss";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from '../Footer/Footer'
 import bannerImage from "../../assets/styles/landing/banner2.jpg";
 import "./Landing.scss"
+
 
 
 
@@ -112,7 +112,6 @@ function Landing() {
 
     </div>
     </div>
-
 
     <Footer />
     </div>

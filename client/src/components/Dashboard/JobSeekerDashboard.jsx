@@ -9,13 +9,13 @@ import "./Dashboard.scss";
 
 function JobSeekerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(true); // Start with loading state
-
-  const [fullName, setFullName] = useState(
-    localStorage.getItem("fullName") || "User"
-  );
-  const [userType] = useState(localStorage.getItem("userType") || "job_seeker");
   const token = localStorage.getItem("accessToken");
   const [connectedCount, setConnectedCount] = useState(5); // Example: 5 employers have connected
+
+  // const [fullName, setFullName] = useState(
+  //   localStorage.getItem("fullName") || "User"
+  // );
+  // const [userType] = useState(localStorage.getItem("userType") || "job_seeker");
 
   useEffect(() => {
     // Fetch job seeker profile data immediately after login
@@ -36,7 +36,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
 
           if (profile) {
             setProfileData(profile); // Store profile data in state
-            setFullName(`${profile.first_name} ${profile.last_name}`); // Set full name from profile
+            `${profile.first_name} ${profile.last_name}`; // Set full name from profile
           }
         } else {
           console.error("Failed to fetch job seeker data.");
@@ -58,15 +58,8 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
     }
   }, [token, setProfileData]);
 
-  // <<<<<<< employCanSeeRequestedJobseekerProfile
-  //   const handleProfileUpdate = (updatedProfile) => {
-  //     setProfileData(updatedProfile);
-  //     setFullName(`${updatedProfile.first_name} ${updatedProfile.last_name}`);
-  // =======
-  // Handle the profile update
   const handleProfileUpdate = async (updatedProfile) => {
     setProfileData(updatedProfile); // Update the profile data in state
-    // >>>>>>> main
   };
 
   const [activeTab, setActiveTab] = useState("profile");
@@ -97,11 +90,9 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
       case "connections":
         return <SeekerConnections />;
 
-      case "security":
+      case "settings":
         return (
           <div>
-            Security Settings
-            <UpdateJobSeekerProfile />
             <DeleteJobSeekerProfile />
           </div>
         );
@@ -117,30 +108,26 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         <ul className="sidebar-menu">
           <li
             onClick={() => setActiveTab("profile")}
-            className={activeTab === "profile" ? "active" : ""}
-          >
+            className={activeTab === "profile" ? "active" : ""}>
             Profile
           </li>
           <li
             onClick={() => setActiveTab("search")}
-            className={activeTab === "search" ? "active" : ""}
-          >
+            className={activeTab === "search" ? "active" : ""}>
             Search
           </li>
           <li
             onClick={() => setActiveTab("connections")}
-            className={activeTab === "connections" ? "active" : ""}
-          >
+            className={activeTab === "connections" ? "active" : ""}>
             Connections
             {connectedCount > 0 && (
               <span className="counter">{connectedCount}</span>
             )}
           </li>
           <li
-            onClick={() => setActiveTab("security")}
-            className={activeTab === "security" ? "active" : ""}
-          >
-            Setting
+            onClick={() => setActiveTab("settings")}
+            className={activeTab === "settings" ? "active" : ""}>
+            Settings
           </li>
         </ul>
       </aside>

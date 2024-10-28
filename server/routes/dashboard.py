@@ -75,6 +75,7 @@ def get_applications():
             "employer_status": application.employer_status,
             "created_at": application.created_at.isoformat(),
             "job_title": job_posting.title,
+            "description": job_posting.description,
             "company_name": employer.company_name
         })
 
