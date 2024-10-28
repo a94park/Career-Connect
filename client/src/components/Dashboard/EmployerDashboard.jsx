@@ -80,8 +80,8 @@ function EmployerDashboard({ profileData, setProfileData }) {
       case "security":
         return (
           <div>
-            <DeleteEmployerProfile />
             <UpdateEmployerProfile />
+            <DeleteEmployerProfile />
           </div>
         );
       case "notification":
