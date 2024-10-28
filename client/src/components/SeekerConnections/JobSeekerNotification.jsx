@@ -48,6 +48,7 @@ function JobSeekerNotification() {
         notifications.map((notification, index) => (
           <div key={index} className="card notification-card mb-3 shadow">
             <h5 className="card-title text-primary">
+              {" "}
               {notification.job_posting_title}
             </h5>
             <p className="card-description-text">
