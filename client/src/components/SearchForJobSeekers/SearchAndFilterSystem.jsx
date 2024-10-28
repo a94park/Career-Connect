@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import './SearchAndFilterSystem.css';
+import "./SearchAndFilterSystem.scss";
 
 function SearchAndFilterSystem() {
   const [input, setInput] = useState("");
@@ -10,6 +10,8 @@ function SearchAndFilterSystem() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0); // Track current card
+  const [slideDirection, setSlideDirection] = useState("");
+  const [endOfResults, setEndOfResults] = useState(false); // Track if end of results reached
 
   const getTokenFromLocalStorage = () => {
     return localStorage.getItem("token");
@@ -27,6 +29,7 @@ function SearchAndFilterSystem() {
   const fetchFilteredJobPostings = async () => {
     setLoading(true);
     setError(null);
+    setEndOfResults(false); // Reset end of results flag on new search
 
     const token = getTokenFromLocalStorage();
     if (!token) {
@@ -59,6 +62,9 @@ function SearchAndFilterSystem() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    fetchFilteredJobPostings(); // Trigger the fetch on component mount
+  }, []);
 
   const handleApplication = async (job_posting_id, action) => {
     const token = getTokenFromLocalStorage();
@@ -75,7 +81,9 @@ function SearchAndFilterSystem() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update application status");
+        throw new Error(
+          errorData.message || "Failed to update application status"
+        );
       }
 
       const data = await response.json();
@@ -83,7 +91,7 @@ function SearchAndFilterSystem() {
     } catch (error) {
       console.log(`Error: ${error.message}`);
     }
-};
+  };
 
   const handleFilterSubmit = (e) => {
     e.preventDefault();
@@ -99,15 +107,41 @@ function SearchAndFilterSystem() {
   };
 
   const handlePrevious = () => {
-    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+    if (currentIndex > 0) {
+      setSlideDirection("slide-out-bottom");
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => prevIndex - 1);
+        setSlideDirection("slide-in-bottom");
+      }, 500);
+    }
   };
 
   const handleNext = () => {
-    if (currentIndex < results.length - 1) setCurrentIndex(currentIndex + 1);
+    if (currentIndex < results.length - 1) {
+      setSlideDirection("slide-out-right"); // Set slide-out-right effect
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+        setSlideDirection("slide-in-left"); // Set slide-in-left effect after index update
+      }, 500); // Duration should match CSS animation timing
+    } else {
+      setEndOfResults(true); // Notify if no more next posts
+    }
+  };
+
+  const handleNextPass = () => {
+    if (currentIndex < results.length - 1) {
+      setSlideDirection("slide-out-left"); // Set slide-out-right effect
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+        setSlideDirection("slide-in-right"); // Set slide-in-left effect after index update
+      }, 500); // Duration should match CSS animation timing
+    } else {
+      setEndOfResults(true); // Notify if no more next posts
+    }
   };
 
   return (
-    <div className="search-container">
+    <div className="searchF-container">
       <form className="filter-form" onSubmit={handleFilterSubmit}>
         {/* Filter Inputs */}
         <div className="form-group">
@@ -120,56 +154,55 @@ function SearchAndFilterSystem() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Search for job titles..."
-            className="search-input"
+            className="form-input"
           />
         </div>
-        <div className="filter-case">
-          <div className="form-group2">
-            <label htmlFor="salaryRange" className="form-label">
-              Salary:
-            </label>
-            <input
-              type="text"
-              id="salaryRange"
-              value={salaryRange}
-              onChange={(e) => setSalaryRange(e.target.value)}
-              placeholder="Enter salary range (e.g., 50K - 70K)"
-              className="form-input"
-            />
-          </div>
-          <div className="form-group2">
-            <label htmlFor="location" className="form-label">
-              Location:
-            </label>
-            <input
-              type="text"
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter location"
-              className="form-input"
-            />
-          </div>
-          <div className="form-group2">
-            <label htmlFor="requiredSkills" className="form-label">
-              Required Skills:
-            </label>
-            <input
-              type="text"
-              id="requiredSkills"
-              value={requiredSkills}
-              onChange={(e) => setRequiredSkills(e.target.value)}
-              placeholder="Enter required skills"
-              className="form-input"
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="salaryRange" className="form-label">
+            Salary:
+          </label>
+          <input
+            type="text"
+            id="salaryRange"
+            value={salaryRange}
+            onChange={(e) => setSalaryRange(e.target.value)}
+            placeholder="Enter salary range (e.g., 50K - 70K)"
+            className="form-input"
+          />
         </div>
+        <div className="form-group">
+          <label htmlFor="location" className="form-label">
+            Location:
+          </label>
+          <input
+            type="text"
+            id="location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            placeholder="Enter location"
+            className="form-input"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="requiredSkills" className="form-label">
+            Required Skills:
+          </label>
+          <input
+            type="text"
+            id="requiredSkills"
+            value={requiredSkills}
+            onChange={(e) => setRequiredSkills(e.target.value)}
+            placeholder="Enter required skills"
+            className="form-input"
+          />
+        </div>
+
         <button type="submit" className="form-button">
           Search
         </button>
         <button
           type="button"
-          className="form-button"
+          className="clear-button"
           onClick={handleClearFilters}
         >
           Clear
@@ -180,8 +213,8 @@ function SearchAndFilterSystem() {
       {error && <p className="error">{error}</p>}
       {!loading && results.length === 0 && <p>No job postings found.</p>}
 
-      {results.length > 0 && (
-        <div className="result-card">
+      {results.length > 0 && !endOfResults ? (
+        <div className={`result-card ${slideDirection}`}>
           <h3>{results[currentIndex].title}</h3>
           <p>
             <strong>Location:</strong> {results[currentIndex].location}
@@ -202,35 +235,39 @@ function SearchAndFilterSystem() {
 
           <div className="button-group">
             <button
-              onClick={() =>
-                handleApplication(
-                  results[currentIndex].job_posting_id,
-                  "accept"
-                )
-              }
-              className="accept-button"
-            >
-              Accept
-            </button>
-            <button
-              onClick={() =>
+              onClick={() => {
                 handleApplication(
                   results[currentIndex].job_posting_id,
                   "reject"
-                )
-              }
+                );
+                handleNextPass();
+              }}
               className="reject-button"
             >
-              Reject
+              Pass
             </button>
+
             <button onClick={handlePrevious} className="previous-button">
               Previous
             </button>
-            <button onClick={handleNext} className="next-button">
-              Next
+            <button
+              onClick={() => {
+                handleApplication(
+                  results[currentIndex].job_posting_id,
+                  "accept"
+                );
+                handleNext();
+              }}
+              className="accept-button"
+            >
+              Apply
             </button>
           </div>
         </div>
+      ) : (
+        <p>
+          No more job postings. Please check again later or adjust your filters.
+        </p>
       )}
     </div>
   );
