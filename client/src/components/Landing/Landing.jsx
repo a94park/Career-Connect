@@ -53,16 +53,16 @@ function Landing() {
         <h2 className="service-title">Services</h2>
       <div className="services-category">
       <div className="service-card service-info-one">
-        <h3>Service One</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <h3>Fast Application</h3>
+        <p>Streamline your job search with instant applications. With just a click, apply to multiple opportunities without the hassle of filling out repetitive forms.</p>
       </div>
       <div className="service-card service-info-two">
-        <h3>Service Two</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <h3>Encourages Response</h3>
+        <p>Boost your chances of engagement. Our platform actively prompts employers to review and respond, keeping job seekers informed every step of the way.</p>
       </div>
       <div className="service-card service-info-three">
-        <h3>Service Three</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit</p>
+        <h3>One Profile Only</h3>
+        <p>Level the playing field with a single, polished profile. Say goodbye to endless resume tweaks – one profile connects you to all relevant jobs, reducing stress and saving time.</p>
       </div>
       </div>
     </div>
