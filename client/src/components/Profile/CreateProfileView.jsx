@@ -25,7 +25,7 @@ function CreateProfileView({ profileData }) {
         </h1>
         <div className="profile-details">
           <img
-            src={profileData.profilePicture}
+            src={profileData.profile_pic}
             alt="Profile"
             className="profile-picture"
           />
