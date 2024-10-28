@@ -1,0 +1,226 @@
+@import "../../assets/styles/util/variables.scss";
+.searchF-container {
+  display: flex;
+  align-items: center;
+  width: 80vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .filter-form {
+    min-width: 280px;
+    max-width: 280px;
+    margin: 20px;
+    padding: 20px;
+    height: 80vh;
+    overflow-y: auto;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    box-shadow: 5px 8px 10px 5px rgba(75, 75, 75, 0.1);
+    align-items: center;
+    .form-group {
+      margin-bottom: 15px;
+
+      .form-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        text-align: center;
+      }
+
+      .form-input {
+        // width: 100%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+    }
+
+    .form-button {
+      width: 40%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      background-color: $button-bg-color;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($button-bg-color, 10%);
+      }
+    }
+    .clear-button {
+      width: 25%;
+      height: 30px;
+      //   padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      background-color: $button-bg-color;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($button-bg-color, 10%);
+      }
+    }
+  }
+
+  .result-card {
+    flex: 1;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    animation: fadeIn 0.3s ease-out forwards;
+    overflow: hidden;
+
+    h3 {
+      margin: 0;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    p {
+      margin: 10px 0;
+      color: #666;
+
+      strong {
+        color: #333;
+      }
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      button {
+        // flex: 1;
+
+        border: none;
+        width: 80px; // Set the desired width
+        height: 80px; // Same as width for a perfect circle
+
+        border-radius: 200px;
+        cursor: pointer;
+        color: white;
+        font-weight: bold;
+      }
+
+      .accept-button {
+        background-color: #4caf50;
+
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+
+      .reject-button {
+        background-color: #f44336;
+
+        &:hover {
+          background-color: #e53935;
+        }
+      }
+
+      .previous-button,
+      .next-button {
+        background-color: #2196f3;
+
+        &:hover {
+          background-color: #1e88e5;
+        }
+      }
+    }
+  }
+}
+
+// Slide and fade animations
+@keyframes slideFadeOutLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideFadeInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFadeOutRight {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slideFadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideFadeOutBottom {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+@keyframes slideFadeInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Applying the animations based on direction
+.result-card.slide-out-left {
+  animation: slideFadeOutLeft 0.5s ease forwards;
+}
+
+.result-card.slide-in-right {
+  animation: slideFadeInRight 0.5s ease forwards;
+}
+
+.result-card.slide-out-right {
+  animation: slideFadeOutRight 0.5s ease forwards;
+}
+
+.result-card.slide-in-left {
+  animation: slideFadeInLeft 0.5s ease forwards;
+}
+.result-card.slide-out-bottom {
+  animation: slideFadeOutBottom 0.5s ease forwards;
+}
+.result-card.slide-in-bottom {
+  animation: slideFadeInBottom 0.5s ease forwards;
+}
