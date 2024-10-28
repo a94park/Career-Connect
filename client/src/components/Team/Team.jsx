@@ -1,6 +1,6 @@
 import DevelopersSection from "../Developers/DevelopersSection.jsx";
 import { useNavigate } from "react-router-dom";
-import ConfettiEffect from "../ConfettiEffect/ConfettiEffect.jsx"; // Import the confetti component
+
 
 function Team() {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ function Team() {
       {/* Additional content */}
       <DevelopersSection></DevelopersSection>
 
-      {/* Add the ConfettiEffect button for testing */}
-      <ConfettiEffect />
+
+
 
       <div className="start-now-btn-container">
         <button className="start-now-btn" onClick={() => navigate("/register")}>

@@ -1,26 +1,20 @@
-// ConfettiEffect.jsx
-import React, { useState } from 'react';
-import Confetti from 'react-confetti';
-import { useWindowSize } from 'react-use';
+// src/components/ConfettiEffect/ConfettiEffect.jsx
+import React, { useEffect } from "react";
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
-const ConfettiEffect = () => {
+const ConfettiEffect = ({ trigger }) => {
   const { width, height } = useWindowSize();
-  const [isActive, setIsActive] = useState(false);
-
-  const triggerConfetti = () => {
-    setIsActive(true);
-    setTimeout(() => {
-      setIsActive(false);
-    }, 5000); // Show confetti for 3 seconds
-  };
 
   return (
-    <>
-      <button onClick={triggerConfetti} className="trigger-confetti-btn">
-        Celebrate!
-      </button>
-      {isActive && <Confetti width={width} height={height} />}
-    </>
+    trigger && (
+      <Confetti
+        width={width}
+        height={height}
+        recycle={false} // Only run once
+        numberOfPieces={500} // Adjust as needed for intensity
+      />
+    )
   );
 };
 
