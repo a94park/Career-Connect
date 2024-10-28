@@ -33,7 +33,7 @@ function DeleteEmployerProfile() {
     return (
         <div className="delete-profile-container">
             <p>
-                If you wish to delete your account, 
+                If you wish to delete your profile,  
                 <span className="delete-profile-link" onClick={SubmitDelete}>
                     {" "}click here to delete your profile.
                 </span>
