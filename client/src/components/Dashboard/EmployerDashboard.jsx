@@ -142,12 +142,6 @@ function EmployerDashboard({ profileData, setProfileData }) {
             My Job Posts
           </li>
         </ul>
-        <div className="welcome-message">
-          <p>
-            Welcome, {fullName}! You are logged in as{" "}
-            {userType === "job_seeker" ? "a Job Seeker" : "an Employer"}.
-          </p>
-        </div>
       </aside>
       <main className="content-area">{renderContent()}</main>
     </div>
