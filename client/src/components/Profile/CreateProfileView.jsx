@@ -1,5 +1,6 @@
 //   import React, { useEffect } from 'react';
 //   import './CreateProfileView.css';
+import placeholderImage from '../../assets/placeholder.jpeg'
 
 function CreateProfileView({ profileData }) {
   if (!profileData) {
@@ -25,7 +26,7 @@ function CreateProfileView({ profileData }) {
         </h1>
         <div className="profile-details">
           <img
-            src={profileData.profile_pic}
+            src={profileData.profile_pic ? profileData.profile_pic : placeholderImage} 
             alt="Profile"
             className="profile-picture"
           />
