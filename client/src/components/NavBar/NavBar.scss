@@ -51,8 +51,8 @@ li {
 
 /* Responsive styling for smaller screens */
 @media (max-width: 768px) {
-  nav {
-    text-align: center;
+  ul {
+    justify-content: center; // Center the navigation links
   }
 
   li {

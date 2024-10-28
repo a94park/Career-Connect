@@ -70,7 +70,6 @@ function Landing() {
     <div className="about-us-container">
       <h1 className="about-us-title">About Us</h1>
       <div className="about-us-content">
-
       <p>
         At <span className="company-name">Career Connect</span>, we believe in
         bridging the gap between talented professionals and the opportunities

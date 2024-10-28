@@ -26,20 +26,20 @@ $banner-height: 80vh;
   h1 {
     color: $text-color;
     text-shadow: $text-shadow;
-    font-size: 3.5rem;
+    font-size: 5rem;
     font-weight: bold;
     margin-top: 0;
 
     @media (max-width: 1200px) {
-      font-size: 3rem;
+      font-size: 4rem;
     }
 
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: 4.5rem;
     }
 
     @media (max-width: 480px) {
-      font-size: 2rem;
+      font-size: 4.5rem;
     }
   }
 
@@ -78,17 +78,17 @@ $banner-height: 80vh;
 
     @media (max-width: 1200px) {
       font-size: 1rem;
-      padding: 10px 22px;
+      padding: 14px 36px;
     }
 
     @media (max-width: 768px) {
       font-size: 0.9rem;
-      padding: 8px 20px;
+      padding: 14px 36px;
     }
 
     @media (max-width: 480px) {
       font-size: 0.85rem;
-      padding: 6px 18px;
+      padding: 14px 36px;
     }
   }
 }
@@ -145,7 +145,7 @@ $banner-height: 80vh;
   .about-us-content {
     background-color: lighten($primary-color, 10%);
     width: 90%;
-    max-width: 800px;
+    max-width: 1200px;
     text-align: center;
     margin-top: 12px;
     padding: 24px;
@@ -158,11 +158,11 @@ $banner-height: 80vh;
     margin-bottom: 20px;
 
     @media (max-width: 768px) {
-      font-size: 2rem;
+      font-size: 3rem;
     }
 
     @media (max-width: 480px) {
-      font-size: 1.8rem;
+      font-size: 2rem;
     }
   }
 
