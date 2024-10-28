@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './JobPosting.scss'
+import "./JobPosting.scss";
 
 const JobPosting = () => {
   const [formData, setFormData] = useState({
@@ -24,9 +24,9 @@ const JobPosting = () => {
     setIsSubmitting(true);
 
     // Retrieve JWT token from localStorage
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      alert('No token found. Please login.');
+      alert("No token found. Please login.");
       setIsSubmitting(false);
       return;
     }
@@ -35,10 +35,10 @@ const JobPosting = () => {
       const response = await fetch("http://localhost:5000/api/jobs", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),  // Send the form data as JSON
+        body: JSON.stringify(formData), // Send the form data as JSON
       });
 
       const data = await response.json();
@@ -64,9 +64,9 @@ const JobPosting = () => {
 
   return (
     <div className="job-posting-container">
-      <div className="job-posting-title"><h3>Create a Job Post</h3></div>
       <form onSubmit={handleSubmit} className="formJobPosting">
         <div className="form-group">
+          <h3>Create a Job Post</h3>
           <label>Job Title:</label>
           <input
             type="text"
@@ -125,7 +125,10 @@ const JobPosting = () => {
           />
         </div>
 
-        <button type="submit" className="button btn btn-primary" disabled={isSubmitting}>
+        <button
+          type="submit"
+          className="button btn btn-primary"
+          disabled={isSubmitting}>
           {isSubmitting ? "Posting..." : "Post Job"}
         </button>
       </form>
