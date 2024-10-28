@@ -17,55 +17,45 @@ def create_profile():
     try:
         # Get JSON data from request
         data = request.get_json()
-        # print test
-        print(f"data = {data}")
+        print(f"data = {data}")  # Debugging print
 
         # Get user_id from JWT
         user_id = get_jwt_identity()
-
-        #print test
-        print(f"user_id from JWT: {user_id}")
+        print(f"user_id from JWT: {user_id}")  # Debugging print
 
         # Validate required fields
         required_fields = ['first_name', 'last_name', 'dob', 'gender', 'nationality', 'education', 'skills']
         for field in required_fields:
             if not data.get(field):
-                print(f"Missing the fields: {field}")
+                print(f"Missing field: {field}")
                 return jsonify({'error': f'Missing required field: {field}'}), 400
 
         # Extract fields from request data
         first_name = data.get('first_name')
         last_name = data.get('last_name')
-        dob_str = data.get('dob')
-        dob = datetime.strptime(dob_str, '%Y-%m-%d').date()
+        dob = datetime.strptime(data.get('dob'), '%Y-%m-%d').date()
         gender = data.get('gender')
         nationality = data.get('nationality')
 
-        # Handle education (ensure it's stored as valid JSON)
+        # Handle education and skills as JSON strings if they are lists
         education = data.get('education')
         if isinstance(education, list):
-            education = json.dumps(education)  # Convert list to JSON string
+            education = json.dumps(education)
 
-        # Handle skills (ensure it's stored as valid JSON)
         skills = data.get('skills')
         if isinstance(skills, list):
-            skills = json.dumps(skills)  # Convert list to JSON string
+            skills = json.dumps(skills)
 
-
-
-        # Handle profile picture (if provided)
+        # Handle profile picture (optional)
         profile_pic = data.get('profile_pic')
-        profile_pic_path = None
+        img_data = None
         if profile_pic and profile_pic.startswith('data:image/'):
-            img_data = profile_pic.split(',')[1]
-            img_data = base64.b64decode(img_data)
-            filename = secure_filename(f"{user_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png")
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            with open(filepath, 'wb') as f:
-                f.write(img_data)
-            profile_pic_path = filepath
-        elif profile_pic:
-            profile_pic_path = profile_pic  # If it's a URL or existing file path
+            try:
+                # Decode Base64 image to binary
+                img_data = base64.b64decode(profile_pic.split(',')[1])
+            except (IndexError, ValueError, base64.binascii.Error) as e:
+                print(f"Error decoding image: {e}")
+                return jsonify({'error': 'Invalid profile picture data.'}), 400
 
         # Create a new JobSeeker object
         new_job_seeker = JobSeeker(
@@ -75,9 +65,9 @@ def create_profile():
             dob=dob,
             gender=gender,
             nationality=nationality,
-            education=education,  # Properly formatted JSON string
-            skills=skills,  # Properly formatted JSON string
-            profile_pic=profile_pic_path or ''
+            education=education,
+            skills=skills,
+            profile_pic=img_data  # None if no image is provided or invalid
         )
 
         # Save new profile to the database
@@ -134,18 +124,14 @@ def update_job_seeker_profile():
 
 
     profile_pic = data.get('profile_pic')
-    # Handle profile picture (if provided)
-    profile_pic_path = None
+    img_data = None
     if profile_pic and profile_pic.startswith('data:image/'):
-        img_data = profile_pic.split(',')[1]
-        img_data = base64.b64decode(img_data)
-        filename = secure_filename(f"{user_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png")
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        with open(filepath, 'wb') as f:
-            f.write(img_data)
-        profile_pic_path = filepath
-    elif profile_pic:
-        profile_pic_path = profile_pic
+        try:
+            # Decode Base64 image to binary
+            img_data = base64.b64decode(profile_pic.split(',')[1])
+        except (IndexError, ValueError, base64.binascii.Error) as e:
+            print(f"Error decoding image: {e}")
+            return jsonify({'error': 'Invalid profile picture data.'}), 400
 
     job_seeker.first_name = first_name if first_name else job_seeker.first_name
     job_seeker.last_name = last_name if last_name else job_seeker.last_name
@@ -154,7 +140,7 @@ def update_job_seeker_profile():
     job_seeker.nationality = nationality if nationality else job_seeker.nationality
     job_seeker.education = json.dumps(education) if education else job_seeker.education
     job_seeker.skills = json.dumps(skills) if skills else job_seeker.skills
-    job_seeker.profile_pic = profile_pic_path
+    job_seeker.profile_pic = img_data
 
     db.session.commit()
     return jsonify({"message": "Profile updated successfully."}), 200
@@ -266,13 +252,14 @@ def update_employer():
         email = data.get('email')
 
         # Handle company logo (keep existing if no new one is uploaded)
-        company_logo_path = employer.company_logo
-        if 'company_logo' in request.files:
-            logo_file = request.files['company_logo']
-            filename = secure_filename(f"{user_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png")
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            logo_file.save(filepath)
-            company_logo_path = filepath
+        company_logo = data.get('company_logo')
+        img_data = None
+        if company_logo and company_logo.startswith('data:image/'):
+            try:
+                img_data = base64.b64decode(company_logo.split(',')[1])
+            except (IndexError, ValueError, base64.binascii.Error) as e:
+                print(f"Error decoding image: {e}")
+                return jsonify({'error': 'Invalid profile picture data.'}), 400
 
         # Update the employer object with the provided or existing data
         employer.company_name = company_name if company_name else employer.company_name
@@ -280,7 +267,7 @@ def update_employer():
         employer.preferential_treatment = preferential_treatment if preferential_treatment else employer.preferential_treatment
         employer.company_benefits = company_benefits if company_benefits else employer.company_benefits
         employer.email = email if email else employer.email
-        employer.company_logo = company_logo_path
+        employer.company_logo = img_data
 
         # Commit changes to the database
         db.session.commit()

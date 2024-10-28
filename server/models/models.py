@@ -1,7 +1,7 @@
 from app import db
 from datetime import datetime
 import json  # Import json module
-
+import base64
 class User(db.Model):
     __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -47,7 +47,7 @@ class JobSeeker(db.Model):
     __tablename__ = "job_seekers"
     job_seeker_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
-    profile_pic = db.Column(db.String(255), nullable=True)
+    profile_pic = db.Column(db.LargeBinary, nullable=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
     dob = db.Column(db.Date, nullable=False)
@@ -57,10 +57,13 @@ class JobSeeker(db.Model):
     skills = db.Column(db.String(255), nullable=False)  # JSON string of skills
 
     def to_json(self):
+        profile_pic_base64 = None
+        if self.profile_pic:
+            profile_pic_base64 = f"data:image/png;base64,{base64.b64encode(self.profile_pic).decode('utf-8')}"
         return {
             "job_seeker_id": self.job_seeker_id,
             "user_id": self.user_id,
-            "profile_pic": self.profile_pic,
+            "profile_pic": profile_pic_base64,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "dob": self.dob.isoformat(),  # Convert date to string
@@ -115,18 +118,21 @@ class Employer(db.Model):
     employer_id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     company_name = db.Column(db.String(255))
-    company_logo = db.Column(db.String(255), nullable = True)
+    company_logo = db.Column(db.LargeBinary, nullable = True)
     about_company = db.Column(db.Text, nullable = False)
     preferential_treatment = db.Column(db.Text, nullable = True)
     company_benefits = db.Column(db.Text, nullable = True)
     email = db.Column(db.String(100), nullable = True)
 
     def to_json(self):
+        company_logo_base64 = None
+        if self.company_logo:
+            company_logo_base64 = f"data:image/png;base64,{base64.b64encode(self.company_logo).decode('utf-8')}"
         return {
             "employer_id": self.employer_id,
             "user_id": self.user_id,
             "company_name": self.company_name,
-            "company_logo": self.company_logo,
+            "company_logo": company_logo_base64,
             "about_company": self.about_company,
             "preferential_treatment": self.preferential_treatment,
             "company_benefits": json.loads(self.company_benefits),

@@ -177,29 +177,20 @@ def create_employer_profile():
 
         # Handle company logo (if provided)
         company_logo = data.get('company_logo')
-        company_logo_path = None  # Default to None
-
+        img_data = None
         if company_logo and company_logo.startswith('data:image/'):
             try:
-                # Decode base64 logo and save it
-                img_data = company_logo.split(',')[1]
-                img_data = base64.b64decode(img_data)
-                filename = secure_filename(f"{user_id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.png")
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                with open(filepath, 'wb') as f:
-                    f.write(img_data)
-                company_logo_path = filepath
-            except (IndexError, binascii.Error) as decode_error:
-                print(f"Error decoding company logo: {decode_error}")
-                company_logo_path = None  # Keep it None if decoding fails
-        elif company_logo:
-            company_logo_path = company_logo  # Assume it’s a URL or valid path
+                # Decode Base64 image to binary
+                img_data = base64.b64decode(company_logo.split(',')[1])
+            except (IndexError, ValueError, base64.binascii.Error) as e:
+                print(f"Error decoding image: {e}")
+                return jsonify({'error': 'Invalid profile picture data.'}), 400 # Assume it’s a URL or valid path
 
         # Create a new Employer object
         new_employer = Employer(
             user_id=user_id,
             company_name=company_name,
-            company_logo=company_logo_path,  # This will be None if not provided
+            company_logo=img_data,  # This will be None if not provided
             about_company=about_company,
             preferential_treatment=preferential_treatment,
             company_benefits=company_benefits,
@@ -214,10 +205,10 @@ def create_employer_profile():
             'message': 'Employer profile created successfully',
             'profile': new_employer.to_json()
         }), 201
-
     except Exception as e:
         print(f"Error: {e}")
-        return jsonify({'error': 'An error occurred while creating the employer profile.'}), 500
+        return jsonify({'error': 'An error occurred while creating the profile.'}), 500
+
 
 
 
