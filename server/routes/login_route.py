@@ -4,6 +4,10 @@ from flask_jwt_extended import create_access_token, unset_jwt_cookies
 from datetime import datetime
 from models.models import db, User
 
+@app.route('/test-cors', methods=['GET', 'OPTIONS'])
+def test_cors():
+    return jsonify({"message": "CORS test successful"}), 200
+
 @app.route("/register", methods=["POST"])
 def register_user():
     data = request.get_json()
