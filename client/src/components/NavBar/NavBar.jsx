@@ -80,7 +80,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
           )}
         </ul>
       </nav>
-      {showLogoutPopUp && <LogoutPopUp />}
+      {showLogoutPopUp && <LogoutPopUp onClose={()=> setShowLogoutPopUp(false)}/>}
     </>
 
   );

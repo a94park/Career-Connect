@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LogoutPopUp.scss";
 
-function LogoutPopUp() {
+
+// onClose allows the navbar to be able to be clicked after logging out.
+function LogoutPopUp({onClose}) {
     const [isFadingOut, setIsFadingOut] = useState(false);
     const navigate = useNavigate();
 
@@ -10,18 +12,21 @@ function LogoutPopUp() {
         // Start fade-out animation after 2.5 seconds
         const fadeTimer = setTimeout(() => {
             setIsFadingOut(true);
-        }, 2500);
+        }, 1000);
 
         // Redirect after the full animation
         const redirectTimer = setTimeout(() => {
             navigate("/");
-        }, 3000);
+            onClose();
+        }, 1500);
 
         return () => {
             clearTimeout(fadeTimer);
             clearTimeout(redirectTimer);
         };
-    }, [navigate]);
+    }, [navigate, onClose]);
+
+
 
     return (
         <div className={`logout-overlay ${isFadingOut ? 'fade-out' : ''}`}>
