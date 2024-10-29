@@ -122,8 +122,7 @@ function EmployerDashboard({ profileData, setProfileData }) {
           </li>
           <li
             onClick={() => setActiveTab("security")}
-            className={activeTab === "security" ? "active" : ""}
-          >
+            className={activeTab === "security" ? "active" : ""}>
             Settings
           </li>
           <li
