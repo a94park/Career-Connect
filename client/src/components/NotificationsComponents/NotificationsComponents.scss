@@ -24,6 +24,40 @@
   .button-group {
     display: flex;
     justify-content: space-evenly;
+
+    .accept-button {
+      background-color: $button-bg-color;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding: 10px;
+
+      &:hover {
+        background-color: lighten($button-bg-color, 10%);
+      }
+    }
+    .reject-button {
+      background-color: $input-bg;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding: 10px;
+
+      &:hover {
+        background-color: lighten($input-bg, 10);
+      }
+    }
+    .vpro-button {
+      background-color: $secondary-color;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding: 10px;
+
+      &:hover {
+        background-color: lighten($secondary-color, 10%);
+      }
+    }
   }
   ul {
     list-style-type: none;
