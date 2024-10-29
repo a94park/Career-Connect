@@ -42,7 +42,7 @@ function SeekerApplied() {
             <h3>
               <strong>{application.company_name}</strong>
             </h3>
-            <p className="card-title text-primary">{application.job_title}</p>
+            <p className="card-title">{application.job_title}</p>
             <p className="card-description-text">{application.description}</p>
 
             <small className="text-muted">
