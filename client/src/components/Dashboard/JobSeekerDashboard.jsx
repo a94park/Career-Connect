@@ -94,6 +94,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         return (
           <div>
             <DeleteJobSeekerProfile />
+            <UpdateJobSeekerProfile />
           </div>
         );
 
