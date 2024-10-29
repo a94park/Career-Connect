@@ -93,8 +93,8 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
       case "settings":
         return (
           <div>
-            <DeleteJobSeekerProfile />
             <UpdateJobSeekerProfile />
+            <DeleteJobSeekerProfile />
           </div>
         );
 

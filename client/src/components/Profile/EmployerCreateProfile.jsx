@@ -135,119 +135,104 @@ function EmployerProfileCreate({ setProfileData, onProfileUpdate }) {
   }
 
   return (
-    <div>
-      <div className={`create-profile-page ${showForm ? "" : "hidden-form"}`}>
-        {showForm && (
-          <form onSubmit={handleSubmit}>
-            <h1>Create Employer Profile</h1>
+    <div className="create-profile-page">
+      <form onSubmit={handleSubmit}>
+        <h1>Create Employer Profile</h1>
 
-            {/* Company Logo */}
-            <label htmlFor="company-logo">Company Logo:</label>
-            <input
-              type="file"
-              accept="image/jpeg, image/png"
-              id="company-logo"
-              onChange={handleLogoChange}
+        {/* Company Logo */}
+        <label htmlFor="company-logo">Company Logo:</label>
+        <input
+          type="file"
+          accept="image/jpeg, image/png"
+          id="company-logo"
+          onChange={handleLogoChange}
+        />
+        {companyLogo && (
+          <div className="image-preview">
+            <img
+              src={URL.createObjectURL(companyLogo)}
+              alt="Logo Preview"
+              style={{ width: "100px", height: "80px" }}
             />
-            {companyLogo && (
-              <div className="image-preview">
-                <img
-                  src={URL.createObjectURL(companyLogo)}
-                  alt="Logo Preview"
-                  style={{ width: "100px", height: "80px" }}
-                />
-              </div>
-            )}
-
-            {/* Company Name */}
-            <label htmlFor="company-name">Company Name:</label>
-            <input
-              type="text"
-              id="company-name"
-              placeholder="Company Name"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              className={!companyNameValid ? "invalid-input" : ""}
-            />
-
-            {/* Email */}
-            <label htmlFor="email">Email:</label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Company Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={!emailValid ? "invalid-input" : ""}
-            />
-
-            {/* About Company */}
-            <label htmlFor="about-company">About Company:</label>
-            <textarea
-              id="about-company"
-              placeholder="Describe your company"
-              value={aboutCompany}
-              onChange={(e) => setAboutCompany(e.target.value)}
-              className={!aboutCompanyValid ? "invalid-input" : ""}
-            />
-
-            {/* Preferential Treatment */}
-            <label htmlFor="preferential-treatment">
-              Preferential Treatment:
-            </label>
-            <input
-              type="text"
-              id="preferential-treatment"
-              placeholder="Any preferential treatment for employees?"
-              value={preferentialTreatment}
-              onChange={(e) => setPreferentialTreatment(e.target.value)}
-            />
-
-            {/* Company Benefits */}
-            <label htmlFor="company-benefits">
-              Company Benefits (Add at least 1):
-            </label>
-            <div className="benefits-input">
-              <input
-                type="text"
-                id="company-benefits"
-                value={inputBenefit}
-                onChange={handleBenefitChange}
-                placeholder="Enter a benefit and press add"
-              />
-              <button onClick={handleAddBenefit}>Add Benefit</button>
-            </div>
-            <div className="benefits-list">
-              {companyBenefits.map((benefit, index) => (
-                <span key={index} className="benefit-item">
-                  {benefit}
-                  <button
-                    className="delete-benefit"
-                    onClick={() => handleDeleteBenefit(benefit)}
-                  >
-                    &times;
-                  </button>
-                </span>
-              ))}
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className={`submit-btn ${isButtonShrinking ? "shrinking" : ""}`}
-            >
-              Submit
-            </button>
-          </form>
-        )}
-
-        {/* Success Overlay */}
-        {showOverlay && (
-          <div className="overlay show">
-            <i className="fas fa-check"></i>
           </div>
         )}
-      </div>
+
+        {/* Company Name */}
+        <label htmlFor="company-name">Company Name:</label>
+        <input
+          type="text"
+          id="company-name"
+          placeholder="Company Name"
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+          className={!companyNameValid ? "invalid-input" : ""}
+        />
+
+        {/* Email */}
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="Company Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={!emailValid ? "invalid-input" : ""}
+        />
+
+        {/* About Company */}
+        <label htmlFor="about-company">About Company:</label>
+        <textarea
+          id="about-company"
+          placeholder="Describe your company"
+          value={aboutCompany}
+          onChange={(e) => setAboutCompany(e.target.value)}
+          className={!aboutCompanyValid ? "invalid-input" : ""}
+        />
+
+        {/* Preferential Treatment */}
+        <label htmlFor="preferential-treatment">Preferential Treatment:</label>
+        <input
+          type="text"
+          id="preferential-treatment"
+          placeholder="Any preferential treatment for employees?"
+          value={preferentialTreatment}
+          onChange={(e) => setPreferentialTreatment(e.target.value)}
+        />
+
+        {/* Company Benefits */}
+        <label htmlFor="company-benefits">
+          Company Benefits (Add at least 1):
+        </label>
+        <div className="benefits-input">
+          <input
+            type="text"
+            id="company-benefits"
+            value={inputBenefit}
+            onChange={handleBenefitChange}
+            placeholder="Enter a benefit and press add"
+          />
+          <button onClick={handleAddBenefit}>Add Benefit</button>
+        </div>
+        <div className="benefits-list">
+          {companyBenefits.map((benefit, index) => (
+            <span key={index} className="benefit-item">
+              {benefit}
+              <button
+                className="delete-benefit"
+                onClick={() => handleDeleteBenefit(benefit)}>
+                &times;
+              </button>
+            </span>
+          ))}
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          className={`submit-btn ${isButtonShrinking ? "shrinking" : ""}`}>
+          Submit
+        </button>
+      </form>
     </div>
   );
 }
