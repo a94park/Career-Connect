@@ -25,7 +25,7 @@ def filter_job_postings():
     # Start with the base query
     query = JobPosting.query
 
-    # Apply filters if parameters are provided
+    # Apply filters if parameters are provided 
     if job_title:
         query = query.filter(JobPosting.title.ilike(f"%{job_title}%"))
 

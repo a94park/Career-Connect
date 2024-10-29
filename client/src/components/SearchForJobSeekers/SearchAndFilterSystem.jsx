@@ -203,8 +203,7 @@ function SearchAndFilterSystem() {
         <button
           type="button"
           className="clear-button"
-          onClick={handleClearFilters}
-        >
+          onClick={handleClearFilters}>
           Clear
         </button>
       </form>
@@ -242,8 +241,7 @@ function SearchAndFilterSystem() {
                 );
                 handleNextPass();
               }}
-              className="reject-button"
-            >
+              className="reject-button">
               Pass
             </button>
 
@@ -258,8 +256,7 @@ function SearchAndFilterSystem() {
                 );
                 handleNext();
               }}
-              className="accept-button"
-            >
+              className="accept-button">
               Apply
             </button>
           </div>
