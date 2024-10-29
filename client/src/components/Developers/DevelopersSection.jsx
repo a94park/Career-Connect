@@ -5,32 +5,32 @@ function DevelopersSection() {
     {
       name: "Abraham",
       role: "Frontend Developer",
-      image: "../src/components/pictures/placeholder.jpeg",
+      image: "../src/assets/abraham-placeholder.jpeg",
     },
     {
       name: "Barra",
       role: "Fullstack Developer",
-      image: "../src/components/pictures/placeholder.jpeg",
+      image: "../src/assets/funny-placeholder-image.jpg",
     },
     {
       name: "Dan",
       role: "Fullstack Developer",
-      image: "../src/components/pictures/placeholder.jpeg",
+      image: "../src/assets/dan-placeholder.webp",
     },
     {
       name: "Jerry",
       role: "Fullstack Developer",
-      image: "../src/components/pictures/placeholder.jpeg",
+      image: "../src/assets/jerry-placeholder.webp",
     },
     {
       name: "Sam",
       role: "Fullstack Developer",
-      image: "../src/components/pictures/placeholder.jpeg",
+      image: "../src/assets/sam-placeholder.jpeg",
     },
     {
       name: "Vlad",
       role: "Fullstack Developer",
-      image: "../src/components/pictures/placeholder.jpeg",
+      image: "../src/assets/vlad-placeholder.jpeg",
     },
     // Add more developers as needed
   ];
