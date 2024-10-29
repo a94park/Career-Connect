@@ -142,7 +142,9 @@ function SearchAndFilterSystem() {
 
   return (
     <div className="searchF-container">
+
       <form className="filter-form" onSubmit={handleFilterSubmit}>
+        <h3>Search Bar</h3>
         {/* Filter Inputs */}
         <div className="form-group">
           <label htmlFor="jobTitle" className="form-label">
@@ -215,6 +217,7 @@ function SearchAndFilterSystem() {
 
       {results.length > 0 && !endOfResults ? (
         <div className={`result-card ${slideDirection}`}>
+
           <h3>{results[currentIndex].title}</h3>
           <p>
             <strong>Location:</strong> {results[currentIndex].location}
