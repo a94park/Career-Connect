@@ -217,6 +217,7 @@ function SearchAndFilterSystem() {
 
       {results.length > 0 && !endOfResults ? (
         <div className={`result-card ${slideDirection}`}>
+
           <h3>{results[currentIndex].title}</h3>
           <p>
             <strong>Location:</strong> {results[currentIndex].location}
