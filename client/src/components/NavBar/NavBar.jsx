@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBar.scss";
+import LogoutPopUp from "./LogoutPopUp";
 
 function NavBar({ isLoggedIn, handleLogout, userType }) {
   const [scrolled, setScrolled] = useState(false);
+  const [showLogoutPopUp, setShowLogoutPopUp] = useState(false); // Controls LogoutPopUp
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,56 +28,61 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
 
   const handleLogoutAndNavigate = () => {
     handleLogout(); // Call the logout function
-    navigate("/"); // Then navigate to the home page
+    setShowLogoutPopUp(true);
   };
 
   return (
-    <nav className={scrolled ? "navbar-scrolled" : ""}>
-      <ul>
-        <li>
-          <Link className="navbar-link" to="/">
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link className="navbar-link" to="/the-team">
-            Team
-          </Link>
-        </li>
-        {isLoggedIn ? (
-          <>
-            <li>
-              <Link
-                className="navbar-link"
-                to={
-                  userType === "employer"
-                    ? "/employer-dashboard"
-                    : "/job-seeker-dashboard"
-                }
-              >
-                Dashboard
-              </Link>
-            </li>
-            <li>
-              <button onClick={handleLogoutAndNavigate}>Logout</button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link className="navbar-link" to="/register">
-                Register
-              </Link>
-            </li>
-            <li>
-              <Link className="navbar-link" to="/login">
-                Login
-              </Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
+
+    <>
+      <nav className={scrolled ? "navbar-scrolled" : ""}>
+        <ul>
+          <li>
+            <Link className="navbar-link" to="/">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link className="navbar-link" to="/the-team">
+              The Team
+            </Link>
+          </li>
+          {isLoggedIn ? (
+            <>
+              <li>
+                <Link
+                  className="navbar-link"
+                  to={
+                    userType === "employer"
+                      ? "/employer-dashboard"
+                      : "/job-seeker-dashboard"
+                  }
+                >
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <button onClick={handleLogoutAndNavigate}>Logout</button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link className="navbar-link" to="/register">
+                  Register
+                </Link>
+              </li>
+              <li>
+                <Link className="navbar-link" to="/login">
+                  Login
+                </Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
+      {showLogoutPopUp && <LogoutPopUp />}
+    </>
+
   );
 }
 
