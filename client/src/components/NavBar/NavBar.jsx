@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./NavBar.scss";
 import LogoutPopUp from "./LogoutPopUp";
 
 function NavBar({ isLoggedIn, handleLogout, userType }) {
   const [scrolled, setScrolled] = useState(false);
   const [showLogoutPopUp, setShowLogoutPopUp] = useState(false); // Controls LogoutPopUp
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +31,6 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
   };
 
   return (
-
     <>
       <nav className={scrolled ? "navbar-scrolled" : ""}>
         <ul>
@@ -55,13 +53,16 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
                     userType === "employer"
                       ? "/employer-dashboard"
                       : "/job-seeker-dashboard"
-                  }
-                >
+                  }>
                   Dashboard
                 </Link>
               </li>
               <li>
-                <button className ="logout-button" onClick={handleLogoutAndNavigate}>Logout</button>
+                <button
+                  className="logout-button"
+                  onClick={handleLogoutAndNavigate}>
+                  Logout
+                </button>
               </li>
             </>
           ) : (
@@ -80,9 +81,10 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
           )}
         </ul>
       </nav>
-      {showLogoutPopUp && <LogoutPopUp onClose={()=> setShowLogoutPopUp(false)}/>}
+      {showLogoutPopUp && (
+        <LogoutPopUp onClose={() => setShowLogoutPopUp(false)} />
+      )}
     </>
-
   );
 }
 

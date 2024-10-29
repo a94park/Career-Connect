@@ -23,7 +23,7 @@ function JobSeekerNotification() {
       setNotifications(data);
 
       // Check for any "Accepted" statuses and trigger confetti if present
-      if (data.some(notification => notification.employer_status === 1)) {
+      if (data.some((notification) => notification.employer_status === 1)) {
         setShowConfetti(true);
       }
     };
@@ -47,10 +47,10 @@ function JobSeekerNotification() {
       {notifications.length > 0 ? (
         notifications.map((notification, index) => (
           <div key={index} className="card notification-card mb-3 shadow">
-            <h5 className="card-title text-primary">
-              {" "}
-              {notification.job_posting_title}
-            </h5>
+            <h3>
+              <strong>{notification.employer.company_name} </strong>
+            </h3>
+            <p className="card-title"> {notification.job_posting_title}</p>
             <p className="card-description-text">
               {notification.job_posting_description}
             </p>
