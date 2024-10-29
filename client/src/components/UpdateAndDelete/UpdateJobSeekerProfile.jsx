@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from 'react-icons/fa';
+import "./UpdateJobSeekerProfile.scss";
 
 function UpdateJobSeekerProfile() {
     const [firstName, setFirstName] = useState('');
@@ -52,12 +53,12 @@ function UpdateJobSeekerProfile() {
                 reader.onerror = (error) => reject(error);
             });
         };
-    
+
         let profile_pic = null; // Declare profile_pic here
         if (profilePic) {
             profile_pic = await convertImageToBase64(profilePic);
         }
-    
+
         const education = educationFields
         .filter(field => field.education) // Keep only fields with a non-empty education value
         .map((field) => {
@@ -68,7 +69,7 @@ function UpdateJobSeekerProfile() {
                 institution,
             };
         });
-    
+
         const formData = {
             profile_pic,
             first_name: firstName,
@@ -79,7 +80,7 @@ function UpdateJobSeekerProfile() {
             education, // JSON string of education array
             skills, // JSON string of skills array
         };
-    
+
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -112,7 +113,7 @@ function UpdateJobSeekerProfile() {
             console.error("Error updating profile:", error);
         }
     };
-    
+
 
     return (
         <div className="update-profile-page">

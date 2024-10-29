@@ -7,14 +7,15 @@
   width: 80vw;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-top: 140px;
+  padding-top: 120px;
+  margin-bottom: 10px;
 
   .filter-form {
     min-width: 280px;
     max-width: 900px;
     width:600px;
     margin: 20px;
-    padding: 20px;
+    margin-bottom: 10px;
     padding-top:56px;
     height: 70vh;
     overflow-y: auto;
@@ -22,6 +23,10 @@
     background-color: #f5f5f5;
     box-shadow: 5px 8px 10px 5px rgba(75, 75, 75, 0.1);
     align-items: center;
+    display: flex;
+    flex-direction: column;
+
+
     .form-group {
       margin-bottom: 15px;
 
