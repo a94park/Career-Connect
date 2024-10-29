@@ -61,7 +61,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
                 </Link>
               </li>
               <li>
-                <button onClick={handleLogoutAndNavigate}>Logout</button>
+                <button className ="logout-button" onClick={handleLogoutAndNavigate}>Logout</button>
               </li>
             </>
           ) : (
