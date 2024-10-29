@@ -120,7 +120,7 @@ const JobPosting = () => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className="form-control" /* Use Bootstrap form-control class */
+            /* Use Bootstrap form-control class */
             required
           />
         </div>

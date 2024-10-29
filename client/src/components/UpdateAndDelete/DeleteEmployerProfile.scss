@@ -1,15 +1,17 @@
 .delete-profile-container {
   position: relative;
   margin-top: 2rem; // Adjust as needed
+  display: flex;
+  justify-content: center;
 
   .delete-profile-link {
-      color: #d9534f; // Use the same red as before
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: underline; // Makes it look like a link
+    color: #d9534f; // Use the same red as before
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline; // Makes it look like a link
 
-      &:hover {
-          color: darken(#d9534f, 10%); // Darken color on hover
-      }
+    &:hover {
+      color: darken(#d9534f, 10%); // Darken color on hover
+    }
   }
 }

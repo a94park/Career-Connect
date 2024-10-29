@@ -134,7 +134,7 @@ function NotificationsComponent() {
               </p>
               <div className="button-group">
                 <button
-                  className="btn btn-success m-2"
+                  className="accept-button"
                   onClick={() =>
                     handleEmployerResponse(
                       notification.application_id,
@@ -145,7 +145,7 @@ function NotificationsComponent() {
                   Accept
                 </button>
                 <button
-                  className="btn btn-danger m-2"
+                  className="reject-button"
                   onClick={() =>
                     handleEmployerResponse(
                       notification.application_id,
@@ -156,7 +156,7 @@ function NotificationsComponent() {
                   Reject
                 </button>
                 <button
-                  className="btn btn-info m-2"
+                  className="vpro-button"
                   onClick={() => viewProfile(job_seeker)}>
                   View Profile
                 </button>

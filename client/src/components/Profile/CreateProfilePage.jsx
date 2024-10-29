@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "./CreateProfilePage.scss";
 import { FaPlus } from "react-icons/fa";
 import CreateProfileView from "./CreateProfileView";
+import "../UpdateAndDelete/UpdateJobSeekerProfile.scss"; //USING THIS SCSS FILE!
 
 function CreateProfilePage({ setProfileData, onProfileUpdate }) {
   const [skills, setSkills] = useState([]);
@@ -24,9 +24,9 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
   const [nationalityValid, setNationalityValid] = useState(true);
   const [skillsValid, setSkillsValid] = useState(true);
 
-  const [showOverlay, setShowOverlay] = useState(false);
-  const [showForm, setShowForm] = useState(true);
-  const [isButtonShrinking, setIsButtonShrinking] = useState(false);
+  // const [showOverlay, setShowOverlay] = useState(false);
+  // const [showForm, setShowForm] = useState(true);
+  // const [isButtonShrinking, setIsButtonShrinking] = useState(false);
 
   // const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -176,200 +176,180 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
     return <CreateProfileView setProfileData={setProfileData} />;
   }
   return (
-    <div>
+    <div className="update-profile-page">
       {/* Form section */}
-      <div className={`create-profile-page ${showForm ? "" : "hidden-form"}`}>
-        {showForm && (
-          <form onSubmit={handleSubmit}>
-            <h1>Create Your Profile</h1>
-            {/* Profile Picture */}
-            <label htmlFor="profile-picture">Profile Picture:</label>
-            <input
-              type="file"
-              accept="image/jpeg, image/png"
-              id="profile-picture"
-              onChange={handleImageChange}
+
+      <form onSubmit={handleSubmit}>
+        <h1>Create Your Profile</h1>
+        {/* Profile Picture */}
+        <label htmlFor="profile-picture">Profile Picture:</label>
+        <input
+          type="file"
+          accept="image/jpeg, image/png"
+          id="profile-picture"
+          onChange={handleImageChange}
+        />
+        {selectedImage && (
+          <div className="image-preview">
+            <img
+              src={URL.createObjectURL(selectedImage)}
+              alt="Profile Preview"
+              style={{ width: "100px", height: "80px" }}
             />
-            {selectedImage && (
-              <div className="image-preview">
-                <img
-                  src={URL.createObjectURL(selectedImage)}
-                  alt="Profile Preview"
-                  style={{ width: "100px", height: "80px" }}
-                />
-              </div>
-            )}
-
-            {/* First Name */}
-            <label htmlFor="first-name">First Name:</label>
-            <input
-              type="text"
-              id="first-name"
-              placeholder="First name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className={!firstNameValid ? "invalid-input" : ""}
-            />
-
-            {/* Last Name */}
-            <label htmlFor="last-name">Last Name:</label>
-            <input
-              type="text"
-              id="last-name"
-              placeholder="Last name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className={!lastNameValid ? "invalid-input" : ""}
-            />
-
-            {/* Date of Birth */}
-            <label htmlFor="dob">Date of Birth:</label>
-            <input
-              type="date"
-              id="dob"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              className={!dobValid ? "invalid-input" : ""}
-            />
-
-            {/* Gender */}
-            <label>Gender:</label>
-            <div
-              className={`gender-input ${!genderValid ? "invalid-input" : ""}`}>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="Male"
-                  onChange={(e) => setGender(e.target.value)}
-                />{" "}
-                Male
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="Female"
-                  onChange={(e) => setGender(e.target.value)}
-                />{" "}
-                Female
-              </label>
-            </div>
-
-            {/* Nationality */}
-            <label htmlFor="nationality">Nationality:</label>
-            <input
-              type="text"
-              id="nationality"
-              placeholder="Nationality"
-              value={nationality}
-              onChange={(e) => setNationality(e.target.value)}
-              className={!nationalityValid ? "invalid-input" : ""}
-            />
-
-            {/* Education Fields */}
-            {educationFields.map((field, index) => (
-              <div key={index} className="education-section">
-                <label htmlFor={`education-${index}`}>Education Level:</label>
-                <select
-                  id={`education-${index}`}
-                  name="education"
-                  value={field.education}
-                  onChange={(e) => handleEducationChange(index, e)}>
-                  <option value="">Select your education level</option>
-                  <option value="High School Diploma">
-                    High School Diploma
-                  </option>
-                  <option value="Skill Certification">
-                    Skill Certification
-                  </option>
-                  <option value="Bachelor's Degree">Bachelor's Degree</option>
-                  <option value="Master's Degree">Master's Degree</option>
-                  <option value="PhD">PhD</option>
-                </select>
-
-                {field.education &&
-                  field.education !== "High School Diploma" && (
-                    <>
-                      <label htmlFor={`degree-details-${index}`}>
-                        Degree/Certification Details:
-                      </label>
-                      <input
-                        type="text"
-                        id={`degree-details-${index}`}
-                        name="degreeDetails"
-                        value={field.degreeDetails}
-                        placeholder="Degree details"
-                        onChange={(e) => handleEducationChange(index, e)}
-                      />
-
-                      <label htmlFor={`institution-${index}`}>
-                        Institution Name:
-                      </label>
-                      <input
-                        type="text"
-                        id={`institution-${index}`}
-                        name="institution"
-                        value={field.institution}
-                        placeholder="Institution name"
-                        onChange={(e) => handleEducationChange(index, e)}
-                      />
-                    </>
-                  )}
-              </div>
-            ))}
-
-            <button
-              type="button"
-              className="add-education-btn"
-              onClick={handleAddEducationField}>
-              <FaPlus /> Add Education
-            </button>
-
-            {/* Skills */}
-            <label htmlFor="skills">Skills (Add at least 3):</label>
-            <div
-              className={`skills-input ${!skillsValid ? "invalid-input" : ""}`}>
-              <input
-                type="text"
-                id="skills"
-                value={inputSkill}
-                onChange={handleSkillChange}
-                placeholder="Enter a skill and press add"
-              />
-              <button onClick={handleAddSkill}>Add Skill</button>
-            </div>
-            <div className="skills-list">
-              {skills.map((skill, index) => (
-                <span key={index} className="skill-item">
-                  {skill}
-                  <button
-                    className="delete-skill"
-                    onClick={() => handleDeleteSkill(skill)}>
-                    &times;
-                  </button>
-                  {index < skills.length - 1 && ", "}{" "}
-                  {/* Add a comma only if it's not the last skill */}
-                </span>
-              ))}
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className={`submit-btn ${isButtonShrinking ? "shrinking" : ""}`}>
-              Submit
-            </button>
-          </form>
-        )}
-
-        {/* Success Overlay */}
-        {showOverlay && (
-          <div className="overlay show">
-            <i className="fas fa-check"></i>
           </div>
         )}
-      </div>
+
+        {/* First Name */}
+        <label htmlFor="first-name">First Name:</label>
+        <input
+          type="text"
+          id="first-name"
+          placeholder="First name"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className={!firstNameValid ? "invalid-input" : ""}
+        />
+
+        {/* Last Name */}
+        <label htmlFor="last-name">Last Name:</label>
+        <input
+          type="text"
+          id="last-name"
+          placeholder="Last name"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className={!lastNameValid ? "invalid-input" : ""}
+        />
+
+        {/* Date of Birth */}
+        <label htmlFor="dob">Date of Birth:</label>
+        <input
+          type="date"
+          id="dob"
+          value={dob}
+          onChange={(e) => setDob(e.target.value)}
+          className={!dobValid ? "invalid-input" : ""}
+        />
+
+        {/* Gender */}
+        <label>Gender:</label>
+        <div className={`gender-input ${!genderValid ? "invalid-input" : ""}`}>
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="Male"
+              onChange={(e) => setGender(e.target.value)}
+            />{" "}
+            Male
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="Female"
+              onChange={(e) => setGender(e.target.value)}
+            />{" "}
+            Female
+          </label>
+        </div>
+
+        {/* Nationality */}
+        <label htmlFor="nationality">Nationality:</label>
+        <input
+          type="text"
+          id="nationality"
+          placeholder="Nationality"
+          value={nationality}
+          onChange={(e) => setNationality(e.target.value)}
+          className={!nationalityValid ? "invalid-input" : ""}
+        />
+
+        {/* Education Fields */}
+        {educationFields.map((field, index) => (
+          <div key={index} className="education-section">
+            <label htmlFor={`education-${index}`}>Education Level:</label>
+            <select
+              id={`education-${index}`}
+              name="education"
+              value={field.education}
+              onChange={(e) => handleEducationChange(index, e)}>
+              <option value="">Select your education level</option>
+              <option value="High School Diploma">High School Diploma</option>
+              <option value="Skill Certification">Skill Certification</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="PhD">PhD</option>
+            </select>
+
+            {field.education && field.education !== "High School Diploma" && (
+              <>
+                <label htmlFor={`degree-details-${index}`}>
+                  Degree/Certification Details:
+                </label>
+                <input
+                  type="text"
+                  id={`degree-details-${index}`}
+                  name="degreeDetails"
+                  value={field.degreeDetails}
+                  placeholder="Degree details"
+                  onChange={(e) => handleEducationChange(index, e)}
+                />
+
+                <label htmlFor={`institution-${index}`}>
+                  Institution Name:
+                </label>
+                <input
+                  type="text"
+                  id={`institution-${index}`}
+                  name="institution"
+                  value={field.institution}
+                  placeholder="Institution name"
+                  onChange={(e) => handleEducationChange(index, e)}
+                />
+              </>
+            )}
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className="add-education-btn"
+          onClick={handleAddEducationField}>
+          <FaPlus /> Add Education
+        </button>
+
+        {/* Skills */}
+        <label htmlFor="skills">Skills (Add at least 3):</label>
+        <div className={`skills-input ${!skillsValid ? "invalid-input" : ""}`}>
+          <input
+            type="text"
+            id="skills"
+            value={inputSkill}
+            onChange={handleSkillChange}
+            placeholder="Enter a skill and press add"
+          />
+          <button onClick={handleAddSkill}>Add Skill</button>
+        </div>
+        <div className="skills-list">
+          {skills.map((skill, index) => (
+            <span key={index} className="skill-item">
+              {skill}
+              {index < skills.length - 1 && ", "} {/*ummmm what?*/}
+              <button
+                className="delete-skill"
+                onClick={() => handleDeleteSkill(skill)}>
+                &times;
+              </button>
+            </span>
+          ))}
+        </div>
+
+        {/* Submit Button */}
+        <button type="submit" className="submit-btn">
+          Submit
+        </button>
+      </form>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./EmployersSeekingForJobSeekers.scss"; // Assume SCSS is used for styling.
-import placeholderImage from '../../assets/placeholder.jpeg'
-
+import placeholderImage from "../../assets/placeholder.jpeg";
 
 function EmployersSeekingForJobSeekers() {
   const [results, setResults] = useState([]);
@@ -23,10 +22,13 @@ function EmployersSeekingForJobSeekers() {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/job_seekers_search", {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        "http://127.0.0.1:5000/api/job_seekers_search",
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -82,16 +84,20 @@ function EmployersSeekingForJobSeekers() {
   };
 
   return (
-    <div className="search-container">
+    <div className="em-search-container">
       <h1>Job Seekers</h1>
       {loading && <p>Loading...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && results.length === 0 && <p>No job seekers found.</p>}
 
       {results.length > 0 && (
-        <div className="result-card">
+        <div className="em-result-card">
           <img
-            src={results[currentIndex].profile_pic ? results[currentIndex].profile_pic : placeholderImage}
+            src={
+              results[currentIndex].profile_pic
+                ? results[currentIndex].profile_pic
+                : placeholderImage
+            }
             alt={`${results[currentIndex].first_name} ${results[currentIndex].last_name}`}
             className="profile-pic"
           />
@@ -99,7 +105,8 @@ function EmployersSeekingForJobSeekers() {
             {results[currentIndex].first_name} {results[currentIndex].last_name}
           </h3>
           <p>
-            <strong>Date of Birth:</strong> {new Date(results[currentIndex].dob).toLocaleDateString()}
+            <strong>Date of Birth:</strong>{" "}
+            {new Date(results[currentIndex].dob).toLocaleDateString()}
           </p>
           <p>
             <strong>Gender:</strong> {results[currentIndex].gender}
@@ -111,7 +118,8 @@ function EmployersSeekingForJobSeekers() {
             <strong>Skills:</strong> {results[currentIndex].skills.join(", ")}
           </p>
           <p>
-            <strong>Education:</strong> {formatEducation(results[currentIndex].education)}
+            <strong>Education:</strong>{" "}
+            {formatEducation(results[currentIndex].education)}
           </p>
 
           <div className="button-group">

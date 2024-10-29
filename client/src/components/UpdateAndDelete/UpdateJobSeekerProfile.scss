@@ -1,5 +1,6 @@
-@import '../../assets/styles/util/variables.scss';
+@import "../../assets/styles/util/variables.scss";
 
+// THIS FILE IS ALSO BEING USED FOR CREATEPROFILEPAGE(JOBSEEKER)
 // Base styling for the update profile form
 .update-profile-page {
   padding: 2rem;
@@ -8,11 +9,12 @@
   border-radius: 8px;
   box-shadow: $box-shadow;
   font-family: $font-family;
+  max-height: 80vh;
+  overflow-y: auto;
 
   form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     background-color: $form-bg-color;
     padding: 2rem;
     border-radius: 8px;
@@ -31,8 +33,8 @@
     select {
       width: 100%;
       padding: 0.8rem;
-
-      color: $text-color;
+      margin-bottom: 10px;
+      color: black;
       border: 1px solid $input-border-color;
       border-radius: 4px;
       font-size: 1rem;
@@ -52,6 +54,7 @@
         color: $primary-color;
         display: flex;
         align-items: center;
+        margin-bottom: 10px;
 
         input[type="radio"] {
           margin-right: 0.5rem;
@@ -60,15 +63,13 @@
     }
 
     .education-section {
-      background-color: $input-bg;
+      background-color: $form-bg-color;
       padding: 1rem;
       border-radius: 4px;
-      border: 1px solid $border-color;
-
-      label {
+      border: 1px solid $input-border-color label {
         display: block;
         color: $primary-color;
-        margin-bottom: 0.5rem;
+        // margin-bottom: 0.5rem;
       }
 
       select,
@@ -79,19 +80,19 @@
     }
 
     .add-education-btn {
-      background-color: $primary-color;
+      background-color: $secondary-color;
       color: $text-color;
-      padding: 0.6rem;
+      padding: 0.5rem 1rem;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
+      transition: background-color 0.3s ease;
+      width: 10rem;
+      align-self: center;
+      margin-bottom: 1rem;
 
       &:hover {
-        background-color: $button-hover-color;
+        background-color: lighten($secondary-color, 10%);
       }
 
       svg {
@@ -101,7 +102,7 @@
 
     .skills-input {
       display: flex;
-      align-items: center;
+      // align-items: center;
       gap: 0.5rem;
 
       input[type="text"] {
@@ -112,13 +113,16 @@
         background-color: $secondary-color;
         color: $text-color;
         padding: 0.5rem 1rem;
+
+        width: 10rem;
+        height: 3.2rem;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease;
 
         &:hover {
-          background-color: $button-hover-color;
+          background-color: lighten($secondary-color, 10%);
         }
       }
     }
@@ -144,6 +148,7 @@
           cursor: pointer;
           font-size: 1rem;
           line-height: 1;
+          margin-bottom: 5px;
 
           &:hover {
             color: $button-hover-color;
@@ -160,6 +165,7 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin-top: 3rem;
       transition: background-color 0.3s ease;
 
       &:hover {
