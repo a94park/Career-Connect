@@ -32,6 +32,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
   };
 
   return (
+
     <>
       <nav className={scrolled ? "navbar-scrolled" : ""}>
         <ul>
@@ -81,6 +82,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
       </nav>
       {showLogoutPopUp && <LogoutPopUp />}
     </>
+
   );
 }
 

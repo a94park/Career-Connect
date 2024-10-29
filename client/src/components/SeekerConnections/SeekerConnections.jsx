@@ -6,7 +6,7 @@ import "./SeekerConnections.scss";
 
 function SeekerConnections() {
   const [activeTab, setActiveTab] = useState("applied");
-  const [connectedCount, setConnectedCount] = useState(100); // Example: 5 employers have connected
+  const [connectedCount, setConnectedCount] = useState(100000); // Example: 5 employers have connected
 
   const renderContent = () => {
     switch (activeTab) {
@@ -41,15 +41,13 @@ function SeekerConnections() {
       <div className="tab-container">
         <button
           className={activeTab === "applied" ? "active" : ""}
-          onClick={() => setActiveTab("applied")}
-        >
+          onClick={() => setActiveTab("applied")}>
           Applied
         </button>
 
         <button
           className={activeTab === "connected" ? "active" : ""}
-          onClick={() => setActiveTab("connected")}
-        >
+          onClick={() => setActiveTab("connected")}>
           Connected
           {connectedCount > 0 && (
             <span className="counter">{connectedCount}</span>
@@ -58,8 +56,7 @@ function SeekerConnections() {
 
         <button
           className={activeTab === "passed" ? "active" : ""}
-          onClick={() => setActiveTab("passed")}
-        >
+          onClick={() => setActiveTab("passed")}>
           Passed
         </button>
       </div>

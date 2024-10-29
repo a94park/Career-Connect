@@ -1,5 +1,6 @@
 //   import React, { useEffect } from 'react';
 //   import './CreateProfileView.css';
+import placeholderImage from '../../assets/placeholder.jpeg'
 
 function CreateProfileView({ profileData }) {
   if (!profileData) {
@@ -8,24 +9,13 @@ function CreateProfileView({ profileData }) {
 
   return (
     <div>
-      {/* Div for particle effect */}
-      {/* <div
-        id="particles-js"
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-        }}
-      ></div> */}
-
       <div className="profile-view">
         <h1>
           {profileData.first_name} {profileData.last_name}'s Profile
         </h1>
         <div className="profile-details">
           <img
-            src={profileData.profilePicture}
+            src={profileData.profile_pic ? profileData.profile_pic : placeholderImage}
             alt="Profile"
             className="profile-picture"
           />
@@ -62,7 +52,7 @@ function CreateProfileView({ profileData }) {
               </>
             )}
             <p>
-              <strong>Skills:</strong> {profileData.skills}
+            <strong>Skills:</strong> {profileData.skills.slice(0, -1).join(', ') + (profileData.skills.length > 1 ? ', and ' : '') + profileData.skills.slice(-1)}
             </p>
           </div>
         </div>

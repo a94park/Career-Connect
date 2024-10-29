@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import JobSeekerNotificationDelete from "./JobSeekerNotificationDelete";
+import ConfettiEffect from "../ConfettiEffect/ConfettiEffect";
 
 function JobSeekerNotification() {
   const [notifications, setNotifications] = useState([]);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -19,13 +21,17 @@ function JobSeekerNotification() {
 
       const data = await response.json();
       setNotifications(data);
+
+      // Check for any "Accepted" statuses and trigger confetti if present
+      if (data.some(notification => notification.employer_status === 1)) {
+        setShowConfetti(true);
+      }
     };
 
     fetchNotifications();
   }, []);
 
   const handleDeleteNotification = (applicationId) => {
-    // Filter out the deleted notification from the state
     setNotifications(
       notifications.filter(
         (notification) => notification.application_id !== applicationId
@@ -35,10 +41,14 @@ function JobSeekerNotification() {
 
   return (
     <div className="jobseeker-notifications">
+      {/* Trigger confetti if there's an accepted notification */}
+      <ConfettiEffect trigger={showConfetti} />
+
       {notifications.length > 0 ? (
         notifications.map((notification, index) => (
           <div key={index} className="card notification-card mb-3 shadow">
             <h5 className="card-title text-primary">
+              {" "}
               {notification.job_posting_title}
             </h5>
             <p className="card-description-text">

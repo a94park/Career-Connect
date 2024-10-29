@@ -12,8 +12,8 @@ import "./Dashboard.scss";
 
 function EmployerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(!profileData);
-  const [fullName] = useState(localStorage.getItem("fullName") || "User");
-  const [userType] = useState(localStorage.getItem("userType") || "job_seeker");
+  // const [fullName] = useState(localStorage.getItem("fullName") || "User");
+  // const [userType] = useState(localStorage.getItem("userType") || "job_seeker");
   const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
@@ -80,8 +80,8 @@ function EmployerDashboard({ profileData, setProfileData }) {
       case "security":
         return (
           <div>
-            <DeleteEmployerProfile />
             <UpdateEmployerProfile />
+            <DeleteEmployerProfile />
           </div>
         );
       case "notification":
@@ -107,47 +107,35 @@ function EmployerDashboard({ profileData, setProfileData }) {
         <ul className="sidebar-menu">
           <li
             onClick={() => setActiveTab("profile")}
-            className={activeTab === "profile" ? "active" : ""}
-          >
+            className={activeTab === "profile" ? "active" : ""}>
             Profile
           </li>
           <li
             onClick={() => setActiveTab("search")}
-            className={activeTab === "search" ? "active" : ""}
-          >
+            className={activeTab === "search" ? "active" : ""}>
             Search Job Seekers
           </li>
           <li
             onClick={() => setActiveTab("create job post")}
-            className={activeTab === "create job post" ? "active" : ""}
-          >
+            className={activeTab === "create job post" ? "active" : ""}>
             Create Job Post
           </li>
           <li
             onClick={() => setActiveTab("security")}
-            className={activeTab === "security" ? "active" : ""}
-          >
-            Security
+            className={activeTab === "security" ? "active" : ""}>
+            Settings
           </li>
           <li
             onClick={() => setActiveTab("notification")}
-            className={activeTab === "notification" ? "active" : ""}
-          >
+            className={activeTab === "notification" ? "active" : ""}>
             Notification
           </li>
           <li
             onClick={() => setActiveTab("my-job-posts")}
-            className={activeTab === "my-job-posts" ? "active" : ""}
-          >
+            className={activeTab === "my-job-posts" ? "active" : ""}>
             My Job Posts
           </li>
         </ul>
-        <div className="welcome-message">
-          <p>
-            Welcome, {fullName}! You are logged in as{" "}
-            {userType === "job_seeker" ? "a Job Seeker" : "an Employer"}.
-          </p>
-        </div>
       </aside>
       <main className="content-area">{renderContent()}</main>
     </div>

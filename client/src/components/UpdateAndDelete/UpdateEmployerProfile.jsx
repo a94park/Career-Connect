@@ -25,7 +25,6 @@ function UpdateEmployerProfile() {
         setCompanyBenefits(updatedBenefits);
     };
 
-    // Handle company logo change
     const handleLogoChange = (e) => {
         const file = e.target.files[0];
         if (file) setCompanyLogo(file);
@@ -43,20 +42,18 @@ function UpdateEmployerProfile() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Convert company logo to base64 if necessary
         let company_logo = null;
         if (companyLogo) {
             company_logo = await convertImageToBase64(companyLogo);
         }
 
-        // Prepare profile data
         const profileData = {
             company_name: companyName,
             about_company: aboutCompany,
-            company_logo,  // Can be null if no logo was uploaded
+            company_logo,
             preferential_treatment: preferentialTreatment,
-            company_benefits: JSON.stringify(companyBenefits),  // Convert benefits to JSON string
-            email  // Include email in the profile data
+            company_benefits: JSON.stringify(companyBenefits),
+            email
         };
 
         console.log("Submitting profile data:", profileData);
@@ -80,7 +77,6 @@ function UpdateEmployerProfile() {
             const data = await response.json();
 
             if (response.ok) {
-                // Show success alert
                 alert("Profile Updated!");
             } else {
                 alert(`An error occurred: ${data.message}`);
@@ -93,15 +89,12 @@ function UpdateEmployerProfile() {
 
     return (
         <div>
-            {/* Particle effect container */}
             <div id="particles-js" style={{ position: 'absolute', width: '100%', height: '100%', zIndex: -1 }}></div>
 
-            {/* Form section */}
-            <div className={`create-profile-page`}>
+            <div className="create-profile-page">
                 <form onSubmit={handleSubmit}>
                     <h1>Update Employer Profile</h1>
 
-                    {/* Company Logo */}
                     <label htmlFor="company-logo">Company Logo:</label>
                     <input type="file" accept="image/jpeg, image/png" id="company-logo" onChange={handleLogoChange} />
                     {companyLogo && (
@@ -110,7 +103,6 @@ function UpdateEmployerProfile() {
                         </div>
                     )}
 
-                    {/* Company Name */}
                     <label htmlFor="company-name">Company Name:</label>
                     <input
                         type="text"
@@ -120,7 +112,6 @@ function UpdateEmployerProfile() {
                         onChange={(e) => setCompanyName(e.target.value)}
                     />
 
-                    {/* Email */}
                     <label htmlFor="email">Email:</label>
                     <input
                         type="email"
@@ -130,7 +121,6 @@ function UpdateEmployerProfile() {
                         onChange={(e) => setEmail(e.target.value)}
                     />
 
-                    {/* About Company */}
                     <label htmlFor="about-company">About Company:</label>
                     <textarea
                         id="about-company"
@@ -139,7 +129,6 @@ function UpdateEmployerProfile() {
                         onChange={(e) => setAboutCompany(e.target.value)}
                     />
 
-                    {/* Preferential Treatment */}
                     <label htmlFor="preferential-treatment">Preferential Treatment:</label>
                     <input
                         type="text"
@@ -149,7 +138,6 @@ function UpdateEmployerProfile() {
                         onChange={(e) => setPreferentialTreatment(e.target.value)}
                     />
 
-                    {/* Company Benefits */}
                     <label htmlFor="company-benefits">Company Benefits (Add at least 1):</label>
                     <div className="benefits-input">
                         <input
@@ -159,7 +147,7 @@ function UpdateEmployerProfile() {
                             onChange={handleBenefitChange}
                             placeholder="Enter a benefit and press add"
                         />
-                        <button onClick={handleAddBenefit}>Add Benefit</button>
+                        <button type="button" className="add-benefit-button" onClick={handleAddBenefit}>Add Benefit</button>
                     </div>
                     <div className="benefits-list">
                         {companyBenefits.map((benefit, index) => (
@@ -172,13 +160,7 @@ function UpdateEmployerProfile() {
                         ))}
                     </div>
 
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        className={`submit-btn`}
-                    >
-                        Update
-                    </button>
+                    <button type="submit" className="submit-btn">Update</button>
                 </form>
             </div>
         </div>

@@ -17,7 +17,7 @@ function SeekerPassed() {
       const data = await response.json();
       setApplications(data);
     } else {
-      alert("Failed to fetch applications");
+      console.log("Failed to fetch applications");
     }
   };
 
@@ -34,14 +34,16 @@ function SeekerPassed() {
         applied.map((application) => (
           <div
             className="card notification-card mb-3 shadow"
-            key={application.application_id}
-          >
-            <p>Job Title: {application.job_title}</p>
-            <p>Company Name: {application.company_name}</p>
+            key={application.application_id}>
+            <h3>
+              <strong>{application.company_name}</strong>
+            </h3>
+            <p className="card-title text-primary">{application.job_title}</p>
+            <p className="card-description-text">{application.description}</p>
 
-            {/* <p>
-                Applied on: {new Date(application.created_at).toLocaleString()}
-              </p> */}
+            <small className="text-muted">
+              Passed on: {new Date(application.created_at).toLocaleString()}
+            </small>
           </div>
         ))
       ) : (
