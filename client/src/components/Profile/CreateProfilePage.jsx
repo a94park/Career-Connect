@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./CreateProfilePage.css";
+import { useState } from "react";
+import "./CreateProfilePage.scss";
 import { FaPlus } from "react-icons/fa";
 import CreateProfileView from "./CreateProfileView";
 
