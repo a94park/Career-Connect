@@ -142,7 +142,9 @@ function SearchAndFilterSystem() {
 
   return (
     <div className="searchF-container">
+
       <form className="filter-form" onSubmit={handleFilterSubmit}>
+        <h3>Search Bar</h3>
         {/* Filter Inputs */}
         <div className="form-group">
           <label htmlFor="jobTitle" className="form-label">
