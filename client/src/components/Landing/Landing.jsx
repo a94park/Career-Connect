@@ -1,9 +1,9 @@
-// import "./Landing.scss";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from '../Footer/Footer'
 import bannerImage from "../../assets/styles/landing/banner2.jpg";
 import "./Landing.scss"
+
 
 
 
@@ -53,22 +53,23 @@ function Landing() {
         <h2 className="service-title">Services</h2>
       <div className="services-category">
       <div className="service-card service-info-one">
-        <h3>Service One</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <h3>Fast Application</h3>
+        <p>Streamline your job search with instant applications. With just a click, apply to multiple opportunities without the hassle of filling out repetitive forms.</p>
       </div>
       <div className="service-card service-info-two">
-        <h3>Service Two</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+        <h3>Encourages Response</h3>
+        <p>Boost your chances of engagement. Our platform actively prompts employers to review and respond, keeping job seekers informed every step of the way.</p>
       </div>
       <div className="service-card service-info-three">
-        <h3>Service Three</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit</p>
+        <h3>One Profile Only</h3>
+        <p>Level the playing field with a single, polished profile. Say goodbye to endless resume tweaks – one profile connects you to all relevant jobs, reducing stress and saving time.</p>
       </div>
       </div>
     </div>
 
     <div className="about-us-container">
       <h1 className="about-us-title">About Us</h1>
+      <div className="about-us-content">
       <p>
         At <span className="company-name">Career Connect</span>, we believe in
         bridging the gap between talented professionals and the opportunities
@@ -102,14 +103,15 @@ function Landing() {
         <span className="buzzword"> success stories </span>
         are written every day.
       </p>
+      </div>
+
       <div className="start-now-btn-container">
         <button className="start-now-btn" onClick={() => navigate("/register")}>
           Register
         </button>
-      </div>
+
     </div>
-
-
+    </div>
 
     <Footer />
     </div>

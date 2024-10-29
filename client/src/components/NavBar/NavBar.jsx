@@ -32,6 +32,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
   };
 
   return (
+
     <>
       <nav className={scrolled ? "navbar-scrolled" : ""}>
         <ul>
@@ -60,7 +61,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
                 </Link>
               </li>
               <li>
-                <button onClick={handleLogoutAndNavigate}>Logout</button>
+                <button className ="logout-button" onClick={handleLogoutAndNavigate}>Logout</button>
               </li>
             </>
           ) : (
@@ -79,8 +80,9 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
           )}
         </ul>
       </nav>
-      {showLogoutPopUp && <LogoutPopUp />}
+      {showLogoutPopUp && <LogoutPopUp onClose={()=> setShowLogoutPopUp(false)}/>}
     </>
+
   );
 }
 

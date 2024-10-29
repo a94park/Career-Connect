@@ -12,13 +12,16 @@ function NotificationsComponent() {
   const fetchNotificationsWithDetails = async () => {
     const token = getTokenFromLocalStorage();
     try {
-      const response = await fetch("http://localhost:5000/api/employer/notifications_details", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/employer/notifications_details",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) throw new Error("Failed to fetch notifications");
 
       const data = await response.json();
@@ -30,7 +33,11 @@ function NotificationsComponent() {
     }
   };
 
-  const handleEmployerResponse = async (applicationId, status, notificationId) => {
+  const handleEmployerResponse = async (
+    applicationId,
+    status,
+    notificationId
+  ) => {
     const token = getTokenFromLocalStorage();
     try {
       // Update the employer_status in the application
@@ -51,7 +58,9 @@ function NotificationsComponent() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to update employer status");
+        throw new Error(
+          errorData.message || "Failed to update employer status"
+        );
       }
 
       // Delete the corresponding notification
@@ -68,13 +77,16 @@ function NotificationsComponent() {
 
       if (!deleteResponse.ok) {
         const deleteErrorData = await deleteResponse.json();
-        throw new Error(deleteErrorData.message || "Failed to delete notification");
+        throw new Error(
+          deleteErrorData.message || "Failed to delete notification"
+        );
       }
 
       // Remove the notification from the displayed list
       setNotifications((prevNotifications) =>
         prevNotifications.filter(
-          (notification) => notification.notification.notification_id !== notificationId
+          (notification) =>
+            notification.notification.notification_id !== notificationId
         )
       );
     } catch (error) {
@@ -114,40 +126,38 @@ function NotificationsComponent() {
                 <strong>Description:</strong> {job_posting.description}
               </p>
               <p className="job-seeker-name">
-                <strong>Job Seeker:</strong> {job_seeker.first_name} {job_seeker.last_name}
+                <strong>Job Seeker:</strong> {job_seeker.first_name}{" "}
+                {job_seeker.last_name}
               </p>
               <p className="skills-list">
                 <strong>Skills:</strong> {job_seeker.skills.join(", ")}
               </p>
               <div className="button-group">
                 <button
-                  className="btn btn-success me-2"
+                  className="btn btn-success m-2"
                   onClick={() =>
                     handleEmployerResponse(
                       notification.application_id,
                       1,
                       notification.notification_id
                     )
-                  }
-                >
+                  }>
                   Accept
                 </button>
                 <button
-                  className="btn btn-danger"
+                  className="btn btn-danger m-2"
                   onClick={() =>
                     handleEmployerResponse(
                       notification.application_id,
                       2,
                       notification.notification_id
                     )
-                  }
-                >
+                  }>
                   Reject
                 </button>
                 <button
-                  className="btn btn-info"
-                  onClick={() => viewProfile(job_seeker)}
-                >
+                  className="btn btn-info m-2"
+                  onClick={() => viewProfile(job_seeker)}>
                   View Profile
                 </button>
               </div>
@@ -156,21 +166,42 @@ function NotificationsComponent() {
         </ul>
       )}
       {showProfileModal && selectedJobSeeker && (
-        <div className="modal-overlay">
+        <div className="em-modal-overlay">
           <div className="modal-content">
-            <button className="close-btn" onClick={closeModal}>X</button>
+            <button className="close-btn" onClick={closeModal}>
+              X
+            </button>
             <h3>
-              {selectedJobSeeker.first_name} {selectedJobSeeker.last_name}'s Profile
+              {selectedJobSeeker.first_name} {selectedJobSeeker.last_name}'s
+              Profile
             </h3>
-            <p><strong>Date of Birth:</strong> {selectedJobSeeker.dob}</p>
-            <p><strong>Gender:</strong> {selectedJobSeeker.gender}</p>
-            <p><strong>Nationality:</strong> {selectedJobSeeker.nationality}</p>
-            <p><strong>Skills:</strong> {selectedJobSeeker.skills.join(", ")}</p>
+            <p>
+              <strong>Date of Birth:</strong> {selectedJobSeeker.dob}
+            </p>
+            <p>
+              <strong>Gender:</strong> {selectedJobSeeker.gender}
+            </p>
+            <p>
+              <strong>Nationality:</strong> {selectedJobSeeker.nationality}
+            </p>
+            <p>
+              <strong>Skills:</strong> {selectedJobSeeker.skills.join(", ")}
+            </p>
             {selectedJobSeeker.education?.map((edu, index) => (
               <div key={index}>
-                <p><strong>Education:</strong> {edu.education}</p>
-                {edu.degreeDetails && <p><strong>Degree Details:</strong> {edu.degreeDetails}</p>}
-                {edu.institution && <p><strong>Institution:</strong> {edu.institution}</p>}
+                <p>
+                  <strong>Education:</strong> {edu.education}
+                </p>
+                {edu.degreeDetails && (
+                  <p>
+                    <strong>Degree Details:</strong> {edu.degreeDetails}
+                  </p>
+                )}
+                {edu.institution && (
+                  <p>
+                    <strong>Institution:</strong> {edu.institution}
+                  </p>
+                )}
               </div>
             ))}
           </div>

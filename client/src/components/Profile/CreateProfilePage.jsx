@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./CreateProfilePage.css";
+import { useState } from "react";
+import "./CreateProfilePage.scss";
 import { FaPlus } from "react-icons/fa";
 import CreateProfileView from "./CreateProfileView";
 
@@ -42,7 +42,6 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
       setInputSkill("");
     }
   };
-
 
   const handleDeleteSkill = (skillToDelete) => {
     const updatedSkills = skills.filter((skill) => skill !== skillToDelete);
@@ -149,17 +148,20 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
     console.log("Submitting profile data:", profileData);
 
     try {
-      const token = localStorage.getItem("token")
+      const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:5000/api/job_seeker/create_profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Include token if needed
-        },
-        body: JSON.stringify(profileData), // Prepare your profile data
-      });
-  
+      const response = await fetch(
+        "http://localhost:5000/api/job_seeker/create_profile",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Include token if needed
+          },
+          body: JSON.stringify(profileData), // Prepare your profile data
+        }
+      );
+
       if (response.ok) {
         const updatedProfile = await response.json();
         onProfileUpdate(updatedProfile.profile); // Call the update handler with the new profile data
@@ -233,8 +235,7 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
             {/* Gender */}
             <label>Gender:</label>
             <div
-              className={`gender-input ${!genderValid ? "invalid-input" : ""}`}
-            >
+              className={`gender-input ${!genderValid ? "invalid-input" : ""}`}>
               <label>
                 <input
                   type="radio"
@@ -274,8 +275,7 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
                   id={`education-${index}`}
                   name="education"
                   value={field.education}
-                  onChange={(e) => handleEducationChange(index, e)}
-                >
+                  onChange={(e) => handleEducationChange(index, e)}>
                   <option value="">Select your education level</option>
                   <option value="High School Diploma">
                     High School Diploma
@@ -322,16 +322,14 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
             <button
               type="button"
               className="add-education-btn"
-              onClick={handleAddEducationField}
-            >
+              onClick={handleAddEducationField}>
               <FaPlus /> Add Education
             </button>
 
             {/* Skills */}
             <label htmlFor="skills">Skills (Add at least 3):</label>
             <div
-              className={`skills-input ${!skillsValid ? "invalid-input" : ""}`}
-            >
+              className={`skills-input ${!skillsValid ? "invalid-input" : ""}`}>
               <input
                 type="text"
                 id="skills"
@@ -347,10 +345,11 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
                   {skill}
                   <button
                     className="delete-skill"
-                    onClick={() => handleDeleteSkill(skill)}
-                  >
+                    onClick={() => handleDeleteSkill(skill)}>
                     &times;
                   </button>
+                  {index < skills.length - 1 && ", "}{" "}
+                  {/* Add a comma only if it's not the last skill */}
                 </span>
               ))}
             </div>
@@ -358,8 +357,7 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
             {/* Submit Button */}
             <button
               type="submit"
-              className={`submit-btn ${isButtonShrinking ? "shrinking" : ""}`}
-            >
+              className={`submit-btn ${isButtonShrinking ? "shrinking" : ""}`}>
               Submit
             </button>
           </form>

@@ -1,129 +1,141 @@
 @import '../../assets/styles/util/variables.scss';
 
-// Import Google Fonts
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .create-profile-page {
-  max-width: 800px;
-  margin: auto;
-  padding: 0px;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 48px;
+  margin-bottom:48px;
+  padding: 20px;
   background-color: $form-bg-color;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: visibility 0.3s ease, height 0.3s ease;
-
-  &.hidden-form {
-    height: 0;
-    visibility: hidden;
-
-    form {
-      display: none;
-    }
-  }
+  border-radius: 8px;
+  box-shadow: $box-shadow;
+  transition: all 0.3s ease-in-out;
 
   h1 {
-    padding-top: 24px;
-    padding-bottom: 24px;
     text-align: center;
     color: $primary-color;
-    font-family: $font-family;
+    margin-bottom: 20px;
   }
 
-  form {
+  // Scoped styles for form elements
+  input[type="text"],
+  input[type="email"],
+  input[type="file"],
+  textarea,
+  .benefits-input .form-input {
+    background-color: $form-bg-color;
+    border: 1px solid $input-border-color;
+    color: $border-color;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-radius: 4px; // Consistent styling for all inputs
+    box-sizing: border-box; // Make inputs responsive
+
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+    }
+  }
+
+  label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: $primary-color;
+  }
+
+  .benefits-input {
     display: flex;
-    flex-direction: column;
-    overflow-y: auto;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 
-    .form-group {
-      margin-bottom: 20px;
 
-      label {
-        font-weight: 600;
-        color: $primary-color;
-        display: block;
-        margin-bottom: 5px;
-      }
-
-      input[type="text"],
-      input[type="file"],
-      input[type="email"],
-      textarea {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid $input-border-color;
-        background-color: $input-bg;
-        color: $text-color;
-        font-family: $font-family;
-        font-size: 16px;
-        transition: border-color 0.3s ease;
-
-        &:focus {
-          border-color: $button-bg-color;
-          box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-        }
-
-        &:disabled {
-          background-color: lighten($input-bg, 20%);
-          cursor: not-allowed;
-        }
-      }
-
-      &.textarea {
-        min-height: 100px;
-        resize: vertical;
-      }
+    // Input field for benefits
+    .form-input {
+      flex: 1;
     }
 
-    .submit-btn {
-      width: 100%;
-      padding: 10px;
-      font-size: 18px;
-      border-radius: 5px;
+    // Add Benefit button
+    button {
       background-color: $button-bg-color;
       color: $text-color;
       border: none;
+      border-radius: 8px;
+      padding-left:8px;
+      padding-right:8px;
+      height: 90%; // Match input height
       cursor: pointer;
-      font-family: $font-family;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      transition: background-color 0.3s;
+      margin-left: 12px;
+      margin-bottom: 8px;
 
       &:hover {
-        background-color: darken($button-bg-color, 10%);
-        box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.2);
+        background-color: $button-hover-color;
       }
-
-      &:disabled {
-        background-color: lighten($button-bg-color, 20%);
-        cursor: not-allowed;
-      }
-    }
-
-    .invalid-input {
-      border-color: $border-color; // Highlight invalid inputs
     }
   }
 
+
   .benefits-list {
-    display: flex;
-    flex-wrap: wrap;
+    margin: 10px 0;
 
     .benefit-item {
-      background-color: $primary-color;
+      display: inline-block;
+      background-color: $secondary-color;
       color: $text-color;
+      border-radius: 4px;
       padding: 5px 10px;
-      border-radius: 5px;
-      margin-right: 10px;
-      display: flex;
-      align-items: center;
+      margin-right: 5px;
+      margin-bottom: 5px;
 
       .delete-benefit {
-        background: transparent;
+        background: none;
         border: none;
-        color: $text-hover-color;
+        color: $text-color;
         cursor: pointer;
+        font-weight: bold;
         margin-left: 5px;
       }
+    }
+  }
+
+  .submit-btn {
+    background-color: $button-bg-color;
+    color: $text-color;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $button-hover-color;
+    }
+
+    &.shrinking {
+      animation: shrink 0.5s forwards;
+    }
+  }
+
+  @keyframes shrink {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0.9);
+    }
+  }
+
+  .image-preview {
+    margin: 10px 0;
+
+    img {
+      border: 1px solid $input-border-color;
+      border-radius: 4px;
     }
   }
 
@@ -131,32 +143,33 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 10;
+    align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease-in-out;
 
     &.show {
       opacity: 1;
     }
 
     i {
-      color: $secondary-color;
       font-size: 50px;
+      color: $text-color;
     }
   }
 }
 
-@keyframes checkGrow {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+// Responsive design for smaller screens
+@media (max-width: 600px) {
+  .create-profile-page {
+    padding: 15px;
+
+    h1 {
+      font-size: 24px;
+    }
   }
 }

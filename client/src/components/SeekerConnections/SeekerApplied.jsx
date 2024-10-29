@@ -21,7 +21,7 @@ function SeekerApplied() {
       console.log("No applications found");
       setApplications([]); // Clear applications or handle an empty state
     } else {
-      alert("Failed to fetch applications");
+      console.log("Failed to fetch applications");
     }
   };
 
@@ -38,14 +38,16 @@ function SeekerApplied() {
         applied.map((application) => (
           <div
             className="card notification-card mb-3 shadow"
-            key={application.application_id}
-          >
-            <p>Job Title: {application.job_title}</p>
-            <p>Company Name: {application.company_name}</p>
+            key={application.application_id}>
+            <h3>
+              <strong>{application.company_name}</strong>
+            </h3>
+            <p className="card-title">{application.job_title}</p>
+            <p className="card-description-text">{application.description}</p>
 
-            <p>
+            <small className="text-muted">
               Applied on: {new Date(application.created_at).toLocaleString()}
-            </p>
+            </small>
           </div>
         ))
       ) : (
