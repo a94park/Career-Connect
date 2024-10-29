@@ -1,94 +1,98 @@
-// DevelopersSection.scss
-// Color Variables
-$primary-color: #007bff; // Blue for header and button accent
-$secondary-color: #ff0048; // Complementary color for key phrases
-$text-color: black; // Standard text color for readability
-$background-color: #f9f9f9; // Light background for section
-$button-color: #007bff; // Button background color
-$button-text-color: #ffffff; // Button text color
 
-// Container Styling
+@import '../../assets/styles/util/variables.scss';
+
 .team-container {
-  padding: 12px; // Reduced padding for less edge spacing
-  max-width: 1800px;
-  margin: 0 auto;
-  background-color: $background-color;
-  border-radius: 5px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
+    max-width: 900px;
+    margin: 4rem auto 0 auto;
+    padding: 2rem;
+    background-color: $primary-color; // Darker background
+    color: $text-color; // Standard text color on dark background
+    font-family: $font-family;
+    line-height: 1.6;
+    text-align: center;
+    border-radius: 8px; // Optional: adds a subtle rounded edge for a polished look
 
-  // Header Styling
-  h1 {
-    font-size: 36px;
-    color: $primary-color;
-    font-weight: bold;
-    margin-bottom: 15px;
-  }
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: lighten($primary-color, 40%); // Slightly lighter shade for heading
+        font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        animation: fadeInDown 1s ease-in-out;
+    }
 
-  // Paragraph Styling
-  p {
-    font-size: 18px;
-    color: $text-color;
-    line-height: 1.4;
-    margin-bottom: 10px; // Reduced bottom margin to decrease gap
-    text-align: justify;
+    p {
+        font-size: 1.1rem;
+        color: lighten($text-color, 20%); // Slightly lighter for readability on dark
+        margin: 1rem 0;
+        padding: 0 1rem;
+        transition: transform 0.2s ease, color 0.3s ease;
+
+        &:hover {
+            color: #fff; // White hover color on dark background
+            transform: translateX(5px);
+        }
+    }
 
     .team-name {
-      font-weight: bold;
-      color: $primary-color;
+        font-weight: bold;
+        color: $secondary-color; // Accent color for emphasis
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: lighten($secondary-color, 10%); // Lighten slightly on hover
+        }
     }
 
     .buzzword {
-      font-style: italic;
-      font-weight: bold;
-      color: $secondary-color;
+        font-style: italic;
+        color: darken($secondary-color, 15%);
+        transition: color 0.3s ease, transform 0.3s ease;
+
+        &:hover {
+            color: lighten($secondary-color, 10%);
+            transform: scale(1.05);
+        }
     }
-  }
 
-  // Developer Section Import
-  .developers-section {
-    margin-top: 30px; // Reduced top margin to decrease gap
-  }
-
-  // Button Styling
-  .start-now-btn-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    .start-now-btn-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: center;
+    }
 
     .start-now-btn {
-      background-color: $button-color;
-      color: $button-text-color;
-      padding: 10px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease-in-out;
+        background-color: $button-bg-color;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
 
-      &:hover {
-        background-color: darken($button-color, 10%);
-      }
+        &:hover {
+            background-color: $button-hover-color;
+            transform: scale(1.05);
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
     }
-  }
 }
 
-// Responsive Design for smaller screens
-@media (max-width: 768px) {
-  .team-container {
-    padding: 15px;
-  }
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
 
-  h1 {
-    font-size: 28px;
-  }
-
-  p {
-    font-size: 16px;
-  }
-
-  .start-now-btn {
-    padding: 10px 24px;
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+

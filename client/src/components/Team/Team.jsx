@@ -1,5 +1,7 @@
 import DevelopersSection from "../Developers/DevelopersSection.jsx";
 import { useNavigate } from "react-router-dom";
+import "./Team.scss";
+
 
 
 function Team() {
