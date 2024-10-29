@@ -11,7 +11,7 @@ function EmployerProfileView({ profileData }) {
         <h1>{profileData.company_name} Employer Profile</h1>
         <div className="profile-details">
           <img
-            src={profileData.company_logo ? profileData.company_logo : placeholderImage} 
+            src={profileData.company_logo ? profileData.company_logo : placeholderImage}
             alt="Company Logo"
             className="profile-picture"
           />
