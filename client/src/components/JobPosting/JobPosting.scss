@@ -1,20 +1,29 @@
 @import "../../assets/styles/util/variables.scss";
 
 .job-posting-container {
-  max-width: 100vw;
-
-  padding: 30px;
+  width: 80vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
   background-color: #f8f9fa; // Light background for the form
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Slight shadow for depth
 
-  h3 {
-    padding-top: 24px;
-    padding-bottom: 24px;
-  }
   .formJobPosting {
+    width: 400px;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); // Slight shadow for depth
+    margin-top: 60px;
+    border-radius: 10px;
+
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+      h3 {
+        color: $button-bg-color;
+        margin-top: 5px;
+      }
 
       label {
         font-weight: 600;
@@ -24,8 +33,9 @@
       }
 
       .form-control {
-        width: 100%;
+        width: 18rem;
         padding: 10px;
+        height: 40px;
         border-radius: 5px;
         border: 1px solid #ced4da;
         font-size: 16px;
@@ -39,14 +49,15 @@
     }
 
     // Textarea specific styling
-    textarea.form-control {
-      height: 150px;
+    textarea .form-control {
+      // height: 150px;
+      // width: 200px;
       resize: none;
     }
 
-    .btn {
-      width: 100%;
-      padding: 10px;
+    .button {
+      padding: 5px;
+      margin-bottom: 10px;
       font-size: 18px;
       border-radius: 5px;
       background-color: $button-bg-color;
