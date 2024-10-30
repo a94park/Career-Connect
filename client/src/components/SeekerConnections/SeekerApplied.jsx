@@ -29,7 +29,7 @@ function SeekerApplied() {
     fetchApplications();
   }, []);
 
-  // Filter applications to show only accepted ones (job_seeker_status === 1) AND ones without Employers response
+  // Filter applications to show only accepted ones (job_seeker_status === 1) AND ones without Employer's response
   const applied = applications.filter(
     (app) => app.job_seeker_status === 1 && app.employer_status === null
   );
