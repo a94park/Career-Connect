@@ -10,12 +10,7 @@ import "./Dashboard.scss";
 function JobSeekerDashboard({ profileData, setProfileData }) {
   const [isLoading, setIsLoading] = useState(true); // Start with loading state
   const token = localStorage.getItem("accessToken");
-  const [connectedCount, setConnectedCount] = useState(5); // Example: 5 employers have connected
-
-  // const [fullName, setFullName] = useState(
-  //   localStorage.getItem("fullName") || "User"
-  // );
-  // const [userType] = useState(localStorage.getItem("userType") || "job_seeker");
+  const [connectedCount, setConnectedCount] = useState(0);
 
   useEffect(() => {
     // Fetch job seeker profile data immediately after login
@@ -33,7 +28,7 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
         if (response.ok) {
           const data = await response.json();
           const profile = data.job_seeker_profile || null;
-
+          setConnectedCount(data.connected_count);
           if (profile) {
             setProfileData(profile); // Store profile data in state
             `${profile.first_name} ${profile.last_name}`; // Set full name from profile
@@ -88,7 +83,12 @@ function JobSeekerDashboard({ profileData, setProfileData }) {
       case "search":
         return <SearchAndFilterSystem />;
       case "connections":
-        return <SeekerConnections />;
+        return (
+          <SeekerConnections
+            connectedCount={connectedCount}
+            setConnectedCount={setConnectedCount}
+          />
+        );
 
       case "settings":
         return (

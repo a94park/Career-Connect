@@ -19,11 +19,11 @@ def get_user_data():
         if binary_data:
             return f"data:image/png;base64,{base64.b64encode(binary_data).decode('utf-8')}"
         return None
-
+ 
     # Fetch the job seeker profile if it exists
     job_seeker_profile = JobSeeker.query.filter_by(user_id=user_id).first()
     employer_profile = Employer.query.filter_by(user_id=user_id).first()
-
+    connected_count = Application.query.filter(Application.employer_status.isnot(None)).count()
     # Convert job seeker profile image if available
     job_seeker_data = job_seeker_profile.to_json() if job_seeker_profile else None
     if job_seeker_data and job_seeker_profile.profile_pic:
@@ -39,6 +39,7 @@ def get_user_data():
         "user_id": user_id,
         "full_name": user.full_name,
         "user_type": user.user_type,
+        "connected_count": connected_count,
         "employer_profile": employer_data,  # Converted employer profile data
         "job_seeker_profile": job_seeker_data  # Converted job seeker profile data
     }
