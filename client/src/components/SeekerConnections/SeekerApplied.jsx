@@ -29,8 +29,10 @@ function SeekerApplied() {
     fetchApplications();
   }, []);
 
-  // Filter applications to show only accepted ones (job_seeker_status === 1)
-  const applied = applications.filter((app) => app.job_seeker_status === 1);
+  // Filter applications to show only accepted ones (job_seeker_status === 1) AND ones without Employers response
+  const applied = applications.filter(
+    (app) => app.job_seeker_status === 1 && app.employer_status === null
+  );
 
   return (
     <div className="seeker-applied">
@@ -52,7 +54,8 @@ function SeekerApplied() {
         ))
       ) : (
         <p className="no-applications">
-          You have not sent any connection requests.
+          You have not sent any connection requests or an Employer might have
+          responded. Check the "Connected" tab.
         </p>
       )}
     </div>
