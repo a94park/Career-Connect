@@ -335,7 +335,7 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
           {skills.map((skill, index) => (
             <span key={index} className="skill-item">
               {skill}
-              {index < skills.length - 1 && ", "} {/*ummmm what?*/}
+              {index < skills.length - 1 && " "} {/*ummmm what?*/}
               <button
                 className="delete-skill"
                 onClick={() => handleDeleteSkill(skill)}>
