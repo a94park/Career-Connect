@@ -5,6 +5,8 @@ import ConfettiEffect from "../ConfettiEffect/ConfettiEffect";
 function JobSeekerNotification() {
   const [notifications, setNotifications] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -38,7 +40,15 @@ function JobSeekerNotification() {
       )
     );
   };
+  const viewContact = (notifications) => {
+    setSelectedCompany(notifications);
+    setShowContactModal(true);
+  };
 
+  const closeModal = () => {
+    setShowContactModal(false);
+    setSelectedCompany(null);
+  };
   return (
     <div className="jobseeker-notifications">
       {/* Trigger confetti if there's an accepted notification */}
@@ -57,7 +67,11 @@ function JobSeekerNotification() {
             {notification.employer_status !== null && (
               <p className="card-text">
                 <strong>Status: </strong>
-                {notification.employer_status === 1 ? "Accepted" : "Rejected"}
+                {notification.employer_status === 1 ? (
+                  <>Accepted </>
+                ) : (
+                  "Rejected"
+                )}
               </p>
             )}
             <p className="card-text">
@@ -66,14 +80,51 @@ function JobSeekerNotification() {
                 {new Date(notification.created_at).toLocaleDateString()}
               </small>
             </p>
-            <JobSeekerNotificationDelete
-              applicationId={notification.application_id}
-              onDelete={handleDeleteNotification}
-            />
+            <div className="del-cont-button">
+              <div>
+                <JobSeekerNotificationDelete
+                  applicationId={notification.application_id}
+                  onDelete={handleDeleteNotification}
+                />
+              </div>
+              <div>
+                {notification.employer_status === 1 ? (
+                  <button
+                    className="contact-button"
+                    onClick={() => viewContact(notification)}>
+                    Contact
+                  </button>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
           </div>
         ))
       ) : (
         <p className="text-center text-light">No notifications yet.</p>
+      )}
+
+      {showContactModal && selectedCompany && (
+        <div className="js-modal-overlay">
+          <div className="modal-content">
+            <p>
+              <strong> {selectedCompany.employer.company_name}</strong> is
+              expecting a message from you!
+            </p>
+            <p>
+              Send an email here:{" "}
+              <u className="emp-email"> {selectedCompany.employer.email}</u>
+            </p>
+            <p>
+              Make sure to mention <strong>Career Connect!</strong> <br></br>
+              And good luck on the rest of your application process!
+            </p>
+            <button className="close-btn" onClick={closeModal}>
+              X
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
