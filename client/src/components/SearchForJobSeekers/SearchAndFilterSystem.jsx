@@ -90,6 +90,7 @@ function SearchAndFilterSystem() {
       console.log(data.message); // Notify user that the application was successful
     } catch (error) {
       console.log(`Error: ${error.message}`);
+      alert("Job seeker not detected. Make a Job Seeker Profile first in Profile Tab.")
     }
   };
 
