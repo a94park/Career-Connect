@@ -4,9 +4,8 @@ import JobSeekerNotification from "./JobSeekerNotification";
 import SeekerPassed from "./SeekerPassed";
 import "./SeekerConnections.scss";
 
-function SeekerConnections() {
+function SeekerConnections({ connectedCount, setConnectedCount }) {
   const [activeTab, setActiveTab] = useState("applied");
-  const [connectedCount, setConnectedCount] = useState(100000); // Example: 5 employers have connected
 
   const renderContent = () => {
     switch (activeTab) {
@@ -21,7 +20,10 @@ function SeekerConnections() {
         return (
           <div>
             <h3>These employers have responded your applications.</h3>
-            <JobSeekerNotification />
+            <JobSeekerNotification
+              connectedCount={connectedCount}
+              setConnectedCount={setConnectedCount}
+            />
           </div>
         );
       case "passed":

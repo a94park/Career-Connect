@@ -1,6 +1,10 @@
 import React from "react";
 
-function JobSeekerNotificationDelete({ applicationId, onDelete }) {
+function JobSeekerNotificationDelete({
+  applicationId,
+  onDelete,
+  setConnectedCount,
+}) {
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -24,6 +28,7 @@ function JobSeekerNotificationDelete({ applicationId, onDelete }) {
       const data = await response.json();
       alert(data.message);
       onDelete(applicationId); // Notify parent to remove the notification from the list
+      setConnectedCount((prevCount) => Math.max(0, prevCount - 1));
     } catch (error) {
       alert(`Error: ${error.message}`);
     }

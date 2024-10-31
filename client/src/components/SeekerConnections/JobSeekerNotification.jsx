@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import JobSeekerNotificationDelete from "./JobSeekerNotificationDelete";
 import ConfettiEffect from "../ConfettiEffect/ConfettiEffect";
 
-function JobSeekerNotification() {
+function JobSeekerNotification({ connectedCount, setConnectedCount }) {
   const [notifications, setNotifications] = useState([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
@@ -85,6 +85,8 @@ function JobSeekerNotification() {
                 <JobSeekerNotificationDelete
                   applicationId={notification.application_id}
                   onDelete={handleDeleteNotification}
+                  connectedCount={connectedCount}
+                  setConnectedCount={setConnectedCount}
                 />
               </div>
               <div>
