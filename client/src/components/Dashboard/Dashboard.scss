@@ -6,13 +6,6 @@
   width: 98.8vw;
   height: 95.33vh;
 
-  .welcome-message {
-    font-size: 20px;
-    padding-top: 100px;
-    color: $text-hover-color;
-    font-family: "merriweather", serif;
-  }
-
   .sidebar {
     width: 20vw;
     min-width: 150px;
@@ -31,17 +24,21 @@
         cursor: pointer;
         margin: 10px 0;
         padding: 8px;
-        background-color: $input-bg;
+        background-color: darken($input-bg, 5%);
         border-radius: 5px;
-        text-align: left;
+        text-align: center;
+        border: 1px solid rgba(0, 0, 0, 0.5);
 
-        &.active {
+        &:hover {
           background-color: lighten($input-bg, 10%);
+        }
+        &.active {
+          background-color: lighten($input-bg, 15%);
           font-weight: bold;
         }
         .counter {
           position: absolute;
-          top: 190px;
+          top: 195px;
           left: 120px;
           background-color: red;
           color: white;
