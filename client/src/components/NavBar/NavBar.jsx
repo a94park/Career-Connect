@@ -40,8 +40,8 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
             </Link>
           </li>
           <li>
-            <Link className="navbar-link" to="/the-team">
-              The Team
+            <Link className="navbar-link" to="/our-team">
+              Our Team
             </Link>
           </li>
           {isLoggedIn ? (

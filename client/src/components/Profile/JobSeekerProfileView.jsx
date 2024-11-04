@@ -1,4 +1,4 @@
-import placeholderImage from "../../assets/placeholder.jpeg";
+import placeholderImage from "../../assets/pictures/placeholder.jpeg";
 
 function CreateProfileView({ profileData }) {
   if (!profileData) {

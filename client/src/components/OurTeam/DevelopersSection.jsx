@@ -1,36 +1,36 @@
-import "./DevelopersSection.css";
+import "./DevelopersSection.scss";
 
 function DevelopersSection() {
   const developers = [
     {
       name: "Abraham",
-      role: "Frontend Developer",
-      image: "../src/assets/abraham-placeholder.jpeg",
+      role: "Fullstack Developer",
+      image: "../src/assets/pictures/abraham-placeholder.jpeg",
     },
     {
       name: "Barra",
       role: "Fullstack Developer",
-      image: "../src/assets/funny-placeholder-image.jpg",
+      image: "../src/assets/pictures/funny-placeholder-image.jpg",
     },
     {
       name: "Dan",
       role: "Fullstack Developer",
-      image: "../src/assets/dan-placeholder.webp",
+      image: "../src/assets/pictures/dan-placeholder.webp",
     },
     {
       name: "Jerry",
       role: "Fullstack Developer",
-      image: "../src/assets/jerry-placeholder.webp",
+      image: "../src/assets/pictures/jerry-placeholder.webp",
     },
     {
       name: "Sam",
       role: "Fullstack Developer",
-      image: "../src/assets/sam-placeholder.jpeg",
+      image: "../src/assets/pictures/sam-placeholder.jpeg",
     },
     {
       name: "Vlad",
       role: "Fullstack Developer",
-      image: "../src/assets/vlad-placeholder.jpeg",
+      image: "../src/assets/pictures/vlad-placeholder.jpeg",
     },
     // Add more developers as needed
   ];

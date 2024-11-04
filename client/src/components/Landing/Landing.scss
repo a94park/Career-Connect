@@ -1,4 +1,4 @@
-@import "../../assets/styles/util/variables.scss";
+@import "../../assets/styles/variables.scss";
 
 $white: #ffffff;
 $text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
@@ -7,6 +7,7 @@ $banner-height: 80vh;
 .landing-container {
   height: auto; // Allow for flexible height based on content
   background-color: $bg-color;
+  margin-top: 2.7rem;
 }
 
 // Banner Styles
@@ -14,10 +15,6 @@ $banner-height: 80vh;
   background-size: cover;
   background-position: center;
   height: $banner-height;
-  padding: 80px 50px; // Adjust for better responsiveness
-  // margin-top: 30px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../../assets/styles/landing/banner2.jpg");
   display: flex;
   flex-direction: column;
   align-items: center;

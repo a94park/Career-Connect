@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import CreateProfileView from "./CreateProfileView";
+import CreateProfileView from "./JobSeekerProfileView";
 import "../UpdateAndDelete/UpdateJobSeekerProfile.scss"; //USING THIS SCSS FILE!
 
 function CreateProfilePage({ setProfileData, onProfileUpdate }) {
@@ -128,11 +128,6 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
         institution,
       };
     });
-
-    // const education = educationFields.map((field) => {
-    //   return `${education} in ${degreeDetails} at ${institution}`;
-    // });
-
     const profileData = {
       profile_pic,
       first_name: firstName,
@@ -141,7 +136,6 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
       gender,
       nationality,
       education,
-      // JSON.stringify(education), // JSON string of education array
       skills: JSON.stringify(skills), // JSON string of skills array
     };
 

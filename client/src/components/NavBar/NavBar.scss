@@ -1,10 +1,9 @@
-/* Styling for the navigation bar */
-@import "../../assets/styles/util/variables.scss";
+@import "../../assets/styles/variables.scss";
 $position: fixed;
 nav {
   background-color: #212529;
   padding: 0.5rem;
-  // position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

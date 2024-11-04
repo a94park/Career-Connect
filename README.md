@@ -7,6 +7,6 @@
 - Run flask
 
 .env:
-SECRET_KEY = ""
-JWT_SECRET_KEY = ""
+SECRET_KEY = (set)
+JWT_SECRET_KEY = (set)
 DEV_DATABASE = mariadb+pymysql://root:@localhost:3306/careerconnect

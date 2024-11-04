@@ -1,10 +1,10 @@
-@import '../../assets/styles/util/variables.scss';
+@import "../../assets/styles/variables.scss";
 
 .create-profile-page {
   max-width: 700px;
   margin: 0 auto;
   margin-top: 48px;
-  margin-bottom:48px;
+  margin-bottom: 48px;
   padding: 20px;
   background-color: $form-bg-color;
   border-radius: 8px;
@@ -52,7 +52,6 @@
     margin: 0;
     padding: 0;
 
-
     // Input field for benefits
     .form-input {
       flex: 1;
@@ -64,8 +63,8 @@
       color: $text-color;
       border: none;
       border-radius: 8px;
-      padding-left:8px;
-      padding-right:8px;
+      padding-left: 8px;
+      padding-right: 8px;
       height: 90%; // Match input height
       cursor: pointer;
       transition: background-color 0.3s;
@@ -77,7 +76,6 @@
       }
     }
   }
-
 
   .benefits-list {
     margin: 10px 0;
