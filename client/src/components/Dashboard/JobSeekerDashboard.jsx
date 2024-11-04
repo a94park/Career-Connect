@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import CreateProfilePage from "../Profile/CreateProfilePage";
-import CreateProfileView from "../Profile/CreateProfileView";
+import CreateProfilePage from "../Profile/JobSeekerCreateProfile";
+import CreateProfileView from "../Profile/JobSeekerProfileView";
 import SearchAndFilterSystem from "../SearchForJobSeekers/SearchAndFilterSystem";
 import UpdateJobSeekerProfile from "../UpdateAndDelete/UpdateJobSeekerProfile";
 import DeleteJobSeekerProfile from "../UpdateAndDelete/DeleteJobSeekerProfile";

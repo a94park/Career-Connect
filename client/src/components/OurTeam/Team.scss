@@ -1,0 +1,92 @@
+@import "../../assets/styles/variables.scss";
+
+.team-container {
+  width: 100vw;
+  height: 100%;
+  // padding: 2rem;
+  background-color: $primary-color; // Darker background
+  color: $text-color; // Standard text color on dark background
+  font-family: $font-family;
+  line-height: 1.6;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: lighten($primary-color, 40%); // Slightly lighter shade for heading
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: fadeInDown 1s ease-in-out;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: lighten(
+      $text-color,
+      20%
+    ); // Slightly lighter for readability on dark
+    margin: 1rem 0;
+    padding: 0 1rem;
+    transition: transform 0.2s ease, color 0.3s ease;
+
+    &:hover {
+      color: #fff; // White hover color on dark background
+      transform: translateX(5px);
+    }
+  }
+
+  .team-name {
+    font-weight: bold;
+    color: $secondary-color; // Accent color for emphasis
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: lighten($secondary-color, 10%); // Lighten slightly on hover
+    }
+  }
+
+  .buzzword {
+    font-style: italic;
+    color: darken($secondary-color, 15%);
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      color: lighten($secondary-color, 10%);
+      transform: scale(1.05);
+    }
+  }
+  .start-now-btn {
+    background-color: $button-bg-color;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background-color: $button-hover-color;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

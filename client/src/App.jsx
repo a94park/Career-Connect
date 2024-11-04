@@ -5,7 +5,8 @@ import UserToken from "./components/Token/UserToken";
 
 import NavBar from "./components/NavBar/NavBar";
 import Landing from "./components/Landing/Landing";
-import Team from "./components/Team/Team";
+import Team from "./components/OurTeam/Team";
+import Footer from "./components/Footer/Footer";
 
 import Register from "./components/RegisterAndLogin/Register";
 import Login from "./components/RegisterAndLogin/Login";
@@ -48,7 +49,7 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/the-team" element={<Team />} />
+          <Route path="/our-team" element={<Team />} />
           <Route path="/register" element={<Register />} />
           <Route
             path="/login"
@@ -85,6 +86,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </>
   );
 }

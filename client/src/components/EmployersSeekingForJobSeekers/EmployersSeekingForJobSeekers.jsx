@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./EmployersSeekingForJobSeekers.scss"; // Assume SCSS is used for styling.
-import placeholderImage from "../../assets/placeholder.jpeg";
+import placeholderImage from "../../assets/pictures/placeholder.jpeg";
 
 function EmployersSeekingForJobSeekers() {
   const [results, setResults] = useState([]);

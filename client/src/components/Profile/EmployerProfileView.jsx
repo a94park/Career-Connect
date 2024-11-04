@@ -1,5 +1,6 @@
-import "./EmployerProfileView.scss";
-import placeholderImage from '../../assets/placeholder.jpeg'
+import "./ProfileView.scss";
+import placeholderImage from "../../assets/pictures/placeholder.jpeg";
+
 function EmployerProfileView({ profileData }) {
   if (!profileData) {
     return <h2>No employer profile data available</h2>;
@@ -11,7 +12,11 @@ function EmployerProfileView({ profileData }) {
         <h1>{profileData.company_name} Employer Profile</h1>
         <div className="profile-details">
           <img
-            src={profileData.company_logo ? profileData.company_logo : placeholderImage}
+            src={
+              profileData.company_logo
+                ? profileData.company_logo
+                : placeholderImage
+            }
             alt="Company Logo"
             className="profile-picture"
           />
