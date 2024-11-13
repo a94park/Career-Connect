@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
-import JobPosting from "../JobPosting/JobPosting";
+import JobPosting from "../EmployerJobPost/JobPosting";
 import EmployerCreateProfile from "../Profile/EmployerCreateProfile";
 import EmployerProfileView from "../Profile/EmployerProfileView";
-import EmployersSeekingForJobSeekers from "../EmployersSeekingForJobSeekers/EmployersSeekingForJobSeekers";
+import EmployersSeekingForJobSeekers from "../EmployerSearchJobSeeker/EmployersSeekingForJobSeekers";
 import DeleteEmployerProfile from "../UpdateAndDelete/DeleteEmployerProfile";
 import UpdateEmployerProfile from "../UpdateAndDelete/UpdateEmployerProfile";
-import NotificationsComponent from "../NotificationsComponents/NotificationsComponents";
-import EmployerViewJobPost from "../JobViewer/EmployerViewJobPost";
+import NotificationsComponent from "../EmployerNotifications/NotificationsComponents";
+import EmployerViewJobPost from "../EmployerJobPost/EmployerViewJobPost";
 
 import "./Dashboard.scss";
 
-function EmployerDashboard({ profileData, setProfileData }) {
+function EmployerDashboard({ profileData, setProfileData, token }) {
   const [isLoading, setIsLoading] = useState(!profileData);
-  // const [fullName] = useState(localStorage.getItem("fullName") || "User");
-  // const [userType] = useState(localStorage.getItem("userType") || "job_seeker");
-  const token = localStorage.getItem("accessToken");
+  // localStorage.getItem("token");
 
   useEffect(() => {
     if (!profileData && token) {
@@ -74,7 +72,8 @@ function EmployerDashboard({ profileData, setProfileData }) {
       case "create job post":
         return (
           <div>
-            <JobPosting></JobPosting>
+            <JobPosting />
+            <EmployerViewJobPost />
           </div>
         );
       case "security":
@@ -90,12 +89,7 @@ function EmployerDashboard({ profileData, setProfileData }) {
             <NotificationsComponent />
           </div>
         );
-      case "my-job-posts":
-        return (
-          <div>
-            <EmployerViewJobPost />
-          </div>
-        );
+
       default:
         return <EmployerProfileView profileData={profileData} />;
     }
@@ -113,27 +107,22 @@ function EmployerDashboard({ profileData, setProfileData }) {
           <li
             onClick={() => setActiveTab("search")}
             className={activeTab === "search" ? "active" : ""}>
-            Search Job Seekers
+            Search for Job Seekers
           </li>
           <li
             onClick={() => setActiveTab("create job post")}
             className={activeTab === "create job post" ? "active" : ""}>
-            Create Job Post
+            Job Posts
+          </li>
+          <li
+            onClick={() => setActiveTab("notification")}
+            className={activeTab === "notification" ? "active" : ""}>
+            Notifications
           </li>
           <li
             onClick={() => setActiveTab("security")}
             className={activeTab === "security" ? "active" : ""}>
             Settings
-          </li>
-          <li
-            onClick={() => setActiveTab("notification")}
-            className={activeTab === "notification" ? "active" : ""}>
-            Notification
-          </li>
-          <li
-            onClick={() => setActiveTab("my-job-posts")}
-            className={activeTab === "my-job-posts" ? "active" : ""}>
-            My Job Posts
           </li>
         </ul>
       </aside>

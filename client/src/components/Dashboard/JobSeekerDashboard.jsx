@@ -7,9 +7,9 @@ import DeleteJobSeekerProfile from "../UpdateAndDelete/DeleteJobSeekerProfile";
 import SeekerConnections from "../SeekerConnections/SeekerConnections";
 import "./Dashboard.scss";
 
-function JobSeekerDashboard({ profileData, setProfileData }) {
+function JobSeekerDashboard({ profileData, setProfileData, token }) {
   const [isLoading, setIsLoading] = useState(true); // Start with loading state
-  const token = localStorage.getItem("accessToken");
+  // const token = localStorage.getItem("token");
   const [connectedCount, setConnectedCount] = useState(0);
 
   useEffect(() => {

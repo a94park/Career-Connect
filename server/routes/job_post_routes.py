@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models.models import JobPosting, Employer  # Import your JobPosting and Employer models
+from models import JobPosting, Employer  # Import your JobPosting and Employer models
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from app import app, db
 

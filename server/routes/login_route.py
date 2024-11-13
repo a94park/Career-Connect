@@ -2,7 +2,7 @@ from app import app, bcrypt
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token, unset_jwt_cookies
 from datetime import datetime
-from models.models import db, User
+from models import db, User
 
 @app.route('/test-cors', methods=['GET', 'OPTIONS'])
 def test_cors():
@@ -56,25 +56,22 @@ def register_user():
 
 @app.route("/login", methods=["POST"])
 def login_user():
-    data = request.get_json()  # Get the JSON payload from the request
+    data = request.get_json()
     username = data.get("username")
     password = data.get("password")
 
-    # Check if the username exists
     user = User.query.filter_by(username=username).first()
     if not user:
         return jsonify({"error": "Invalid username or password"}), 401
 
-    # Check if the password matches the hashed password in the database
     if not bcrypt.check_password_hash(user.password, password):
         return jsonify({"error": "Invalid username or password"}), 401
 
-    # Generate access token after successful login
-    access_token = create_access_token(identity=user.user_id)  # Use user_id as identity
-    user_type = user.user_type  # Get user type from the user object
+    access_token = create_access_token(identity=user.user_id)
+    user_type = user.user_type 
 
     # Return the access token and user type in the response
-    return jsonify({"access_token": access_token, "user_type": user_type, "full_name": user.full_name, "message": "Login successful"}), 200
+    return jsonify({"access_token": access_token, "user_type": user_type, "message": "Login successful"}), 200
 
 
 

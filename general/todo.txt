@@ -3,4 +3,13 @@ navbar color login/register
 the team
 
 navbar footer stay still
-connected_count
+connected_count (employer)
+
+
+employer
+- connected count 
+- edit profile in profile
+- jobposts
+
+jobseeker
+- edit profile in profile
