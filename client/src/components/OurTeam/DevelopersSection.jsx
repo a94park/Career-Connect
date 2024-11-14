@@ -1,3 +1,4 @@
+import abrahamplaceholder from "../../assets/pictures/abraham-placeholder.jpeg";
 import "./DevelopersSection.scss";
 
 function DevelopersSection() {
@@ -5,7 +6,7 @@ function DevelopersSection() {
     {
       name: "Abraham",
       role: "Fullstack Developer",
-      image: "/src/assets/pictures/abraham-placeholder.jpeg",
+      image: abrahamplaceholder,
     },
     {
       name: "Barra",
