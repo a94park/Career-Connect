@@ -1,3 +1,10 @@
+import abraham from "../../assets/pictures/abraham-placeholder.jpeg";
+import barra from "../../assets/pictures/funny-placeholder-image.jpg";
+import dan from "../../assets/pictures/dan-placeholder.webp";
+import jerry from "../../assets/pictures/jerry-placeholder.webp";
+import sam from "../../assets/pictures/sam-placeholder.jpeg";
+import vlad from "../../assets/pictures/vlad-placeholder.jpeg";
+
 import "./DevelopersSection.scss";
 
 function DevelopersSection() {
@@ -5,32 +12,32 @@ function DevelopersSection() {
     {
       name: "Abraham",
       role: "Fullstack Developer",
-      image: "/src/assets/pictures/abraham-placeholder.jpeg",
+      image: abraham,
     },
     {
       name: "Barra",
       role: "Fullstack Developer",
-      image: "../src/assets/pictures/funny-placeholder-image.jpg",
+      image: barra,
     },
     {
       name: "Dan",
       role: "Fullstack Developer",
-      image: "/src/assets/pictures/dan-placeholder.webp",
+      image: dan,
     },
     {
       name: "Jerry",
       role: "Fullstack Developer",
-      image: "../src/assets/pictures/jerry-placeholder.webp",
+      image: jerry,
     },
     {
       name: "Sam",
       role: "Fullstack Developer",
-      image: "../src/assets/pictures/sam-placeholder.jpeg",
+      image: sam,
     },
     {
       name: "Vlad",
       role: "Fullstack Developer",
-      image: "../src/assets/pictures/vlad-placeholder.jpeg",
+      image: vlad,
     },
     // Add more developers as needed
   ];
