@@ -503,7 +503,7 @@ ALTER TABLE `notifications`
   ADD KEY `application_id` (`application_id`),
   ADD KEY `notification_to_employer` (`employer_id`),
   ADD KEY `notification_to_jobseeker` (`job_seeker_id`),
-  ADD KEY `notificatio_to_jobposting` (`job_posting_id`);
+  ADD KEY `notification_to_jobposting` (`job_posting_id`);
 
 --
 -- Indexes for table `users`
