@@ -23,13 +23,8 @@ function CreateProfilePage({ setProfileData, onProfileUpdate }) {
   const [genderValid, setGenderValid] = useState(true);
   const [nationalityValid, setNationalityValid] = useState(true);
   const [skillsValid, setSkillsValid] = useState(true);
-
-  // const [showOverlay, setShowOverlay] = useState(false);
-  // const [showForm, setShowForm] = useState(true);
-  // const [isButtonShrinking, setIsButtonShrinking] = useState(false);
-
-  // const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
   // Handle skill input
   const handleSkillChange = (e) => {
     setInputSkill(e.target.value);

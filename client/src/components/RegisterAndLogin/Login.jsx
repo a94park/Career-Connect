@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserToken from "../Token/UserToken.jsx";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
+import UserToken from "../Token/UserToken";
+
 import "../RegisterAndLogin/Login.scss";
 
-function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
+function Login({ setIsLoggedIn, setProfileData, setToken }) {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [loginError, setLoginError] = useState("");
-  const [loading, setLoading] = useState(false); // Added loading state
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
-  const { setToken } = UserToken();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  // const { token, userType, profileData, setToken } = UserToken();
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,75 +20,46 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword); // Toggle password visibility
+    setShowPassword((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Start loading
+    setLoading(true);
+    setLoginError("");
 
     try {
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        const {
-          access_token: accessToken,
-          user_type: userType,
-          full_name: fullName,
-        } = await response.json();
+        const { access_token: token, user_type: userType } =
+          await response.json();
+        setToken(token);
+        setIsLoggedIn(true);
+        navigate(
+          userType === "job_seeker"
+            ? "/job-seeker-dashboard"
+            : "/employer-dashboard"
+        );
 
-        if (accessToken) {
-          // Save the token and user information
-          setToken(accessToken);
-          setIsLoggedIn(true);
-          setUserType(userType);
-          setFullName(fullName);
+        const profileResponse = await fetch("http://localhost:5000/dashboard", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-          // Save user data to local storage
-          localStorage.setItem("accessToken", accessToken);
-          localStorage.setItem("userType", userType);
-          localStorage.setItem("fullName", fullName);
-
-          // Fetch profile data
-          const profileResponse = await fetch(
-            "http://localhost:5000/dashboard",
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
-
-          if (profileResponse.ok) {
-            const profileData = await profileResponse.json();
-            // Set the profile data depending on the user type
-            if (userType === "job_seeker") {
-              setProfileData(profileData.job_seeker_profile || {});
-            } else if (userType === "employer") {
-              setProfileData(profileData.employer_profile || {});
-            }
-          } else {
-            console.error(
-              "Failed to fetch profile data:",
-              profileResponse.status
-            );
-            setLoginError("Failed to retrieve profile data.");
-          }
-
-          // Navigate to the appropriate dashboard
-          navigate(
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          setToken(token);
+          setProfileData(
             userType === "job_seeker"
-              ? "/job-seeker-dashboard"
-              : "/employer-dashboard"
+              ? profileData.job_seeker_profile || {}
+              : profileData.employer_profile || {}
           );
         } else {
-          setLoginError("Failed to retrieve access token.");
+          setLoginError("Failed to retrieve profile data.");
         }
       } else {
         setLoginError("Invalid username or password.");
@@ -95,7 +68,7 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
       console.error("Login error:", error);
       setLoginError("An error occurred. Please try again.");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
@@ -112,8 +85,9 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
-              maxLength={30} // Limit the username input to 30 characters
+              maxLength={30}
               required
+              aria-label="Username" // Accessibility enhancement
             />
           </div>
 
@@ -125,13 +99,15 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              maxLength={30} // Limit the username input to 30 characters
+              maxLength={30}
               required
+              aria-label="Password" // Accessibility enhancement
             />
             <span
               className="toggle-password"
               onClick={togglePasswordVisibility}
-            >
+              role="button"
+              aria-label="Toggle password visibility">
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
@@ -139,8 +115,7 @@ function Login({ setIsLoggedIn, setUserType, setFullName, setProfileData }) {
           <button
             type="submit"
             className="btn btn-primary w-100"
-            disabled={loading}
-          >
+            disabled={loading}>
             {loading ? "Loading..." : "Login"}
           </button>
         </form>

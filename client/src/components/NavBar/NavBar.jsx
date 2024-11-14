@@ -1,38 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./NavBar.scss";
 import LogoutPopUp from "./LogoutPopUp";
+import UserToken from "../Token/UserToken";
+import "./NavBar.scss";
 
-function NavBar({ isLoggedIn, handleLogout, userType }) {
-  const [scrolled, setScrolled] = useState(false);
+function NavBar({ isLoggedIn, handleLogout }) {
+  const { token, userType, profileData } = UserToken();
+
   const [showLogoutPopUp, setShowLogoutPopUp] = useState(false); // Controls LogoutPopUp
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 50) {
-        // Adjust the scroll threshold as needed
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const handleLogoutAndNavigate = () => {
     handleLogout(); // Call the logout function
     setShowLogoutPopUp(true);
   };
-
   return (
     <>
-      <nav className={scrolled ? "navbar-scrolled" : ""}>
+      <nav>
         <ul>
           <li>
             <Link className="navbar-link" to="/">
@@ -57,6 +40,7 @@ function NavBar({ isLoggedIn, handleLogout, userType }) {
                   Dashboard
                 </Link>
               </li>
+
               <li>
                 <button
                   className="logout-button"

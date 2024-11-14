@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./EmployerViewJobPost.scss";
-import DeleteJobPost from "../UpdateAndDelete/DeleteJobPost"; // Import the DeleteJobPost component
+import DeleteJobPost from "./DeleteJobPost"; // Import the DeleteJobPost component
 
 const EmployerViewJobPost = () => {
   const [jobs, setJobs] = useState([]);
@@ -10,13 +10,16 @@ const EmployerViewJobPost = () => {
   useEffect(() => {
     const fetchEmployerJobs = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/employer/jobs", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "http://localhost:5000/api/employer/jobs",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           if (response.status === 401) {
@@ -41,7 +44,7 @@ const EmployerViewJobPost = () => {
 
   const handleDeleteSuccess = (deletedJobId) => {
     // Update the jobs state to remove the deleted job
-    setJobs(jobs.filter(job => job.job_posting_id !== deletedJobId));
+    setJobs(jobs.filter((job) => job.job_posting_id !== deletedJobId));
   };
 
   if (error) {
@@ -50,7 +53,7 @@ const EmployerViewJobPost = () => {
 
   return (
     <div className="employer-job-posts-container">
-      <h1>My Job Postings</h1>
+      <h1>My Job Posts</h1>
       {jobs.length > 0 ? (
         <ul className="job-list">
           {jobs.map((job) => (
@@ -58,15 +61,25 @@ const EmployerViewJobPost = () => {
               <h2 className="job-title">{job.title}</h2>
               <p className="job-description">{job.description}</p>
               <div className="job-meta">
-                <p className="job-location"><strong>Location:</strong> {job.location}</p>
-                <p className="job-salary"><strong>Salary:</strong> {job.salary}</p>
-                <p className="job-skills"><strong>Skills:</strong> {job.skills}</p>
+                <p className="job-location">
+                  <strong>Location:</strong> {job.location}
+                </p>
+                <p className="job-salary">
+                  <strong>Salary:</strong> {job.salary}
+                </p>
+                <p className="job-skills">
+                  <strong>Skills:</strong> {job.skills}
+                </p>
               </div>
               <p className="job-posted">
-                <strong>Posted on:</strong> {new Date(job.created_at).toLocaleDateString()}
+                <strong>Posted on:</strong>{" "}
+                {new Date(job.created_at).toLocaleDateString()}
               </p>
               {/* DeleteJobPost component with success handler */}
-              <DeleteJobPost jobId={job.job_posting_id} onDeleteSuccess={handleDeleteSuccess} />
+              <DeleteJobPost
+                jobId={job.job_posting_id}
+                onDeleteSuccess={handleDeleteSuccess}
+              />
             </li>
           ))}
         </ul>

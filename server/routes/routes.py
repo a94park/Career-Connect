@@ -1,6 +1,6 @@
 from app import app, db, bcrypt
 from flask import jsonify, request
-from models.models import JobPosting, Application, JobSeeker, Employer, Notification
+from models import JobPosting, Application, JobSeeker, Employer, Notification
 from datetime import datetime
 import re
 from flask_jwt_extended import jwt_required, get_jwt_identity

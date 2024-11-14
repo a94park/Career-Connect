@@ -1,14 +1,16 @@
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from models.models import User, JobSeeker, Application, JobPosting, Employer  # Import your models
-from app import app, db  # Import your Flask app and database
+from models import User, JobSeeker, Application, JobPosting, Employer 
+from app import app, db  
 import base64
 
 #route to get jobseeker and employer profile data
 @app.route('/dashboard', methods=['GET'])
-@jwt_required()  # Ensure that this route requires authentication
+# Ensure that this route requires authentication
+@jwt_required()
 def get_user_data():
-    user_id = get_jwt_identity()  # Retrieve user_id from JWT
+    # Retrieve user_id from JWT
+    user_id = get_jwt_identity()  
     user = User.query.get(user_id)  # Fetch the user from the database
 
     if not user:
@@ -23,7 +25,21 @@ def get_user_data():
     # Fetch the job seeker profile if it exists
     job_seeker_profile = JobSeeker.query.filter_by(user_id=user_id).first()
     employer_profile = Employer.query.filter_by(user_id=user_id).first()
-    connected_count = Application.query.filter(Application.employer_status.isnot(None)).count()
+    
+    if job_seeker_profile:
+        connected_count = Application.query.filter(
+            Application.job_seeker_id == job_seeker_profile.job_seeker_id,
+            Application.employer_status.isnot(None)
+        ).count()
+    elif employer_profile:
+        connected_count = Application.query.filter(
+            Application.job_posting_id == employer_profile.employer_id,
+            Application.employer_status.isnot(None),
+            Application.job_seeker_status == 1 
+        ).count()
+        print("AHHHHHHHHHHHHH",connected_count)
+    else:
+        connected_count = 0
     # Convert job seeker profile image if available
     job_seeker_data = job_seeker_profile.to_json() if job_seeker_profile else None
     if job_seeker_data and job_seeker_profile.profile_pic:

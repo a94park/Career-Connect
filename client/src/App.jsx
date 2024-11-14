@@ -17,35 +17,23 @@ function App() {
   const [profileData, setProfileData] = useState(null);
   const { token, setToken } = UserToken(); // State for user token
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userType, setUserType] = useState(
-    localStorage.getItem("userType") || null
-  );
-  const [fullName, setFullName] = useState(
-    localStorage.getItem("fullName") || null
-  );
 
   useEffect(() => {
     setIsLoggedIn(!!token); // Update state based on whether a token exists
-    const storedUserType = localStorage.getItem("userType");
-    setUserType(storedUserType);
   }, [token]);
 
   const handleLogout = () => {
     setToken(null); // Clear the token
     setIsLoggedIn(false);
-    setUserType(null);
-    localStorage.removeItem("userType"); // Update the login state
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("fullName");
-    localStorage.removeItem("access_token");
   };
   return (
     <>
       <BrowserRouter>
         <NavBar
           isLoggedIn={isLoggedIn}
-          userType={userType}
+          profileData={profileData}
           handleLogout={handleLogout}
+          token={token}
         />
         <Routes>
           <Route path="/" element={<Landing />} />
@@ -56,9 +44,8 @@ function App() {
             element={
               <Login
                 setIsLoggedIn={setIsLoggedIn}
-                setUserType={setUserType}
-                setFullName={setFullName}
                 setProfileData={setProfileData}
+                setToken={setToken}
               />
             }
           />
@@ -66,10 +53,9 @@ function App() {
             path="/job-seeker-dashboard"
             element={
               <JobSeekerDashboard
-                userType={userType}
-                fullName={fullName}
                 profileData={profileData}
                 setProfileData={setProfileData}
+                token={token}
               />
             }
           />
@@ -77,10 +63,9 @@ function App() {
             path="/employer-dashboard"
             element={
               <EmployerDashboard
-                userType={userType}
-                fullName={fullName}
                 profileData={profileData}
                 setProfileData={setProfileData}
+                token={token}
               />
             }
           />

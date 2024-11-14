@@ -4,7 +4,7 @@ import os
 import base64
 from datetime import datetime
 from flask_jwt_extended import get_jwt_identity, jwt_required, create_access_token
-from models.models import db, JobSeeker, Application, Employer, JobPosting, Notification
+from models import db, JobSeeker, Application, Employer, JobPosting, Notification
 from app import app
 import json
 

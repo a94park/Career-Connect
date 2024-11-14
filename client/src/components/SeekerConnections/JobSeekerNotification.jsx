@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import JobSeekerNotificationDelete from "./JobSeekerNotificationDelete";
-import ConfettiEffect from "../ConfettiEffect/ConfettiEffect";
+import ConfettiEffect from "../../assets/confetti/ConfettiEffect";
 
 function JobSeekerNotification({ connectedCount, setConnectedCount }) {
   const [notifications, setNotifications] = useState([]);
