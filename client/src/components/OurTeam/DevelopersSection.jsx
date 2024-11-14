@@ -5,7 +5,7 @@ function DevelopersSection() {
     {
       name: "Abraham",
       role: "Fullstack Developer",
-      image: "../src/assets/pictures/abraham-placeholder.jpeg",
+      image: "/src/assets/pictures/abraham-placeholder.jpeg",
     },
     {
       name: "Barra",
@@ -15,7 +15,7 @@ function DevelopersSection() {
     {
       name: "Dan",
       role: "Fullstack Developer",
-      image: "../src/assets/pictures/dan-placeholder.webp",
+      image: "/src/assets/pictures/dan-placeholder.webp",
     },
     {
       name: "Jerry",
